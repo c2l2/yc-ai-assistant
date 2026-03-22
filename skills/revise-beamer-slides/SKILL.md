@@ -79,6 +79,7 @@ When no stronger local style signal is present, prefer the academic Beamer style
 - `\usetheme{default}` with `\usecolortheme{orchid}`
 - black or near-black frametitle text with a thin horizontal rule below it
 - square main bullets, circular sub-bullets, and light use of `\vs`
+- top-level claims or explanations often appear without bullet icons, while bullets are mainly used for subordinate structure
 - concise, formal slide writing rather than manuscript paragraphs
 
 ## Editing rules
@@ -86,7 +87,8 @@ When no stronger local style signal is present, prefer the academic Beamer style
 - Preserve the deck's existing preamble, macros, and frame structure unless the requested edit requires changing them.
 - Prefer direct, informative frame titles over vague labels.
 - Keep one main message per slide.
-- Use a small number of bullets, often two to four.
+- Do not put every sentence in an `itemize` list; when a frame has one main claim plus explanation, prefer a short unbulleted statement, equation, or block.
+- Use bullet icons for parallel points or sub-items, and keep such lists short, often two to four items.
 - Keep equations only when they are central to the slide's purpose.
 - Match notation to the existing deck first, then to the paper if clarification is needed.
 - Do not rebuild the whole talk from scratch unless the user explicitly asks.

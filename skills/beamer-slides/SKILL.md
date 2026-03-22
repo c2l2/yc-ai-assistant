@@ -65,6 +65,7 @@ Use the user's prior slides as the default style reference.
 - Keep title and frametitle styling simple and academic rather than decorative.
 - Use black or near-black title text and a thin horizontal rule under frame titles when matching the user's usual style.
 - Prefer square main bullets, circular sub-bullets, light use of `\vs`, and uncluttered layouts.
+- Do not force `itemize` on every content slide; use bullet icons only when the slide genuinely contains a list, and especially when introducing sub-points under a main statement.
 - Keep layouts clean and sparse; avoid flashy visual effects or crowded multi-panel slides unless clearly needed.
 
 ### Default preamble conventions
@@ -126,12 +127,14 @@ Keep the preamble lightweight when possible, and add packages only when the slid
 
 - Start from a simple talk arc: motivation, research question, this paper, findings, setup, method, results, limitations, conclusion.
 - Use slide titles that are direct and informative, such as `Introduction`, `This Paper`, `Summary of Findings`, `Related Literature`, or a short statement of the main point.
-- Prefer short declarative bullets over dense prose.
+- Prefer short declarative slide text over dense prose.
 - Keep one main message per slide.
-- Use a small number of bullets, often two to four, rather than long lists.
+- At the top level, often use a short statement, equation, block, or compact paragraph instead of an `itemize` environment.
+- Use bullet icons only for parallel points or subordinate details; avoid turning each sentence into its own bullet.
+- If bullets are used, keep the list short, often two to four items.
 - Use figures, tables, and equations only when they carry the main point of the slide.
 - When presenting technical material, pair formal notation with one sentence of intuition.
-- When presenting results, state the substantive conclusion first and put nuance in bullets underneath.
+- When presenting results, state the substantive conclusion first in unbulleted form and put nuance in bullets underneath only if the hierarchy helps.
 
 ### Beamer writing conventions
 
@@ -140,6 +143,7 @@ Keep the preamble lightweight when possible, and add packages only when the slid
 - Keep notation consistent with the project draft in `deliverable/paper/`.
 - Prefer readable tables and centered figures over overloaded slide text.
 - Avoid turning slide text into a paragraph copied from the paper draft.
+- Avoid defaulting to one-bullet-per-sentence formatting.
 
 ## Slide design rules
 
