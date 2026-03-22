@@ -1,37 +1,50 @@
 ---
 name: beamer-slides
-description: Use when the user wants help turning research notes, paper drafts, theory sketches, or outlines into Beamer slide structure or LaTeX slide content for talks, meetings, or presentations.
+description: Use only when the user wants to initialize a new Beamer deck, slide outline, or first-pass set of frames from a paper draft, theory sketch, or research notes, especially when starting a presentation from scratch in deliverable/slides/. Do not use this skill for revising an existing deck; use `revise-beamer-slides` instead.
 ---
 
-# Beamer Slides
+# Beamer Slides Initialization
 
-Use this skill when the user wants to create, revise, or organize slides in LaTeX Beamer format.
+Use this skill only when the user is starting a new deck or asking for an initial slide structure from the paper or other project notes.
 
-The goal is not just to convert text into slides. The goal is to build a presentation that has a clear research narrative, uses the right level of detail, and is easy to paste into an existing Beamer deck.
+The goal is to create a clean first-pass presentation that has a coherent research narrative, uses the right level of detail, and is easy to extend later.
 
-Match the user's established Beamer style from prior decks whenever possible, both visually and contentwise.
+This skill is for initialization. If the user already has a `.tex` deck in `deliverable/slides/` and wants to edit it in place, follow inline comments, or turn rough slide stubs into polished slides, use `revise-beamer-slides` instead.
+
+Match the user's established Beamer style from prior decks whenever possible, both visually and content-wise.
+
+## Boundary with Revise Beamer Slides
+
+Use `revise-beamer-slides` instead when:
+
+- the user already has an existing Beamer deck
+- the user places `%` instructions or rough slide notes inside a `.tex` file
+- the user wants localized edits rather than a new talk structure
+- the user wants slide purpose comments preserved while the body is rewritten
 
 ## What to inspect
 
 Inspect only the files needed for the task:
 
 - the most relevant LaTeX file in `deliverable/paper/`, since it contains the latest project framing, notation, and key results
-- any outline, pasted text, or rough slide bullets provided by the user
+- directly relevant notes in `references/` only when they materially affect framing
+- any talk purpose, audience, time limit, or outline provided by the user
+- older slide decks when the user provides them as style references
 
-At the slide-making stage, treat the draft paper in `deliverable/paper/` as the primary and usually sufficient source of project content.
+For initialization work, treat the draft paper in `deliverable/paper/` as the primary source of project content.
 
 ## Output targets
 
 Default output is one of the following, depending on the user's request:
 
-- a Beamer slide outline
-- LaTeX Beamer frames that can be pasted directly into a deck in `deliverable/slides/`
-- a revised talk structure for an existing presentation
-- a compact speaking-flow outline for a meeting or workshop talk
+- a new Beamer slide outline
+- a new deck skeleton or preamble for `deliverable/slides/`
+- a first-pass set of Beamer frames
+- a compact speaking-flow outline for a new meeting, workshop, or seminar talk
 
 ## Workflow
 
-When helping with slides:
+When initializing slides:
 
 1. identify the talk purpose, audience, and time constraint if known
 2. inspect the most relevant LaTeX draft in `deliverable/paper/` to recover the current project framing
@@ -39,6 +52,7 @@ When helping with slides:
 4. organize the presentation into a logical sequence
 5. write concise Beamer-ready slide content
 6. trim unnecessary detail so each slide has one clear job
+7. leave room for later deck-specific revisions rather than overbuilding the first draft
 
 ## Style guide from prior slides
 
@@ -47,15 +61,15 @@ Use the user's prior slides as the default style reference.
 ### Visual conventions
 
 - Default to `\documentclass[10pt]{beamer}`.
-- Prefer `\usetheme{default}` with `\usecolortheme{orchid}` unless the existing deck clearly uses something else.
-- Keep the title and frametitle styling simple and academic rather than decorative.
-- Use black or near-black title text and a thin horizontal rule under frame titles when matching the existing deck.
-- Prefer standard Beamer bullets with square main bullets and circular sub-bullets when extending an existing deck.
-- Keep layouts clean and sparse; avoid flashy visual effects, heavy color, or crowded multi-panel slides unless clearly needed.
+- Prefer `\usetheme{default}` with `\usecolortheme{orchid}` unless the user clearly uses something else.
+- Keep title and frametitle styling simple and academic rather than decorative.
+- Use black or near-black title text and a thin horizontal rule under frame titles when matching the user's usual style.
+- Prefer square main bullets, circular sub-bullets, light use of `\vs`, and uncluttered layouts.
+- Keep layouts clean and sparse; avoid flashy visual effects or crowded multi-panel slides unless clearly needed.
 
 ### Default preamble conventions
 
-When creating a new Beamer deck or extending a deck that follows the user's usual style, prefer a preamble close to this setup:
+When creating a new Beamer deck that follows the user's usual style, a preamble close to this setup is a reasonable default:
 
 ```tex
 \documentclass[10pt]{beamer}
@@ -106,7 +120,7 @@ When creating a new Beamer deck or extending a deck that follows the user's usua
 \newcommand{\vs}{\vspace{1em}}
 ```
 
-Keep the preamble lightweight when possible. Reuse the existing deck preamble if one already exists, and add packages only when the slide content actually needs them.
+Keep the preamble lightweight when possible, and add packages only when the slide content actually needs them.
 
 ### Content conventions
 
@@ -136,7 +150,6 @@ Keep the preamble lightweight when possible. Reuse the existing deck preamble if
 - Emphasize motivation, intuition, identification, main result, and takeaway.
 - Keep notation consistent with the LaTeX draft in `deliverable/paper/`.
 - Default to Beamer-friendly LaTeX output when the user asks for slide content.
-- When extending an existing deck, mirror its package usage and frame structure instead of inventing a new slide style.
 
 ## Good output standard
 
@@ -157,9 +170,5 @@ Use this skill when the user asks things like:
 - make slides for this theory section
 - outline a seminar talk from my paper draft
 - convert these notes into presentation frames
-- shorten these slides for a meeting presentation
-- add a few slides to my existing Beamer deck based on this discussion
-- revise these existing slides using the points we just discussed
-- add a transition slide between these two sections
-- insert a new result slide into my current presentation
-- update this deck to reflect the latest draft or meeting discussion
+- build an initial deck for a workshop talk from this paper
+- create a first-pass set of slides in `deliverable/slides/` from this draft

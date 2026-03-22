@@ -8,15 +8,18 @@ statistics, and related fields.
 The repo is designed so that:
 - Markdown stores the working research memory
 - LaTeX in `deliverable/paper/` stores the evolving formal draft
-- slides in `deliverable/slides/` are derived from the paper draft
+- slides in `deliverable/slides/` store presentation artifacts, often initialized from the paper draft and later revised in place
 - Codex can read local files and help across the full research workflow
 
 ## Global Interpretation Rules
 
 - Treat Markdown as the canonical research memory.
 - Treat the most relevant LaTeX file in `deliverable/paper/` as the main source
-  of current project context whenever the task touches the paper, theory, or
-  slides.
+  of current project context whenever the task touches the paper or theory, and
+  when initializing slides from scratch.
+- For slide revision tasks in `deliverable/slides/`, treat the target Beamer
+  file and its inline comments as the main working source, and consult
+  `deliverable/paper/` only when needed for notation or factual consistency.
 - Treat `deliverable/slides/` as a presentation layer derived from the paper
   draft, not as the main place to develop ideas.
 - Prefer local repo context over unsupported assumptions.
@@ -40,7 +43,8 @@ The repo is designed so that:
 
 When building context, prioritize files in this order when relevant:
 
-1. the most relevant file in `deliverable/paper/`
+1. for slide revision tasks, the target file in `deliverable/slides/`;
+   otherwise the most relevant file in `deliverable/paper/`
 2. directly relevant files in `references/`
 3. `meeting-note.md`
 4. directly relevant files in `finding/`
@@ -64,6 +68,8 @@ Do not read broadly without need. Prefer targeted inspection.
 - For literature search, prioritize stronger journals, especially in economics,
   econometrics, and the user's preferred management-science subfields.
 - For slides, match the user's established Beamer style when possible.
+- For slide revision tasks, treat inline LaTeX comments in
+  `deliverable/slides/` as authoritative local instructions.
 
 ## Skill Usage
 
@@ -76,6 +82,7 @@ Use repo-local skills when the task matches them:
 - `paper-search`
 - `simulation-runner`
 - `beamer-slides`
+- `revise-beamer-slides`
 - `chat-to-latex`
 - `chinese-referee-report`
 - `english-referee-report`
