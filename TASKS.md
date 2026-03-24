@@ -24,6 +24,8 @@ Use this file when the work is intentionally split across multiple prompts.
 | T1 | done | Add a one-sentence purpose statement to `toy-demo.md`. | `toy-demo.md` | Keep it to one short sentence under a new `## Purpose` heading. |
 | T2 | done | Add a three-item numbered checklist to `toy-demo.md`. | `toy-demo.md` | Put it under a new `## Checklist` heading. |
 | T3 | done | Add a final completion note to `toy-demo.md`. | `toy-demo.md` | Add a `## Completion Note` heading with one short paragraph. |
+| T4 | done | Update Beamer slide skills to support `% message:` comments for frame-level slide intent. | `skills/beamer-slides/SKILL.md`, `skills/revise-beamer-slides/SKILL.md` | New slides should add `% message:` comments; revisions should read them as the intended takeaway. |
+| T5 | done | Commit and push the current Beamer skill updates. | Git commit on `main` and push to `origin`. | Include the skill changes and handoff-note updates from this turn. |
 
 ## Task Template
 

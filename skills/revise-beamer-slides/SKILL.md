@@ -1,6 +1,6 @@
 ---
 name: revise-beamer-slides
-description: Use when the user wants to revise an existing Beamer deck in deliverable/slides/, especially by following inline LaTeX comments or instructions, editing specific frames, or turning purpose-and-outline slide stubs into polished Beamer content while preserving the slide purpose as a LaTeX comment.
+description: Use when the user wants to revise an existing Beamer deck in deliverable/slides/, especially by following inline LaTeX comments, `% message:` comments, `GPT-*` frame tags, or `%GPT:` instructions, editing only the tagged frames, or turning rough tagged slide stubs into polished Beamer content while preserving the slide purpose as a LaTeX comment.
 ---
 
 # Revise Beamer Slides
@@ -8,6 +8,10 @@ description: Use when the user wants to revise an existing Beamer deck in delive
 Use this skill when the user already has a Beamer `.tex` file and wants the deck updated in place.
 
 The goal is to make localized, presentation-ready edits inside the existing deck. Start from the slide file itself rather than rebuilding slides from the paper.
+
+When `GPT-*` tags are present, treat them as the edit boundary: revise tagged frames only and leave every other frame untouched.
+
+When a frame has a `% message:` comment, treat it as the intended takeaway of that slide and revise the frame to serve that message.
 
 ## Primary context
 
@@ -24,7 +28,9 @@ Consult `deliverable/paper/` only when needed to:
 Inspect only the files needed for the task:
 
 - the target `.tex` file in `deliverable/slides/`
-- nearby `%` comments that contain instructions, slide purpose notes, or rough outlines
+- `% message:` comments that describe the intended message of each frame
+- `GPT-*` tags and nearby `%GPT:` comments that specify which frames are in scope and what to do
+- nearby `%` comments that contain slide purpose notes or rough outlines
 - older slide decks supplied by the user when they serve as style references
 - the most relevant LaTeX draft in `deliverable/paper/` only when needed for notation or factual consistency
 
@@ -32,18 +38,34 @@ Inspect only the files needed for the task:
 
 Use this skill when the user wants to:
 
-- revise existing slides based on inline instructions in the Beamer source
-- add a new slide from a purpose comment and a rough outline
+- revise existing slides based on inline instructions, `% message:` comments, or `GPT-*` frame tags in the Beamer source
+- add or fill in a `GPT-N` slide from a purpose comment and a rough outline
+- lightly polish a `GPT-GS` slide for grammar and professional style
 - tighten titles, bullets, equations, transitions, or local slide order within an existing deck
 - convert rough slide notes into professional Beamer writing without turning them into paper prose
 
+## GPT tag rules
+
+Treat `GPT-*` tags as the frame-selection mechanism.
+
+- A frame is editable only if it contains a `GPT-*` tag or has one in the LaTeX comments directly attached to that frame.
+- If multiple frames are tagged, revise each tagged frame independently and do not change untagged frames.
+- `GPT-N` means "new": the frame may be only a rough outline or placeholder, so you may rewrite freely within that frame to make it presentation-ready.
+- `GPT-GS` means "grammar and style": the frame is already substantively developed, so limit changes to grammar, wording, and professional polish.
+- If a frame has more than one tag, inspect the actual slide content and any `%GPT:` comments, then apply the tags by discretion. When signals conflict, prefer the more conservative edit unless the frame is clearly a rough stub.
+- If the user defines additional `GPT-*` tags in the prompt, follow those definitions for that run.
+
 ## Comment handling rules
 
-Treat nearby LaTeX comments as authoritative local instructions.
+Treat nearby LaTeX comments, especially `% message:` and `%GPT:` comments, as authoritative local instructions.
 
 - Keep slide purpose comments as LaTeX comments directly above the relevant frame.
+- Treat `% message:` comments as the authoritative description of what the slide is trying to communicate.
+- Preserve `% message:` comments when revising a frame, and update the frame body so it matches that message more clearly.
+- Treat `%GPT:` comments as frame-local editing instructions and apply them only within the tagged frame they belong to.
+- If a `GPT-*` tag appears in a comment directly above a frame, treat that frame as tagged.
 - If the user provides a rough outline for a new slide, preserve the purpose comment and rewrite the outline into polished slide content.
-- When a comment is just a scratch instruction, use it to revise the slide and then remove or shorten it unless the user clearly wants it retained.
+- When a comment is just a scratch instruction, use it to revise the tagged frame and then remove or shorten it unless the user clearly wants it retained.
 - When a comment mixes purpose and editing instructions, preserve the purpose and consume the editing instruction.
 
 If a new slide is created from rough notes, prefer a pattern like:
@@ -61,13 +83,14 @@ If a new slide is created from rough notes, prefer a pattern like:
 
 When revising slides:
 
-1. inspect the target Beamer file and locate the relevant frames, comments, and placeholders
-2. infer the local editing intent from nearby comments before reading broader project context
-3. use the existing deck and any user-provided prior decks as the primary style anchors
-4. consult the paper draft only if needed for notation, claims, or terminology
-5. rewrite rough outlines into concise, professional slide writing
-6. preserve slide purpose comments as LaTeX comments directly above the frame
-7. keep edits local and conservative unless the user explicitly asks for a broader reorganization
+1. inspect the target Beamer file and locate all frames with `GPT-*` tags, plus their nearby `% message:` comments, `%GPT:` comments, purpose notes, and placeholders
+2. set the edit scope to those tagged frames only
+3. infer the local editing intent from the `% message:` comment first, then from tags and nearby comments before reading broader project context
+4. use the existing deck and any user-provided prior decks as the primary style anchors
+5. consult the paper draft only if needed for notation, claims, or terminology
+6. for `GPT-N`, turn rough outlines into concise, professional slide writing; for `GPT-GS`, make only light grammar-and-style edits
+7. preserve slide purpose comments and `% message:` comments as LaTeX comments directly above or inside the frame where they already belong
+8. keep edits local and conservative unless the user explicitly asks for a broader reorganization
 
 ## Style guide from prior slides
 
@@ -81,14 +104,23 @@ When no stronger local style signal is present, prefer the academic Beamer style
 - square main bullets, circular sub-bullets, and light use of `\vs`
 - top-level claims or explanations often appear without bullet icons, while bullets are mainly used for subordinate structure
 - concise, formal slide writing rather than manuscript paragraphs
+- generous whitespace and visible margins around the main content rather than densely filling the frame
 
 ## Editing rules
 
+- Edit only frames selected by `GPT-*` tags. Never make opportunistic changes to untagged frames, even for consistency, cleanup, or style matching.
 - Preserve the deck's existing preamble, macros, and frame structure unless the requested edit requires changing them.
+- Let the `% message:` comment determine the slide's intended takeaway; revise the tagged frame so the visible content supports that message more clearly.
+- For `GPT-GS`, prefer a minimal diff and preserve the slide's structure, claims, equations, and ordering unless a tiny local change is needed for correctness or professionalism.
+- For `GPT-N`, local restructuring within the tagged frame is allowed if it improves the slide.
 - Prefer direct, informative frame titles over vague labels.
 - Keep one main message per slide.
+- Do not overcrowd slides. Prefer a slide with breathing room and clear margins over a slide that tries to say everything at once.
 - Do not put every sentence in an `itemize` list; when a frame has one main claim plus explanation, prefer a short unbulleted statement, equation, or block.
 - Use bullet icons for parallel points or sub-items, and keep such lists short, often two to four items.
+- As a house style, text inside `\item` should start with lower case.
+- If a tagged frame becomes dense, cut secondary detail, shorten prose, or simplify the structure rather than shrinking margins or packing in more bullets.
+- Only add another frame to relieve overcrowding when the user asks for it explicitly or when a `GPT-N` frame clearly calls for a new slide; otherwise keep the revision inside the tagged frame.
 - Keep equations only when they are central to the slide's purpose.
 - Match notation to the existing deck first, then to the paper if clarification is needed.
 - Do not rebuild the whole talk from scratch unless the user explicitly asks.
@@ -97,8 +129,10 @@ When no stronger local style signal is present, prefer the academic Beamer style
 
 A good revision should let the user quickly answer:
 
-- Did the edit follow the inline instruction?
+- Did the edit follow the tag and any `%GPT:` instruction?
+- Does the revised frame now clearly deliver the `% message:` comment?
 - Is the new slide professional and presentation-ready?
+- Does the slide still have breathing room, with visible margins and non-crowded content?
 - Is the slide purpose still visible as a LaTeX comment?
 - Does the revised frame match the style of the surrounding deck?
 
@@ -108,13 +142,16 @@ Default to targeted, reusable edits rather than a full deck rewrite.
 
 Use `beamer-slides` instead when the user wants to create a new deck or initial slide outline from the paper draft.
 
-Use `revise-beamer-slides` when the user already has a deck and wants to work through in-file comments, purpose notes, or rough slide stubs.
+Use `revise-beamer-slides` when the user already has a deck and wants to work through in-file comments, `GPT-*` tags, purpose notes, or rough slide stubs.
 
 ## Example prompt patterns
 
 Use this skill when the user asks things like:
 
 - update this `deliverable/slides/main.tex` using my inline comments
+- update only the `GPT-N` and `GPT-GS` frames in `deliverable/slides/main.tex`
+- revise tagged frames so they better match the `% message:` comments
+- revise tagged frames according to the `%GPT:` comments
 - revise these existing slides based on the `% TODO` notes
 - add a new slide from the purpose comment and rough outline I left in the file
 - rewrite this frame so it sounds more professional but keep the purpose comment

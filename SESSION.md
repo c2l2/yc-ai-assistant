@@ -4,30 +4,31 @@ Use this file as the handoff note between separate Codex prompts.
 
 ## Current Objective
 
-- Complete the toy workflow and leave the handoff files in a finished state.
+- Keep the Beamer slide skills aligned with the user's slide-authoring conventions and persist the updates to the repo.
 
 ## Current Task
 
-- Task ID: T3
+- Task ID: T5
 - Status: `done`
 
 ## Relevant Files
 
+- `skills/beamer-slides/SKILL.md`
+- `skills/revise-beamer-slides/SKILL.md`
 - `TASKS.md`
-- `toy-demo.md`
-- `meeting-note.md`
-- `BACKLOG.md`
 
 ## Latest Decisions
 
-- Use `toy-demo.md` as the scratch file for workflow testing.
-- Keep each demo task small enough to complete in one Codex turn.
-- Add the completion note under a new `## Completion Note` heading as one short paragraph.
+- In `beamer-slides`, every newly generated frame should include a `% message:` comment stating the slide's intended takeaway.
+- In `revise-beamer-slides`, `% message:` comments should be read as authoritative frame-level intent alongside `GPT-*` tags and `%GPT:` comments.
+- `% message:` comments should stay concise and be placed near the top of the frame.
+- Commit the current skill updates together and push them on `main`.
 
 ## Files Changed This Turn
 
+- `skills/beamer-slides/SKILL.md`
+- `skills/revise-beamer-slides/SKILL.md`
 - `TASKS.md`
-- `toy-demo.md`
 - `SESSION.md`
 
 ## Open Blockers
@@ -36,4 +37,4 @@ Use this file as the handoff note between separate Codex prompts.
 
 ## Recommended Next Prompt
 
-`Please review the toy workflow files and confirm the sequence is complete.`
+`Please add one canonical Beamer frame template example that combines % message:, GPT tags, and %GPT: instructions.`

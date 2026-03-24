@@ -1,6 +1,6 @@
 ---
 name: beamer-slides
-description: Use only when the user wants to initialize a new Beamer deck, slide outline, or first-pass set of frames from a paper draft, theory sketch, or research notes, especially when starting a presentation from scratch in deliverable/slides/. Do not use this skill for revising an existing deck; use `revise-beamer-slides` instead.
+description: Use only when the user wants to initialize a new Beamer deck, slide outline, or first-pass set of frames from a paper draft, theory sketch, or research notes, especially when starting a presentation from scratch in deliverable/slides/. When generating frames, include a `% message:` comment that states the slide's intended message. Do not use this skill for revising an existing deck; use `revise-beamer-slides` instead.
 ---
 
 # Beamer Slides Initialization
@@ -8,6 +8,8 @@ description: Use only when the user wants to initialize a new Beamer deck, slide
 Use this skill only when the user is starting a new deck or asking for an initial slide structure from the paper or other project notes.
 
 The goal is to create a clean first-pass presentation that has a coherent research narrative, uses the right level of detail, and is easy to extend later.
+
+When this skill generates new frames, include a `% message:` comment for each frame to state the intended takeaway of that slide.
 
 This skill is for initialization. If the user already has a `.tex` deck in `deliverable/slides/` and wants to edit it in place, follow inline comments, or turn rough slide stubs into polished slides, use `revise-beamer-slides` instead.
 
@@ -42,6 +44,24 @@ Default output is one of the following, depending on the user's request:
 - a first-pass set of Beamer frames
 - a compact speaking-flow outline for a new meeting, workshop, or seminar talk
 
+## Message comments
+
+For each newly generated frame, add a LaTeX comment of the form `% message: ...` that states the slide's main message in one sentence.
+
+- Treat the `% message:` comment as the slide-level intent, not as presenter notes or a full paragraph.
+- Keep it specific enough that a later revision can tell what the slide is trying to accomplish.
+- Place the `% message:` comment directly inside the frame near the top, typically immediately after `\begin{frame}{...}` or immediately after `\frametitle{...}` when that style is used.
+- Preserve concise wording; one sentence is the default.
+
+When useful, prefer a pattern like:
+
+```tex
+\begin{frame}{Introduction}
+% message: motivate why learning preferences from incomplete rankings matters in economics, marketing, and personalization.
+...
+\end{frame}
+```
+
 ## Workflow
 
 When initializing slides:
@@ -50,9 +70,10 @@ When initializing slides:
 2. inspect the most relevant LaTeX draft in `deliverable/paper/` to recover the current project framing
 3. extract the smallest set of points needed for a coherent slide narrative
 4. organize the presentation into a logical sequence
-5. write concise Beamer-ready slide content
-6. trim unnecessary detail so each slide has one clear job
-7. leave room for later deck-specific revisions rather than overbuilding the first draft
+5. decide the main message of each frame and encode it in a `% message:` comment
+6. write concise Beamer-ready slide content
+7. trim unnecessary detail so each slide has one clear job
+8. leave room for later deck-specific revisions rather than overbuilding the first draft
 
 ## Style guide from prior slides
 
@@ -67,6 +88,7 @@ Use the user's prior slides as the default style reference.
 - Prefer square main bullets, circular sub-bullets, light use of `\vs`, and uncluttered layouts.
 - Do not force `itemize` on every content slide; use bullet icons only when the slide genuinely contains a list, and especially when introducing sub-points under a main statement.
 - Keep layouts clean and sparse; avoid flashy visual effects or crowded multi-panel slides unless clearly needed.
+- Prefer generous whitespace and visible margins around the main content rather than densely filling the frame.
 
 ### Default preamble conventions
 
@@ -127,6 +149,7 @@ Keep the preamble lightweight when possible, and add packages only when the slid
 
 - Start from a simple talk arc: motivation, research question, this paper, findings, setup, method, results, limitations, conclusion.
 - Use slide titles that are direct and informative, such as `Introduction`, `This Paper`, `Summary of Findings`, `Related Literature`, or a short statement of the main point.
+- Give each frame a `% message:` comment that states what the audience should take away from the slide.
 - Prefer short declarative slide text over dense prose.
 - Keep one main message per slide.
 - At the top level, often use a short statement, equation, block, or compact paragraph instead of an `itemize` environment.
@@ -139,21 +162,25 @@ Keep the preamble lightweight when possible, and add packages only when the slid
 ### Beamer writing conventions
 
 - Prefer concise frame content that can be pasted directly into an existing deck.
+- Add a `% message:` comment near the top of every newly generated frame.
 - Use `\vs` or light vertical spacing when it improves readability and matches the surrounding style.
 - Keep notation consistent with the project draft in `deliverable/paper/`.
 - Prefer readable tables and centered figures over overloaded slide text.
 - Avoid turning slide text into a paragraph copied from the paper draft.
 - Avoid defaulting to one-bullet-per-sentence formatting.
+- As a house style, text inside `\item` should start with lower case.
 
 ## Slide design rules
 
 - Prefer one clear idea per slide.
 - Keep slide text concise and presentation-friendly.
+- Do not overcrowd slides. Prefer a slide with breathing room and clear margins over a slide that tries to say everything at once.
 - Use equations only when they are central to the point of the slide.
 - Do not paste long paragraphs from the paper draft into slides.
 - Emphasize motivation, intuition, identification, main result, and takeaway.
 - Keep notation consistent with the LaTeX draft in `deliverable/paper/`.
 - Default to Beamer-friendly LaTeX output when the user asks for slide content.
+- If a draft slide becomes dense, cut secondary detail, shorten prose, or split ideas across slides rather than shrinking margins or packing in more bullets.
 
 ## Good output standard
 
@@ -161,8 +188,10 @@ A good slide draft should let a future presenter quickly answer:
 
 - What is the main message of the talk?
 - Why does each slide exist?
+- Does each frame have a clear `% message:` comment that states its intended takeaway?
 - What is the audience supposed to remember?
 - Which technical details are essential and which can be omitted?
+- Does each slide still have breathing room, with visible margins and non-crowded content?
 
 Default to concise output: enough detail to build a deck, but not so much that the slides become a second paper.
 
