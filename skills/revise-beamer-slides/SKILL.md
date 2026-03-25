@@ -1,6 +1,6 @@
 ---
 name: revise-beamer-slides
-description: Use when the user wants to revise an existing Beamer deck in deliverable/slides/, especially by following inline LaTeX comments, `% message:` comments, `GPT-*` frame tags, or `%GPT:` instructions, editing only the tagged frames, or turning rough tagged slide stubs into polished Beamer content while preserving the slide purpose as a LaTeX comment.
+description: Use when the user wants to revise an existing Beamer deck in deliverable/slides/, especially by following inline LaTeX comments, `% message:` comments, `GPT-*` frame tags, or `%GPT:` instructions, editing only the tagged frames, or turning rough tagged slide stubs into polished Beamer content while preserving the slide purpose as a LaTeX comment. For figure/table result slides, prefer takeaway titles, keep visible text to at most two sentences, and place the fuller spoken interpretation in LaTeX presenter-note comments.
 ---
 
 # Revise Beamer Slides
@@ -12,6 +12,8 @@ The goal is to make localized, presentation-ready edits inside the existing deck
 When `GPT-*` tags are present, treat them as the edit boundary: revise tagged frames only and leave every other frame untouched.
 
 When a frame has a `% message:` comment, treat it as the intended takeaway of that slide and revise the frame to serve that message.
+
+When a tagged frame centers on a figure or table, prefer a sparse result-slide format: the takeaway can live in the frame title, the visible body should usually be at most two sentences, and the fuller explanation should be moved into presenter-note comments.
 
 ## Primary context
 
@@ -57,11 +59,13 @@ Treat `GPT-*` tags as the frame-selection mechanism.
 
 ## Comment handling rules
 
-Treat nearby LaTeX comments, especially `% message:` and `%GPT:` comments, as authoritative local instructions.
+Treat nearby LaTeX comments, especially `% message:`, `% presenter notes:`, and `%GPT:` comments, as authoritative local instructions.
 
 - Keep slide purpose comments as LaTeX comments directly above the relevant frame.
 - Treat `% message:` comments as the authoritative description of what the slide is trying to communicate.
 - Preserve `% message:` comments when revising a frame, and update the frame body so it matches that message more clearly.
+- Preserve `% presenter notes:` blocks when they already exist, and update them when the spoken interpretation changes.
+- When revising a dense figure or table slide, move detail from visible bullets into `% presenter notes:` comments rather than keeping all interpretation on the slide.
 - Treat `%GPT:` comments as frame-local editing instructions and apply them only within the tagged frame they belong to.
 - If a `GPT-*` tag appears in a comment directly above a frame, treat that frame as tagged.
 - If the user provides a rough outline for a new slide, preserve the purpose comment and rewrite the outline into polished slide content.
@@ -88,9 +92,10 @@ When revising slides:
 3. infer the local editing intent from the `% message:` comment first, then from tags and nearby comments before reading broader project context
 4. use the existing deck and any user-provided prior decks as the primary style anchors
 5. consult the paper draft only if needed for notation, claims, or terminology
-6. for `GPT-N`, turn rough outlines into concise, professional slide writing; for `GPT-GS`, make only light grammar-and-style edits
-7. preserve slide purpose comments and `% message:` comments as LaTeX comments directly above or inside the frame where they already belong
-8. keep edits local and conservative unless the user explicitly asks for a broader reorganization
+6. for figure or table result slides, prefer a takeaway-style title, keep the visible body to at most two sentences, and move the fuller speaking script into `% presenter notes:` comments
+7. for `GPT-N`, turn rough outlines into concise, professional slide writing; for `GPT-GS`, make only light grammar-and-style edits unless the slide is clearly too dense to serve its stated message
+8. preserve slide purpose comments, `% message:` comments, and `% presenter notes:` comments as LaTeX comments directly above or inside the frame where they already belong
+9. keep edits local and conservative unless the user explicitly asks for a broader reorganization
 
 ## Style guide from prior slides
 
@@ -114,8 +119,12 @@ When no stronger local style signal is present, prefer the academic Beamer style
 - For `GPT-GS`, prefer a minimal diff and preserve the slide's structure, claims, equations, and ordering unless a tiny local change is needed for correctness or professionalism.
 - For `GPT-N`, local restructuring within the tagged frame is allowed if it improves the slide.
 - Prefer direct, informative frame titles over vague labels.
+- On figure and table result slides, a takeaway-style frame title is often better than a neutral label.
 - Keep one main message per slide.
 - Do not overcrowd slides. Prefer a slide with breathing room and clear margins over a slide that tries to say everything at once.
+- Avoid math-first layouts when revising a slide. If the first visible content under the title is a displayed equation, prefer adding a short lead-in sentence or claim before the equation unless the user clearly wants a math-first presentation.
+- For figure and table slides, keep the visible body text to at most two sentences total and move the rest of the interpretation into `% presenter notes:` comments.
+- If a sentence wraps and leaves only one or two words on the last line, shorten or rephrase it as part of the revision.
 - Do not put every sentence in an `itemize` list; when a frame has one main claim plus explanation, prefer a short unbulleted statement, equation, or block.
 - Use bullet icons for parallel points or sub-items, and keep such lists short, often two to four items.
 - As a house style, text inside `\item` should start with lower case.
@@ -133,6 +142,9 @@ A good revision should let the user quickly answer:
 - Does the revised frame now clearly deliver the `% message:` comment?
 - Is the new slide professional and presentation-ready?
 - Does the slide still have breathing room, with visible margins and non-crowded content?
+- Does the slide give the audience verbal orientation before any displayed math, rather than opening the body with notation alone?
+- On figure and table slides, is the visible text sparse while the spoken interpretation is preserved in `% presenter notes:` comments?
+- Do wrapped sentences avoid one-word or two-word trailing lines when a shorter phrasing would fix the layout?
 - Is the slide purpose still visible as a LaTeX comment?
 - Does the revised frame match the style of the surrounding deck?
 

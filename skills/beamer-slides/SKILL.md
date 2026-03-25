@@ -1,6 +1,6 @@
 ---
 name: beamer-slides
-description: Use only when the user wants to initialize a new Beamer deck, slide outline, or first-pass set of frames from a paper draft, theory sketch, or research notes, especially when starting a presentation from scratch in deliverable/slides/. When generating frames, include a `% message:` comment that states the slide's intended message. Do not use this skill for revising an existing deck; use `revise-beamer-slides` instead.
+description: Use only when the user wants to initialize a new Beamer deck, slide outline, or first-pass set of frames from a paper draft, theory sketch, or research notes, especially when starting a presentation from scratch in deliverable/slides/. When generating frames, include a `% message:` comment that states the slide's intended message, and keep figure/table slides sparse by using takeaway titles, at most two visible sentences, and LaTeX presenter-note comments for the spoken interpretation. Do not use this skill for revising an existing deck; use `revise-beamer-slides` instead.
 ---
 
 # Beamer Slides Initialization
@@ -10,6 +10,8 @@ Use this skill only when the user is starting a new deck or asking for an initia
 The goal is to create a clean first-pass presentation that has a coherent research narrative, uses the right level of detail, and is easy to extend later.
 
 When this skill generates new frames, include a `% message:` comment for each frame to state the intended takeaway of that slide.
+
+When a frame centers on a figure or table, keep the visible slide content sparse: prefer a takeaway-style frame title, limit the body text to at most two sentences, and place the fuller spoken interpretation in LaTeX presenter-note comments inside the frame.
 
 This skill is for initialization. If the user already has a `.tex` deck in `deliverable/slides/` and wants to edit it in place, follow inline comments, or turn rough slide stubs into polished slides, use `revise-beamer-slides` instead.
 
@@ -59,6 +61,34 @@ When useful, prefer a pattern like:
 \begin{frame}{Introduction}
 % message: motivate why learning preferences from incomplete rankings matters in economics, marketing, and personalization.
 ...
+\end{frame}
+```
+
+## Presenter-note comments
+
+When a slide shows a figure or table, keep the on-slide interpretation short and move the fuller speaking script into LaTeX comments.
+
+- Use a comment block such as `% presenter notes:` followed by `% - ...` lines.
+- Place the presenter-note block near the top of the frame, typically right below the `% message:` comment.
+- Use presenter notes to say what to point at, what the result means, and what caveat or comparison to mention orally.
+- Keep presenter notes concise and speaker-facing; they are not part of the visible slide text.
+
+When useful, prefer a pattern like:
+
+```tex
+\begin{frame}{Region Preferences Are Heterogeneous, Not One-Dimensional}
+% message: the figure shows regional preferences do not collapse to one simple axis.
+% presenter notes:
+% - Start with the headline: the pattern is not just old world versus new world.
+% - Point to the strongest positive cluster and name the regions involved.
+% - Then note the weaker correlation for Bordeaux and Burgundy once observables are controlled for.
+% - Close by explaining why the distinct Marlborough pattern matters substantively.
+
+This heatmap shows that regional tastes cluster along multiple dimensions rather than a single old-world versus new-world line.
+
+\begin{center}
+\includegraphics[width=0.72\textwidth]{figures/region-correlation.pdf}
+\end{center}
 \end{frame}
 ```
 
@@ -149,13 +179,17 @@ Keep the preamble lightweight when possible, and add packages only when the slid
 
 - Start from a simple talk arc: motivation, research question, this paper, findings, setup, method, results, limitations, conclusion.
 - Use slide titles that are direct and informative, such as `Introduction`, `This Paper`, `Summary of Findings`, `Related Literature`, or a short statement of the main point.
+- On result slides with figures or tables, it is often good to put the takeaway directly in the frame title.
 - Give each frame a `% message:` comment that states what the audience should take away from the slide.
 - Prefer short declarative slide text over dense prose.
+- If a sentence wraps and leaves only one or two words on the last line, shorten or rephrase it.
 - Keep one main message per slide.
+- Avoid starting the slide body with a displayed equation. Introduce the math with a short verbal setup, claim, or intuition line first, then show the equation.
 - At the top level, often use a short statement, equation, block, or compact paragraph instead of an `itemize` environment.
 - Use bullet icons only for parallel points or subordinate details; avoid turning each sentence into its own bullet.
 - If bullets are used, keep the list short, often two to four items.
 - Use figures, tables, and equations only when they carry the main point of the slide.
+- For figure and table slides, keep the visible body text to at most two sentences total; move extra interpretation into presenter-note comments.
 - When presenting technical material, pair formal notation with one sentence of intuition.
 - When presenting results, state the substantive conclusion first in unbulleted form and put nuance in bullets underneath only if the hierarchy helps.
 
@@ -175,6 +209,9 @@ Keep the preamble lightweight when possible, and add packages only when the slid
 - Prefer one clear idea per slide.
 - Keep slide text concise and presentation-friendly.
 - Do not overcrowd slides. Prefer a slide with breathing room and clear margins over a slide that tries to say everything at once.
+- Avoid math-first layouts where the first visible content under the title is a standalone equation. Give the audience one line of orientation before the notation whenever possible.
+- For slides built around a figure or table, prefer the graphic plus at most two visible sentences rather than a graphic plus a long bullet list.
+- Avoid awkward wrapped lines with only one or two trailing words. Tighten the sentence rather than accepting the orphaned ending.
 - Use equations only when they are central to the point of the slide.
 - Do not paste long paragraphs from the paper draft into slides.
 - Emphasize motivation, intuition, identification, main result, and takeaway.
@@ -189,6 +226,7 @@ A good slide draft should let a future presenter quickly answer:
 - What is the main message of the talk?
 - Why does each slide exist?
 - Does each frame have a clear `% message:` comment that states its intended takeaway?
+- Do figure and table slides keep the visible text to at most two sentences and put the fuller script in presenter-note comments?
 - What is the audience supposed to remember?
 - Which technical details are essential and which can be omitted?
 - Does each slide still have breathing room, with visible margins and non-crowded content?

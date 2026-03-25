@@ -26,6 +26,9 @@ Use this file when the work is intentionally split across multiple prompts.
 | T3 | done | Add a final completion note to `toy-demo.md`. | `toy-demo.md` | Add a `## Completion Note` heading with one short paragraph. |
 | T4 | done | Update Beamer slide skills to support `% message:` comments for frame-level slide intent. | `skills/beamer-slides/SKILL.md`, `skills/revise-beamer-slides/SKILL.md` | New slides should add `% message:` comments; revisions should read them as the intended takeaway. |
 | T5 | done | Commit and push the current Beamer skill updates. | Git commit on `main` and push to `origin`. | Include the skill changes and handoff-note updates from this turn. |
+| T6 | done | Update Beamer slide skills to avoid math-first slide bodies. | `skills/beamer-slides/SKILL.md`, `skills/revise-beamer-slides/SKILL.md` | New slides and revisions should lead with a short verbal setup before any displayed equation when possible. |
+| T7 | done | Update Beamer slide skills to keep figure/table slides sparse and add presenter-note comments. | `skills/beamer-slides/SKILL.md`, `skills/revise-beamer-slides/SKILL.md` | Figure/table slides should use takeaway titles when helpful, show at most two visible sentences, and place fuller spoken interpretation in LaTeX presenter-note comments. |
+| T8 | done | Update Beamer slide skills to avoid awkward one-word or two-word trailing lines. | `skills/beamer-slides/SKILL.md`, `skills/revise-beamer-slides/SKILL.md` | When a sentence wraps badly, shorten or rephrase it instead of leaving an orphaned last line. |
 
 ## Task Template
 
