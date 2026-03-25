@@ -29,6 +29,9 @@ Use this file when the work is intentionally split across multiple prompts.
 | T6 | done | Update Beamer slide skills to avoid math-first slide bodies. | `skills/beamer-slides/SKILL.md`, `skills/revise-beamer-slides/SKILL.md` | New slides and revisions should lead with a short verbal setup before any displayed equation when possible. |
 | T7 | done | Update Beamer slide skills to keep figure/table slides sparse and add presenter-note comments. | `skills/beamer-slides/SKILL.md`, `skills/revise-beamer-slides/SKILL.md` | Figure/table slides should use takeaway titles when helpful, show at most two visible sentences, and place fuller spoken interpretation in LaTeX presenter-note comments. |
 | T8 | done | Update Beamer slide skills to avoid awkward one-word or two-word trailing lines. | `skills/beamer-slides/SKILL.md`, `skills/revise-beamer-slides/SKILL.md` | When a sentence wraps badly, shorten or rephrase it instead of leaving an orphaned last line. |
+| T9 | done | Update `revise-beamer-slides` to mark revised frames and report the first revised frame line in chat. | `skills/revise-beamer-slides/SKILL.md` | Revised frames should get a `%revised` tag, and the final response should identify the first revised frame line in the target `.tex` file. |
+| T10 | done | Update `revise-beamer-slides` to stop when the target Beamer file may have unsaved changes. | `skills/revise-beamer-slides/SKILL.md` | If the on-disk `.tex` file may be stale relative to an unsaved editor buffer, stop and ask the user to save before proceeding. |
+| T11 | done | Update `beamer-slides` to separate generated frames with `% -----------------`. | `skills/beamer-slides/SKILL.md` | Place the separator between `\\end{frame}` and the next `\\begin{frame}` so frames are easier to locate in source. |
 
 ## Task Template
 

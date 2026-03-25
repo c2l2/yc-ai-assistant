@@ -8,7 +8,7 @@ Use this file as the handoff note between separate Codex prompts.
 
 ## Current Task
 
-- Task ID: T8
+- Task ID: T11
 - Status: `done`
 
 ## Relevant Files
@@ -30,6 +30,11 @@ Use this file as the handoff note between separate Codex prompts.
 - Fuller speaking guidance for result slides should go into LaTeX `% presenter notes:` comments inside the frame.
 - Slides should avoid wrapped sentences whose last line contains only one or two words.
 - When that happens, the sentence should be shortened or rephrased rather than left as-is.
+- In `revise-beamer-slides`, every edited frame should receive a `%revised` tag near the top of the frame.
+- After a slide-revision task, the final chat response should report the line number of the first revised frame in the target `.tex` file.
+- `revise-beamer-slides` should stop rather than edit if the target Beamer `.tex` file may have unsaved editor-buffer changes.
+- The skill should state clearly that Codex can only trust the on-disk file, so the user must save first before revision continues.
+- In `beamer-slides`, consecutive generated frames should be separated by `% -----------------` between `\end{frame}` and the next `\begin{frame}`.
 
 ## Files Changed This Turn
 

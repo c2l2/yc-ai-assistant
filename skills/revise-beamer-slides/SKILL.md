@@ -1,6 +1,6 @@
 ---
 name: revise-beamer-slides
-description: Use when the user wants to revise an existing Beamer deck in deliverable/slides/, especially by following inline LaTeX comments, `% message:` comments, `GPT-*` frame tags, or `%GPT:` instructions, editing only the tagged frames, or turning rough tagged slide stubs into polished Beamer content while preserving the slide purpose as a LaTeX comment. For figure/table result slides, prefer takeaway titles, keep visible text to at most two sentences, and place the fuller spoken interpretation in LaTeX presenter-note comments.
+description: Use when the user wants to revise an existing Beamer deck in deliverable/slides/, especially by following inline LaTeX comments, `% message:` comments, `GPT-*` frame tags, or `%GPT:` instructions, editing only the tagged frames, or turning rough tagged slide stubs into polished Beamer content while preserving the slide purpose as a LaTeX comment. For revised frames, add a `%revised` tag and report in chat the line number of the first revised frame. For figure/table result slides, prefer takeaway titles, keep visible text to at most two sentences, and place the fuller spoken interpretation in LaTeX presenter-note comments.
 ---
 
 # Revise Beamer Slides
@@ -24,6 +24,14 @@ Consult `deliverable/paper/` only when needed to:
 - recover notation
 - verify a claim or equation
 - match the latest project framing
+
+## Save-state safety
+
+Before editing, make sure the target Beamer `.tex` file is saved to disk.
+
+- Codex can only read and edit the on-disk file; it cannot see unsaved editor-buffer changes.
+- If the user indicates the file may have unsaved changes, or if there is any reason to doubt that the on-disk file is current, stop and ask the user to save the file before proceeding.
+- Do not edit the `.tex` file, add `%revised` tags, or report revised-frame line numbers until the saved file is available.
 
 ## What to inspect
 
@@ -59,12 +67,13 @@ Treat `GPT-*` tags as the frame-selection mechanism.
 
 ## Comment handling rules
 
-Treat nearby LaTeX comments, especially `% message:`, `% presenter notes:`, and `%GPT:` comments, as authoritative local instructions.
+Treat nearby LaTeX comments, especially `% message:`, `% presenter notes:`, `%revised`, and `%GPT:` comments, as authoritative local instructions.
 
 - Keep slide purpose comments as LaTeX comments directly above the relevant frame.
 - Treat `% message:` comments as the authoritative description of what the slide is trying to communicate.
 - Preserve `% message:` comments when revising a frame, and update the frame body so it matches that message more clearly.
 - Preserve `% presenter notes:` blocks when they already exist, and update them when the spoken interpretation changes.
+- Add a `%revised` comment to every frame that you revise, and place it with the frame's other top-of-frame comments so the edit is easy to audit later.
 - When revising a dense figure or table slide, move detail from visible bullets into `% presenter notes:` comments rather than keeping all interpretation on the slide.
 - Treat `%GPT:` comments as frame-local editing instructions and apply them only within the tagged frame they belong to.
 - If a `GPT-*` tag appears in a comment directly above a frame, treat that frame as tagged.
@@ -87,15 +96,17 @@ If a new slide is created from rough notes, prefer a pattern like:
 
 When revising slides:
 
-1. inspect the target Beamer file and locate all frames with `GPT-*` tags, plus their nearby `% message:` comments, `%GPT:` comments, purpose notes, and placeholders
-2. set the edit scope to those tagged frames only
-3. infer the local editing intent from the `% message:` comment first, then from tags and nearby comments before reading broader project context
-4. use the existing deck and any user-provided prior decks as the primary style anchors
-5. consult the paper draft only if needed for notation, claims, or terminology
-6. for figure or table result slides, prefer a takeaway-style title, keep the visible body to at most two sentences, and move the fuller speaking script into `% presenter notes:` comments
-7. for `GPT-N`, turn rough outlines into concise, professional slide writing; for `GPT-GS`, make only light grammar-and-style edits unless the slide is clearly too dense to serve its stated message
-8. preserve slide purpose comments, `% message:` comments, and `% presenter notes:` comments as LaTeX comments directly above or inside the frame where they already belong
-9. keep edits local and conservative unless the user explicitly asks for a broader reorganization
+1. confirm that the target Beamer `.tex` file is saved on disk; if unsaved editor changes may exist, stop and ask the user to save before proceeding
+2. inspect the target Beamer file and locate all frames with `GPT-*` tags, plus their nearby `% message:` comments, `%GPT:` comments, purpose notes, and placeholders
+3. set the edit scope to those tagged frames only
+4. infer the local editing intent from the `% message:` comment first, then from tags and nearby comments before reading broader project context
+5. use the existing deck and any user-provided prior decks as the primary style anchors
+6. consult the paper draft only if needed for notation, claims, or terminology
+7. for figure or table result slides, prefer a takeaway-style title, keep the visible body to at most two sentences, and move the fuller speaking script into `% presenter notes:` comments
+8. for `GPT-N`, turn rough outlines into concise, professional slide writing; for `GPT-GS`, make only light grammar-and-style edits unless the slide is clearly too dense to serve its stated message
+9. add a `%revised` comment to every frame that was edited during the task
+10. preserve slide purpose comments, `% message:` comments, `% presenter notes:` comments, and `%revised` comments as LaTeX comments directly above or inside the frame where they already belong
+11. keep edits local and conservative unless the user explicitly asks for a broader reorganization
 
 ## Style guide from prior slides
 
@@ -113,6 +124,7 @@ When no stronger local style signal is present, prefer the academic Beamer style
 
 ## Editing rules
 
+- Stop immediately if the target Beamer file may have unsaved editor changes. Ask the user to save first rather than risking an overwrite.
 - Edit only frames selected by `GPT-*` tags. Never make opportunistic changes to untagged frames, even for consistency, cleanup, or style matching.
 - Preserve the deck's existing preamble, macros, and frame structure unless the requested edit requires changing them.
 - Let the `% message:` comment determine the slide's intended takeaway; revise the tagged frame so the visible content supports that message more clearly.
@@ -125,6 +137,7 @@ When no stronger local style signal is present, prefer the academic Beamer style
 - Avoid math-first layouts when revising a slide. If the first visible content under the title is a displayed equation, prefer adding a short lead-in sentence or claim before the equation unless the user clearly wants a math-first presentation.
 - For figure and table slides, keep the visible body text to at most two sentences total and move the rest of the interpretation into `% presenter notes:` comments.
 - If a sentence wraps and leaves only one or two words on the last line, shorten or rephrase it as part of the revision.
+- Every revised frame should include a `%revised` tag near the top of the frame.
 - Do not put every sentence in an `itemize` list; when a frame has one main claim plus explanation, prefer a short unbulleted statement, equation, or block.
 - Use bullet icons for parallel points or sub-items, and keep such lists short, often two to four items.
 - As a house style, text inside `\item` should start with lower case.
@@ -140,6 +153,7 @@ A good revision should let the user quickly answer:
 
 - Did the edit follow the tag and any `%GPT:` instruction?
 - Does the revised frame now clearly deliver the `% message:` comment?
+- Does each edited frame now carry a `%revised` tag?
 - Is the new slide professional and presentation-ready?
 - Does the slide still have breathing room, with visible margins and non-crowded content?
 - Does the slide give the audience verbal orientation before any displayed math, rather than opening the body with notation alone?
@@ -149,6 +163,15 @@ A good revision should let the user quickly answer:
 - Does the revised frame match the style of the surrounding deck?
 
 Default to targeted, reusable edits rather than a full deck rewrite.
+
+## Response convention
+
+After finishing a slide-revision task, report in chat which line of the target `.tex` file contains the first revised frame.
+
+- If you stop because the file may have unsaved editor changes, say that clearly in chat and do not report a revised-frame line number.
+- If at least one frame was revised, give the path and the line number of the first revised frame in the final response.
+- If multiple frames were revised, still report the first one explicitly; additional line references are optional.
+- If no frame was revised, say that clearly rather than inventing a line number.
 
 ## Boundary with Beamer Slides
 

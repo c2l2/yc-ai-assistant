@@ -1,6 +1,6 @@
 ---
 name: beamer-slides
-description: Use only when the user wants to initialize a new Beamer deck, slide outline, or first-pass set of frames from a paper draft, theory sketch, or research notes, especially when starting a presentation from scratch in deliverable/slides/. When generating frames, include a `% message:` comment that states the slide's intended message, and keep figure/table slides sparse by using takeaway titles, at most two visible sentences, and LaTeX presenter-note comments for the spoken interpretation. Do not use this skill for revising an existing deck; use `revise-beamer-slides` instead.
+description: Use only when the user wants to initialize a new Beamer deck, slide outline, or first-pass set of frames from a paper draft, theory sketch, or research notes, especially when starting a presentation from scratch in deliverable/slides/. When generating frames, include a `% message:` comment that states the slide's intended message, insert `% -----------------` between frames for easy navigation, and keep figure/table slides sparse by using takeaway titles, at most two visible sentences, and LaTeX presenter-note comments for the spoken interpretation. Do not use this skill for revising an existing deck; use `revise-beamer-slides` instead.
 ---
 
 # Beamer Slides Initialization
@@ -46,6 +46,8 @@ Default output is one of the following, depending on the user's request:
 - a first-pass set of Beamer frames
 - a compact speaking-flow outline for a new meeting, workshop, or seminar talk
 
+When generating more than one frame in LaTeX, place a separator comment of the form `% -----------------` between `\end{frame}` and the next `\begin{frame}`.
+
 ## Message comments
 
 For each newly generated frame, add a LaTeX comment of the form `% message: ...` that states the slide's main message in one sentence.
@@ -60,6 +62,13 @@ When useful, prefer a pattern like:
 ```tex
 \begin{frame}{Introduction}
 % message: motivate why learning preferences from incomplete rankings matters in economics, marketing, and personalization.
+...
+\end{frame}
+
+% -----------------
+
+\begin{frame}{This Paper}
+% message: summarize the paper's core modeling contribution.
 ...
 \end{frame}
 ```
@@ -197,6 +206,7 @@ Keep the preamble lightweight when possible, and add packages only when the slid
 
 - Prefer concise frame content that can be pasted directly into an existing deck.
 - Add a `% message:` comment near the top of every newly generated frame.
+- Insert `% -----------------` between consecutive frames so the user can scan and locate frames quickly in the `.tex` file.
 - Use `\vs` or light vertical spacing when it improves readability and matches the surrounding style.
 - Keep notation consistent with the project draft in `deliverable/paper/`.
 - Prefer readable tables and centered figures over overloaded slide text.
@@ -226,6 +236,7 @@ A good slide draft should let a future presenter quickly answer:
 - What is the main message of the talk?
 - Why does each slide exist?
 - Does each frame have a clear `% message:` comment that states its intended takeaway?
+- Are consecutive frames separated by `% -----------------` so the deck is easy to navigate in source form?
 - Do figure and table slides keep the visible text to at most two sentences and put the fuller script in presenter-note comments?
 - What is the audience supposed to remember?
 - Which technical details are essential and which can be omitted?
