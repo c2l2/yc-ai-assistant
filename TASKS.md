@@ -29,21 +29,48 @@ individual task cards — this table is the planning/queue stage only.
 | W0 | done | Set up the Beamer deck skeleton (preamble, title slide, section dividers for Part 1 / Part 2) matching `beamer-slides` skill style guide. | `deliverable/slides/eb-workshop.tex` | No content slides yet — just the shell all later tasks slot into. |
 | W1 | done | Part 1 #1 — What is EB? When is it used? | Slide draft (outline first, then Beamer) | See task card W1 below. ~2 slides. Drafted directly into `eb-workshop.tex`. |
 | W2 | done | Part 1 #2 — Teacher value-added: EB for individual estimates. | Slide draft | See task card W2. Drafted as 3 slides (split beyond the ~2 estimate). |
-| W3 | done | Part 1 #3 — Teacher value-added: distribution of teacher effects. | Slide draft | See task card W3. Drafted as 3 slides (split beyond the ~2 estimate). |
-| W4 | done | Part 1 #4 — Teacher value-added: using the teacher effect as a regressor (attenuation bias + EB fix). | Slide draft | See task card W4. Drafted as 3 slides (matches the ~2–3 estimate). |
-| W5 | done | Part 1 #5 — Other unit types: judge effects, firm effects, and the general "many units" list. | Slide draft | See task card W5. Drafted as 2 slides (matches the ~2 estimate). |
+| W3 | done | Part 1 #3 — Teacher value-added: distribution of teacher effects. | Slide draft | See task card W3. Drafted as 3 slides, **compressed to 2 on 2026-07-17** (fixed/random-effects frame folded into "Introducing G" as one bullet). |
+| W4 | done | Part 1 #4 — Teacher value-added: using the teacher effect as a regressor (attenuation bias + EB fix). | Slide draft | See task card W4. Drafted as 3 slides, **compressed to 2 on 2026-07-17** (Memorable Rule folded into the EB Fix frame's closing bullet + emphasis box). |
+| W5 | done | Part 1 #5 — Other unit types: judge effects, firm effects, and the general "many units" list. | Slide draft | See task card W5. Drafted as 2 slides, **compressed to 1 on 2026-07-17** (Beyond Schools intro folded into the Gallery table frame). |
 | W6 | done | Part 1 #6 — Ranking application: Kline–Rose–Walters discrimination study. | Slide draft | See task card W6. Drafted as 3 slides (matches the ~3 estimate). |
 | W7 | done | Part 1 #7 — A/B testing application: Azevedo et al. fat tails. | Slide draft | See task card W7. Drafted as 3 slides (matches the ~3 estimate). |
-| W8 | done | Part 1 #8 — Wrap-up: when is EB used (synthesis slide). | Slide draft | See task card W8. Drafted as 2 slides (matches the ~1–2 estimate). |
-| W9 | done | Part 1 #9 — Bridge: introduce the simplest EB (normal/normal), example-driven, light touch. | Slide draft | See task card W9. Drafted as 4 slides (matches the ~3–4 estimate). |
-| W10 | todo | Part 2 #1 — Normal/normal setup: sampling distribution, prior, posterior mean derivation. | Slide draft | See task card W10. ~4–5 slides. Depends on W9. |
-| W11 | todo | Part 2 #2 — From Bayes to Empirical Bayes: estimating hyperparameters from data. | Slide draft | See task card W11. ~3–4 slides. Depends on W10. |
-| W12 | todo | Part 2 #3 — James–Stein phenomenon and the shrinkage-reduces-risk intuition. | Slide draft | See task card W12. ~4–5 slides. Depends on W11. |
+| W8 | done | Part 1 #8 — Wrap-up: when is EB used (synthesis slide). | Slide draft | See task card W8. Drafted as 2 slides, **compressed to 1 on 2026-07-17** (Today's Examples Revisited bullet list dropped; table frame kept, its transition line appended). |
+| W9 | done | Part 1 #9 — Bridge: introduce the simplest EB (normal/normal), example-driven, light touch. | Slide draft | See task card W9. Drafted as 4 slides, **compressed to 3 on 2026-07-17** (Now Let's Derive It folded into the Recipe Preview frame's closing paragraph). |
+| W10 | done | Part 2 #1 — Normal/normal setup: sampling distribution, prior, posterior mean derivation. | Slide draft | See task card W10. Drafted as 5 slides (top of the ~4–5 estimate, per the user's explicit "setup + result + picture + plain-language" structure). |
+| W11 | done | Part 2 #2 — From Bayes to Empirical Bayes: estimating hyperparameters from data. | Slide draft | See task card W11. Drafted as 5 slides (one above the ~3–4 estimate — each derivation step got its own frame with a plain-language gloss, per the user's explicit instruction). |
+| W12 | done | Part 2 #3 — James–Stein phenomenon and the shrinkage-reduces-risk intuition. | Slide draft | See task card W12. Drafted as 5 slides (top of, not beyond, the ~4–5 estimate — kept brief per the user's explicit "簡短處理" instruction for this card). **Deck is now content-complete: W0–W12 all done.** |
 
-Rough slide-count total: ~9 slides (skeleton + wrap-up) + ~20 slides (Part 1,
-09:00–09:40) + ~12–14 slides (Part 2, 09:40–10:40) ≈ **low-to-mid 40s**. Treat
-all counts as first-pass estimates to be revised once drafting starts — dense
-image-heavy slides may need to split further.
+Slide-count total (updated 2026-07-17 after drafting W12 — **deck is now
+content-complete**): title + skeleton dividers (2) + Part 1 content
+(**21** slides, compressed down from 26 — see "Part 1 Compression Pass"
+below) + W10 (**5** slides) + W11 (**5** slides) + W12 (**5** slides) =
+**38 frames total** — confirmed via `grep -c '\begin{frame}'`. No more
+content cards remain in the queue; what's left is a real compile pass and
+figure-asset collection (see W9/W10/W11's `SESSION.md` "Open Blockers").
+
+## Part 1 Compression Pass (2026-07-17)
+
+Part 1 ran long at 26 slides for a 09:00–09:40 block, so five pairs of
+frames were merged down to 21 (still one frame per task-card content point,
+just fewer *separate* frames for points that could share a slide):
+
+- W8: "The Recurring Pattern" (table) + "Today's Examples, Revisited"
+  (bullet recap) → one frame, table version kept, closing transition line
+  appended after the table.
+- W4: "The EB Fix: Regress on the Posterior Mean" + "Memorable Rule" → one
+  frame; the rule-of-thumb mnemonic now closes the fix frame as a
+  `\fcolorbox` emphasis box.
+- W3: "Fixed Effects or Random Effects?" condensed from a full frame into
+  one closing bullet on "Introducing $G$".
+- W5: "Beyond Schools" opening frame folded into "A Gallery of Many-Unit
+  Settings" as a lead-in paragraph before the table.
+- W9: "Now Let's Derive It" folded into the end of "Preview: The
+  Three-Step EB Recipe" as a closing paragraph.
+
+No content points were dropped, only re-homed onto an existing slide;
+task-card "Definition of done" text for W3/W4/W5/W8/W9 still describes the
+original point-by-point content, now delivered across fewer frames — see
+each card's notes for the specific merge.
 
 ## Toy Demo History
 
@@ -201,6 +228,10 @@ not final Beamer LaTeX, unless the user asks to go straight to `.tex`.
   the point (raw variance overstates truth) doesn't need a figure to land,
   and W2 already has one figure placeholder pending a real asset; revisit if
   a deconvolved-density image becomes available before the workshop.
+- **2026-07-17 compression pass**: down to 2 frames. The "Fixed Effects or
+  Random Effects?" frame no longer stands alone — its point is now the
+  closing bullet on "Introducing $G$". Content unchanged, just re-homed;
+  see `deliverable/slides/eb-workshop.tex`'s W3 comment block.
 
 ### W4
 
@@ -245,6 +276,11 @@ not final Beamer LaTeX, unless the user asks to go straight to `.tex`.
   heteroskedastic variant were both left out of the drafted frames — neither
   is needed for the ~3-slide concept-level treatment, and omitting them
   avoids the misattribution risk the note flagged.
+- **2026-07-17 compression pass**: down to 2 frames. The "Memorable Rule"
+  frame no longer stands alone — its rule-of-thumb bullet and pull-quote now
+  close out "The EB Fix: Regress on the Posterior Mean" frame (the quote is
+  now an `\fcolorbox` emphasis box). Content unchanged, just re-homed; see
+  `deliverable/slides/eb-workshop.tex`'s W4 comment block.
 
 ### W5
 
@@ -292,6 +328,11 @@ not final Beamer LaTeX, unless the user asks to go straight to `.tex`.
   type as suggested; used `\c{c}` for "Gonçalves" rather than a raw UTF-8
   character in the `.tex`, since the preamble declares no
   `inputenc`/`fontenc` and the ASCII-escape form is safer across engines.
+- **2026-07-17 compression pass**: down to 1 frame. The "Beyond Schools:
+  The Same Problem, Everywhere" frame no longer stands alone — its
+  common-thread text is now the lead-in paragraph on "A Gallery of
+  Many-Unit Settings", right before the table. Content unchanged, just
+  re-homed; see `deliverable/slides/eb-workshop.tex`'s W5 comment block.
 
 ### W6
 
@@ -397,6 +438,12 @@ not final Beamer LaTeX, unless the user asks to go straight to `.tex`.
   (restating the running example with the sampling-model notation, the
   three-step EB recipe preview) is W9's separate job, not W8's; duplicating
   it here would step on W9's card.
+- **2026-07-17 compression pass**: down to 1 frame. "Today's Examples,
+  Revisited" (the per-example bullet recap) was dropped as redundant with
+  the table already on frame 1 — only its closing transition sentence
+  ("Every one of these examples ran on intuition alone...") survived,
+  appended after the table. See `deliverable/slides/eb-workshop.tex`'s W8
+  comment block.
 
 ### W9
 
@@ -449,30 +496,69 @@ not final Beamer LaTeX, unless the user asks to go straight to `.tex`.
   breakdown in the "Rough slide-count total" note) — not after the divider.
   Frame 4's hand-off line now lands right before the audience sees the
   "Part 2: Point Estimation" title card, which reads as a clean pause point.
+- **2026-07-17 compression pass**: down to 3 frames. "Now Let's Derive It"
+  (frame 4, the explicit hand-off) no longer stands alone — it's now the
+  closing paragraph of frame 3 ("Preview: The Three-Step EB Recipe"), right
+  after "now we make it precise." The hand-off still lands immediately
+  before the Part 2 section divider, just without its own slide. See
+  `deliverable/slides/eb-workshop.tex`'s W9 comment block.
 
 ### W10
 
-- Status: `todo`
+- Status: `done`
 - Goal: Full normal/normal setup with a simple worked derivation — sampling
   distribution, prior, and the posterior mean formula.
 - Inputs: [gu-walters-2022-nber-eb-methods-lecture-slides.md](../references/gu-walters-2022-nber-eb-methods-lecture-slides.md)
   ("Normal/Normal Model" and "Posterior Means" slides — has the formula
   `θ*_j = [τ²/(τ²+s_j²)]θ̂_j + [s_j²/(τ²+s_j²)]μ`); [walters-2024-eb-methods-labor-economics.md](../references/walters-2024-eb-methods-labor-economics.md)
   (Section 2.1–2.2 for the fuller derivation/exposition).
-- Target files: slide draft.
+- Target files: `deliverable/slides/eb-workshop.tex`.
 - Definition of done: ~4–5 slides — (1) sampling distribution
   `θ̂_j | θ_j, s_j ~ N(θ_j, s_j²)`, (2) prior `θ_j ~ N(μ, τ²)`, (3) the
   posterior-mean derivation (can be a single "algebra" slide or split into
   setup + result), (4) a picture showing the posterior mean as a
   precision-weighted average / shrinkage toward `μ`, (5) plain-language
-  restatement of what the formula says.
-- Depends on: W9.
+  restatement of what the formula says. — **Met, 5 frames** (top of the
+  ~4–5 estimate, per the user's explicit request to structure it as
+  setup + derivation + result + picture + plain-language, and their
+  instruction not to feel bound by the original estimate). (1) "Setting Up
+  the Derivation: What We Know, What We Want" formally restates both
+  distributions from W9 (Level 1 sampling model, Level 2 prior) as the
+  derivation's starting point, states the target
+  ($E[\theta_j \mid \hat\theta_j]$), and flags that `μ, τ²` are treated as
+  known here (estimating them is W11's job); (2) "Deriving the Posterior
+  Mean: Precision-Weighting" gives the short derivation — Bayes' rule,
+  the completing-the-square/precision-adding argument — without a full
+  measure-theoretic proof; (3) "Result: The Posterior Mean Formula" states
+  the closed-form `θ*_j` formula plus the posterior-variance formula, and
+  notes the EB version plugs in `(μ̂, τ̂²)`; (4) "Picture: Shrinkage as a
+  Precision-Weighted Pull Toward `μ`" is a figure placeholder (`\fcolorbox`)
+  for a schematic diagram (number line, `μ` at center, two example units'
+  arrows of different lengths) — flagged explicitly as *to be drawn fresh*,
+  not a paper screenshot, since no existing figure fits this exact
+  illustration; (5) "What the Formula Says, in Plain Language" restates the
+  formula in words (reliability weight, precise-vs-noisy limiting cases)
+  and ties it back to the Part 1 shrinkage pictures the audience already
+  saw without a formula (W2's VAM histogram, W4's attenuation-bias fix).
+- Depends on: W9. — done, unaffected by the 2026-07-17 Part 1 compression
+  pass (that pass changed W9's frame count, not its content or status).
 - Notes for Codex: "簡單推導" — keep the derivation short (complete the
-  square / precision-weighting argument), not a full measure-theoretic proof.
+  square / precision-weighting argument), not a full measure-theoretic
+  proof. **Followed this**: frame (2) states the precision-adding result
+  as a general fact about combining Gaussian signals rather than working
+  through the full algebra term-by-term; no measure theory, no general
+  conjugate-prior theorem invoked. Structural check after drafting: brace
+  balance and `\begin`/`\end` environment pairs still net to zero (checked
+  programmatically, same method as prior turns); display-math `\[...\]`
+  opens/closes balanced (4/4 across the whole file, 2 new from W10); total
+  frame count 28 (`grep -c '\begin{frame}'`), consistent with 23 pre-W10 +
+  5 new. Still no local `pdflatex`/`xelatex` — **not compiled**, structural
+  check only; recommend the user compile in Overleaf to confirm before
+  trusting the math typesets as intended.
 
 ### W11
 
-- Status: `todo`
+- Status: `done`
 - Goal: The "empirical" step — show how the prior's hyperparameters `(μ, τ²)`
   are estimated from the ensemble of units, turning the Bayes posterior mean
   into the EB posterior mean.
@@ -480,21 +566,49 @@ not final Beamer LaTeX, unless the user asks to go straight to `.tex`.
   ("Estimating Hyperparameters" and "EB Posterior Means" slides — has
   `μ̂ = mean(θ̂_j)`, `τ̂² = mean[(θ̂_j−μ̂)²] − s_j²`); [walters-2024-eb-methods-labor-economics.md](../references/walters-2024-eb-methods-labor-economics.md)
   (Section 2.1 hyperparameter estimation discussion).
-- Target files: slide draft.
+- Target files: `deliverable/slides/eb-workshop.tex`.
 - Definition of done: ~3–4 slides — (1) motivate: in practice we don't know
   `μ, τ²`, (2) method-of-moments estimators `μ̂`, `τ̂²`, with the bias-
   correction (subtracting `s_j²`) explained in words as "removing sampling
   noise," (3) the plug-in EB posterior mean formula, (4) a picture contrasting
   raw estimates vs. EB posterior means (e.g., the Boston VAM histogram before/
-  after shrinkage).
-- Depends on: W10.
+  after shrinkage). — **Met, 5 frames** (one above the ~3–4 estimate — split
+  per the user's explicit instruction this turn to keep the derivation steps
+  but simplify the algebra, pairing each step with its own plain-language
+  gloss rather than stacking formulas onto fewer slides). (1) "The Empirical
+  Step: We Don't Actually Know $\mu$ and $\tau^2$" motivates the problem and
+  ties it to W9's "deconvolution" step; (2) "Estimating $\mu$" gives
+  `μ̂ = mean(θ̂_j)` with the unbiasedness intuition (noise averages out); (3)
+  "Estimating $\tau^2$" gives the bias-corrected formula
+  `τ̂² = raw variance − average(s_j²)` with an in-words gloss for each term
+  and a truncate-at-zero caveat, naming MLE and Kline–Saggio–Sølvsten (2020)
+  as alternatives without deriving them; (4) "From Bayes to Empirical Bayes:
+  Plug and Play" substitutes `(μ̂, τ̂²)` into W10's formula, states this is
+  the EB posterior mean, and explicitly closes W9's three-step recipe
+  (estimation → deconvolution → posterior formation); (5) "Picture: Raw
+  Estimates vs. EB Posterior Means" is a figure placeholder that
+  **deliberately reuses** the figure-asset need already flagged for W2
+  (Boston VAM before/after histogram) rather than creating a new, near-
+  duplicate asset — the placeholder text says to caption it with the
+  actual computed `μ̂, τ̂²` this time, making the same figure concrete
+  instead of schematic.
+- Depends on: W10. — done.
 - Notes for Codex: Briefly mention MLE and the Kline–Saggio–Sølvsten (2020)
   unbiased variance estimator as alternatives, per the source slide, without
-  deriving them.
+  deriving them. **Followed this**: both named in frame 3's caveat bullet,
+  neither derived. Also followed this turn's explicit user instruction: no
+  intermediate algebra shown for *why* raw variance decomposes into
+  `τ² + average noise` (no law-of-total-variance derivation) — frame 3
+  states the result formula directly and glosses each term in words instead.
+  Structural check after drafting: brace balance and `\begin`/`\end` pairs
+  still net to zero; display-math `\[...\]` opens/closes balanced (7/7,
+  3 new from W11); dollar-sign count even (268); total frame count 33
+  (`grep -c '\begin{frame}'`), consistent with 28 pre-W11 + 5 new. Still no
+  local `pdflatex`/`xelatex` — not compiled, structural check only.
 
 ### W12
 
-- Status: `todo`
+- Status: `done`
 - Goal: Introduce the James–Stein phenomenon and use it to build the
   intuition that shrinkage reduces *aggregate* risk, even though it can be
   worse for any single unit.
@@ -502,7 +616,7 @@ not final Beamer LaTeX, unless the user asks to go straight to `.tex`.
   (the two "When to Shrink?" slides — single-unit vs. many-unit MSE
   comparison); [walters-2024-eb-methods-labor-economics.md](../references/walters-2024-eb-methods-labor-economics.md)
   ("James–Stein justification" point in Section 2 summary).
-- Target files: slide draft.
+- Target files: `deliverable/slides/eb-workshop.tex`.
 - Definition of done: ~4–5 slides — (1) pose the question "should we prefer
   the shrunk estimate to the raw one?", (2) single-unit MSE comparison (raw
   `= s_j²`; shrunk has a bias term) — ambiguous for one unit, (3) many-unit
@@ -511,11 +625,46 @@ not final Beamer LaTeX, unless the user asks to go straight to `.tex`.
   aggregate risk reduction (e.g., a stylized risk-vs-truth plot or the
   standard "baseball batting averages" style illustration if one is easy to
   source), (5) one-line intuition takeaway: "you don't have to believe the
-  units are literally random draws for shrinkage to help on average."
-- Depends on: W11.
+  units are literally random draws for shrinkage to help on average." —
+  **Met, 5 frames**, kept at the top of (not beyond) the ~4–5 estimate per
+  the user's explicit "簡短處理，重點放直覺，不用完整證明" instruction for
+  this card specifically. (1) "Should We Always Trust the Shrunk Estimate?"
+  poses the question via risk/MSE framing; (2) "For One Unit, It's
+  Ambiguous" gives one short display equation —
+  `MSE(θ̂_j)=s_j²` vs. `MSE(θ̂*_j)=w_j²s_j²+(1-w_j)²(θ_j-μ)²` with
+  `w_j=τ²/(τ²+s_j²)` — glossed in words (smaller variance, but a new bias
+  term that can dominate for an atypical unit); (3) "But Averaged Across
+  Many Units, Shrinkage Wins" states the aggregate result in words (no
+  further algebra), names it the James–Stein phenomenon (James \& Stein
+  1961), and notes it holds regardless of `G`'s normality (best *linear*
+  predictor result) — explicitly declines to reprove the theorem; (4)
+  "Picture: One Unit's Risk vs.\ Everyone's Risk" is a figure placeholder
+  for a schematic risk-crossing plot tying frames 2 and 3 together visually
+  (raw estimator flat risk line vs. shrunk estimator's crossing curve); (5)
+  "The Takeaway" closes with the fixed/random-effects callback to W3 and a
+  bold pull-quote emphasis box (mirroring W4's closing-box pattern), since
+  this is the deck's last content frame.
+- Depends on: W11. — done.
 - Notes for Codex: Keep the James–Stein *theorem* statement brief and
   intuitive per the outline ("放在本節簡短處理") — this is a risk-intuition
-  slide, not a proof.
+  slide, not a proof. **Followed this**: frame 3 states the result and its
+  normality-robustness in one bullet each, with an explicit "we won't
+  reprove the theorem here" line; no measure theory, no minimax argument,
+  no explicit integration-over-`G` algebra anywhere in the card. Structural
+  check after drafting (same method as every prior turn): brace balance and
+  `\begin`/`\end` pairs still net to zero; display-math `\[...\]`
+  opens/closes balanced (8/8, 1 new from W12); dollar-sign count even
+  (324); total frame count 38 (`grep -c '\begin{frame}'`), consistent with
+  33 pre-W12 + 5 new. Still no local `pdflatex`/`xelatex` — not compiled,
+  structural check only.
+- **Deck-completion note**: this was the last `todo` content card in the
+  queue. **W0–W12 are all `done`** — both Part 1 (21 slides) and Part 2
+  (W10+W11+W12 = 15 slides) are now content-complete, 38 frames total. What
+  remains is not more content drafting but (a) a real `pdflatex`/`latexmk`
+  compile pass (never done in this environment — see `SESSION.md` "Open
+  Blockers," recurring across W9–W12) and (b) collecting/designing the
+  figure assets flagged throughout (W2, W6, W10, W12 all have `\fcolorbox`
+  placeholders still to replace with real images).
 
 ## Toy Demo Notes
 
