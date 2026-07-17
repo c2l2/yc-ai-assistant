@@ -197,6 +197,24 @@ not final Beamer LaTeX, unless the user asks to go straight to `.tex`.
   W1 — no `.bib` file yet); the figure is a placeholder box, not an embedded
   image, since `deliverable/slides/` has no figure assets — swap in the real
   screenshot from `references/Slides2.pdf` before the workshop.
+- **2026-07-17 figure-asset pass**: the `\fcolorbox` placeholder is now a
+  real image, `deliverable/slides/figures/gu-walters-posterior-means.png`.
+  Note this required a correction mid-task: the user first asked for
+  `references/Slides2.pdf` page 12 ("Posterior Means"), but rendering that
+  page showed it has **no chart at all** — just the frame title, three
+  bullets, and the closed-form posterior-mean formula. Scanned every page
+  in the deck via PyMuPDF's `get_images()`/`get_drawings()` counts to find
+  pages that actually contain a rendered chart, then visually confirmed
+  candidates; page 20, "Posterior Means Pooling Sectors," was the one that
+  actually overlays raw BPS/Charter VAM estimates (outlined bars) with EB
+  posterior means (filled bars) and the fitted prior curve — exactly the
+  before/after-shrinkage comparison this card and W11 both describe. Asked
+  the user to confirm before proceeding (page 20 vs. page 18's raw-only
+  histogram vs. looking further); user picked page 20. Rendered at 6x zoom
+  and cropped to the plot + axis label + legend only (title row and
+  footer row excluded, no page-number text on this slide to worry about).
+  This same file is now reused by W11 rather than creating a second,
+  near-duplicate image (matches W11's card note about reusing this asset).
 
 ### W3
 
@@ -374,6 +392,18 @@ not final Beamer LaTeX, unless the user asks to go straight to `.tex`.
   the Lorenz-curve numbers directly against Figure 7's on-page text (Gini
   0.394/top-20%-0.46 for race, top-20%-0.56 for gender), which match the
   reference note.
+- **2026-07-17 figure-asset pass**: the frame (2) `\fcolorbox` placeholder
+  is now a real image. Rendered PDF pages 55-56 of `references/w29053.pdf`
+  to PNG via PyMuPDF (`fitz`, 3x zoom), cropped each to just the
+  title+plot+axis-label region (dropped the dense "Notes:" methodology
+  paragraph and the rotated page-number margin -- neither belongs on a
+  slide), and saved as `deliverable/slides/figures/kline-rose-walters-fig6.png`
+  (Figure 6, 2209x965px) and `.../fig7.png` (Figure 7, 1364x1204px). Frame
+  now shows both side by side via `\includegraphics` (`width=0.52\textwidth`
+  for fig6, `width=0.26\textwidth` for fig7, chosen so the two render at
+  roughly matching heights given their different native aspect ratios)
+  with a small source citation line underneath, replacing the placeholder
+  box entirely.
 
 ### W7
 
@@ -555,6 +585,32 @@ not final Beamer LaTeX, unless the user asks to go straight to `.tex`.
   5 new. Still no local `pdflatex`/`xelatex` — **not compiled**, structural
   check only; recommend the user compile in Overleaf to confirm before
   trusting the math typesets as intended.
+- **2026-07-17 figure-asset pass**: frame (4)'s `\fcolorbox` placeholder is
+  now a hand-drawn TikZ schematic (not a paper screenshot, per the card's
+  own note that no existing figure fits this exact illustration). Added
+  `\usepackage{tikz}` to the preamble (new package for this deck). The
+  picture is a horizontal number line with `μ` marked and dashed at center,
+  and two example units: unit `A` (small `s_j`, precise) has its raw
+  estimate close to `μ` with a short arrow to its posterior mean; unit `B`
+  (large `s_j`, noisy) has its raw estimate far from `μ` with a long arrow
+  landing close to `μ` — open circles mark raw `\hat\theta_j`, filled
+  circles mark shrunk `\theta_j^*`, arrow length visibly scales with
+  shrinkage magnitude as the placeholder specified. Wrapped in
+  `\resizebox{0.92\textwidth}{!}{...}` so it scales to fit regardless of
+  the tikzpicture's native coordinate-space size, since there is no local
+  compiler to check the raw size against the frame. Structural check after
+  the edit (same method as every prior turn, redone carefully this time
+  after an initial regex mistake double-counted `\\[0.4em]`-style
+  line-break spacing as false display-math opens): brace balance nets to
+  zero (478/478); all `\begin`/`\end` environment pairs balanced, including
+  the new `tikzpicture` (1/1); frame count still 38 (unchanged — content
+  was replaced inside an existing frame, no frame added/removed); real
+  display-math `\[...\]` opens/closes correctly 8/8 once `\\[...]`
+  linebreak-spacing false positives are excluded; dollar-sign count even
+  (322). Still no local `pdflatex`/`xelatex` — **not compiled**; this is
+  the first TikZ content in the deck, so an Overleaf compile pass is
+  especially recommended next to confirm the coordinates/arrows render as
+  intended (geometry was reasoned through, not visually verified).
 
 ### W11
 
@@ -605,6 +661,19 @@ not final Beamer LaTeX, unless the user asks to go straight to `.tex`.
   3 new from W11); dollar-sign count even (268); total frame count 33
   (`grep -c '\begin{frame}'`), consistent with 28 pre-W11 + 5 new. Still no
   local `pdflatex`/`xelatex` — not compiled, structural check only.
+- **2026-07-17 figure-asset pass**: frame 5's `\fcolorbox` placeholder is
+  now `\includegraphics` pointing at
+  `deliverable/slides/figures/gu-walters-posterior-means.png` — the same
+  file W2 now uses (per this card's own note above, "deliberately reuses"
+  the asset rather than duplicating it). See W2's card for the sourcing
+  detail: the user's initial page request (`Slides2.pdf` p. 12) had no
+  chart on it; the correct chart (raw-vs-posterior histogram) turned out
+  to be p. 20, "Posterior Means Pooling Sectors," confirmed with the user
+  before cropping. The image already carries real computed numbers (std.
+  dev. of estimates/prior/posterior means printed on the chart itself), so
+  this satisfies the "caption with the actual computed values" goal
+  without needing a separate re-caption — it's the real underlying figure,
+  not a schematic with placeholder numbers.
 
 ### W12
 
@@ -663,8 +732,10 @@ not final Beamer LaTeX, unless the user asks to go straight to `.tex`.
   remains is not more content drafting but (a) a real `pdflatex`/`latexmk`
   compile pass (never done in this environment — see `SESSION.md` "Open
   Blockers," recurring across W9–W12) and (b) collecting/designing the
-  figure assets flagged throughout (W2, W6, W10, W12 all have `\fcolorbox`
-  placeholders still to replace with real images).
+  figure assets flagged throughout (W2, W6, W10, W12 all had `\fcolorbox`
+  placeholders to replace with real images — **W2, W6, W10, and W11's
+  reused copy of W2's figure are all done as of 2026-07-17**, see those
+  cards' latest notes; only W12's risk-plot schematic remains open).
 
 ## Toy Demo Notes
 
