@@ -8,78 +8,69 @@ Use this file as the handoff note between separate Codex prompts.
   session: Part 1 "Overview: Why Empirical Bayes?" and Part 2 "Point
   Estimation: Normal-Normal Model"). Five `references/` notes exist and the
   workshop outline was broken into a 13-task queue (W0-W12) in `TASKS.md`.
-  **W0-W12 are all done - the deck is now content-complete.** Part 1 is 21
-  slides (compressed from 26 on 2026-07-17); Part 2 is 15 slides (W10: 5,
-  W11: 5, W12: 5). Total: **38 frames.** No more content-drafting tasks
-  remain in the queue. What's left is (a) a real LaTeX compile pass - this
-  deck has never been compiled end-to-end in this environment, only
-  structurally checked - and (b) one remaining figure asset: W2, W6, W10,
-  and W11's reused copy of W2's figure are all done (as of 2026-07-17);
-  only **W12's risk-plot schematic** is still open.
+  **W0-W12 are all done - the deck is now content-complete, and as of this
+  turn every figure placeholder is also resolved** - no `\fcolorbox`
+  placeholders remain anywhere in `eb-workshop.tex`. Part 1 is 21 slides
+  (compressed from 26 on 2026-07-17); Part 2 is 15 slides (W10: 5, W11: 5,
+  W12: 5). Total: **38 frames.** What's left is a real LaTeX compile pass -
+  this deck has never been compiled end-to-end in this environment, only
+  structurally checked - plus whatever visual polish that compile surfaces
+  (this turn already fixed two such issues, caught by the user reviewing
+  the rendered TikZ, not by structural checks - see below).
 
 ## Current Task
 
-- Task ID: W10 figure-asset follow-up ("Picture: Shrinkage as a
-  Precision-Weighted Pull Toward `μ`" frame) - replacing its `\fcolorbox`
-  placeholder with a hand-drawn TikZ schematic (not a paper screenshot -
-  no existing figure fits this exact illustration, per the card's own
-  note).
-- Status: `done`.
+- Task ID: three small polish fixes on the deck's figures, caught by
+  the user reviewing the rendered slides in their editor:
+  1. W10's "Picture: Shrinkage..." frame - the `\mu` label (below the
+     axis) visually overlapped `\theta_B^*`'s label (also below the axis,
+     since unit B's shrunk point lands close to `\mu`). Moved `\mu` above
+     the axis.
+  2. W12's "Picture: One Unit's Risk vs. Everyone's Risk" frame - the
+     `\resizebox{0.85\textwidth}` was letting the figure's content
+     (axis labels, wins-brackets below the x-axis) spill past the slide
+     margins. Reduced to `\resizebox{0.6\textwidth}`.
+  3. W2's "The EB Fix: Borrow Strength Across Schools" frame - shrank the
+     `gu-walters-posterior-means.png` `\includegraphics` from
+     `width=0.62\textwidth` to `width=0.36\textwidth` per the user's
+     request (their message described the prior width as
+     `0.5\textwidth`, but the file actually had `0.62\textwidth` -
+     applied the requested `0.36\textwidth` target regardless). W11's
+     frame reuses the same PNG at `width=0.62\textwidth` and was left
+     untouched, since the instruction named only the W2 frame.
+- Status: `done`, all three fixes applied.
+- Note on W12's figure specifically: `TASKS.md`/`SESSION.md` had gone
+  stale on this point - they still described W12's risk-plot as an open
+  `\fcolorbox` placeholder, but the TikZ risk-crossing figure was already
+  drafted and committed (see `1e18e0e`, "完成 W10-W12：Part 2 全部內容").
+  Corrected the record in `TASKS.md` this turn rather than re-drawing it.
 
 ## Relevant Files
 
-- `deliverable/slides/eb-workshop.tex` (edited this turn - added
-  `\usepackage{tikz}` to the preamble, and replaced the W10 frame's
-  `\fcolorbox` placeholder with a TikZ number-line diagram wrapped in
-  `\resizebox`)
-- `TASKS.md` (W10 card got a new "2026-07-17 figure-asset pass" note; the
-  W12 deck-completion note's remaining-placeholder list updated to mark
-  W10 done)
+- `deliverable/slides/eb-workshop.tex` (edited this turn - W10 frame's
+  `\mu` label moved from `\node[below] at (0,-0.35)` to
+  `\node[above] at (0,0.2)`; W12 frame's `\resizebox{0.85\textwidth}`
+  changed to `\resizebox{0.6\textwidth}`; W2 frame's
+  `\includegraphics[width=0.62\textwidth]{figures/gu-walters-posterior-means.png}`
+  changed to `width=0.36\textwidth`)
+- `TASKS.md` (W10 card got a new "2026-07-18 label-collision fix" note;
+  W12 card's stale "figure still open" claim corrected with a
+  "2026-07-18 figure-asset pass" note documenting the already-committed
+  TikZ risk-plot, plus a "2026-07-18 sizing fix" note for the resizebox
+  change; the deck-completion note's "only W12's risk-plot schematic
+  remains open" line removed since that was inaccurate; W2 card got a
+  new "2026-07-18 sizing fix" note)
+- `SESSION.md` (this file)
 
 ## Latest Decisions
 
-- Drawn (not sourced) this time: unlike W2/W6/W11 (paper screenshots
-  cropped from PDFs), this frame's figure was always flagged as an
-  original schematic to draw fresh, so there was no page to locate or
-  confirm with the user - went straight to TikZ.
-- Schematic design, built to literally match the placeholder's spec: a
-  horizontal number line, `μ` marked and dashed at the center, and two
-  example units on opposite sides of `μ` -
-  - Unit `A` (small `s_j`, precise): raw estimate `\hat\theta_A` plotted
-    close to `μ` (at `x=-2.0`), short arrow to its posterior mean
-    `\theta_A^*` (`x=-1.4`) - barely shrinks, consistent with a precise
-    (low-noise) unit.
-  - Unit `B` (large `s_j`, noisy): raw estimate `\hat\theta_B` plotted far
-    from `μ` (at `x=4.0`), long arrow to its posterior mean `\theta_B^*`
-    (`x=0.8`) - shrinks most of the way to `μ`, consistent with a noisy
-    (high-variance) unit.
-  - Open circles (white fill, colored border) mark the raw `\hat\theta_j`
-    points; filled circles mark the shrunk `\theta_j^*` points - visually
-    distinguishes "before" from "after" without needing extra labels.
-    Blue for unit `A`, red for unit `B`, purely for visual separation (no
-    theme-color matching attempted - the deck's `orchid` beamer theme
-    doesn't define reusable named colors to draw from).
-- Sizing: wrapped the whole `tikzpicture` in
-  `\resizebox{0.92\textwidth}{!}{...}` rather than hand-tuning the
-  tikzpicture's native coordinate scale - this guarantees it fits the
-  frame's width regardless of how the absolute TikZ units render, which
-  matters here since there's no local compiler to check actual sizing
-  against.
-- `\usepackage{tikz}` added right after `\usepackage{graphicx}` in the
-  preamble (previously not needed since W2/W6/W11's figures were all
-  raster screenshots via `\includegraphics`).
-- Structural verification after the edit surfaced a false alarm worth
-  recording: a naive `\[`/`\]` count came back 15 opens vs. 8 closes,
-  which looked like a real imbalance until inspecting the actual matches -
-  13 of the 15 "opens" were `\\[0.4em]`/`\\[0.5em]`-style line-break
-  spacing (the second backslash of a `\\` followed by a bracket, not a
-  display-math open at all). Filtering those out, the real count is 8/8,
-  matching every prior turn's verified figure and confirming this edit
-  didn't disturb the file's math-mode balance. Recorded here so a future
-  turn doesn't have to rediscover this - **always grep the actual `\[`
-  matches with context before trusting a raw substring count** when the
-  file contains `\\[<length>]` line breaks (this deck's title-slide and
-  Part-divider frames use several).
+- All three fixes were label/scale-only - no coordinates, arrow geometry,
+  colors, or curve formulas were touched in any frame, and no other
+  `\includegraphics` calls for the same PNG (e.g. W11's) were changed.
+- Did not re-verify the rest of the deck's structural balance (brace
+  count, frame count, etc.) this turn - these were surgical,
+  single-line-scope edits with no risk of unbalancing braces or
+  environments, unlike the larger content-drafting turns.
 
 ## Files Changed This Turn
 
@@ -90,24 +81,21 @@ Use this file as the handoff note between separate Codex prompts.
 ## Open Blockers
 
 - **Deck has never been compiled end-to-end with a real LaTeX toolchain in
-  this environment** - still true this turn. This frame is the deck's
-  **first TikZ content**, so it's an especially important one to check on
-  the next Overleaf pass - the coordinates/arrow geometry were reasoned
-  through on paper, not visually rendered, so there's more room for a
-  surprise (e.g. label collision, unexpected scaling from `\resizebox`)
-  than with the plain `\includegraphics` figures from the last two turns.
+  this environment** - still true this turn, and now the most important
+  remaining item. All three of this turn's fixes were reactions to the
+  user visually reviewing the frames without a real compile in this
+  environment - more such visual issues (label collisions, overflow,
+  spacing, image sizing) may still be hiding in the deck's other figures
+  (W6, W10, W11, W12) or elsewhere. A real `pdflatex`/`latexmk` (e.g. via
+  Overleaf) pass is the highest-value next step.
 - `enumitem` fix (re-added `\usepackage{enumitem}` a few turns ago to fix a
   real `TeX capacity exceeded [grouping levels=255]` error the user hit in
   Overleaf) is still **unconfirmed by an actual compile**.
-- **One figure asset still needed**: W12's risk-plot frame - an original
-  schematic (raw estimator's flat risk line vs. shrunk estimator's
-  crossing risk curve), style-cued to the classic Efron-Morris
-  baseball-batting-average illustration. This is now the **last** open
-  figure placeholder in the whole deck.
 - No task in `TASKS.md`'s Active Sequence table is `todo` or `blocked` -
-  W0 through W12 are all `done`; this figure-asset work is a follow-up
-  pass on top of that, not a new queue entry.
+  W0 through W12 are all `done`, and all figure placeholders are resolved;
+  remaining work is compile verification and any polish it surfaces, not
+  new queue entries.
 
 ## Recommended Next Prompt
 
-`W10 的示意圖也用 TikZ 畫完了——麻煩比照同樣的做法，把 W12「Picture: One Unit's Risk vs. Everyone's Risk」那張投影片裡的 \fcolorbox 佔位框，換成用 TikZ 畫的示意圖：一條橫軸代表 raw estimator 的風險（水平直線，對任何 μ 距離都是常數 s_j^2），另一條曲線代表 shrunk estimator 的風險（在 μ 附近較低、離 μ夠遠處才會超過 raw estimator，兩線交叉），標出交叉點並簡短加註哪一段 shrunk 更好、哪一段 raw 更好。這是整份講義最後一個圖片佔位框，畫完後 W0–W12 就全部圖文皆完成了。`
+`麻煩把整份 eb-workshop.tex 拿去 Overleaf（或本地 pdflatex/latexmk）跑一次完整編譯，抓出任何排版溢出、標籤重疊、或圖片跑版的問題並回報——目前已經手動抓到並修過 W10、W12 兩張 TikZ 圖各一個小問題（標籤重疊、resizebox 太大導致溢出），但這份文件從沒有真的編譯過，其他地方可能還有沒發現的視覺問題。`

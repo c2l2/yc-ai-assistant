@@ -215,6 +215,15 @@ not final Beamer LaTeX, unless the user asks to go straight to `.tex`.
   footer row excluded, no page-number text on this slide to worry about).
   This same file is now reused by W11 rather than creating a second,
   near-duplicate image (matches W11's card note about reusing this asset).
+- **2026-07-18 sizing fix**: the user asked to shrink this frame's
+  `\includegraphics` from `width=0.62\textwidth` down to
+  `width=0.36\textwidth` (their message described the prior width as
+  `0.5\textwidth` — the file actually had `0.62\textwidth`; applied the
+  requested `0.36\textwidth` target regardless, noted here for the
+  record). Nothing else on the frame changed. Note W11's frame
+  ([Picture: Raw Estimates vs. EB Posterior Means], line ~833) still
+  `\includegraphics`s the same PNG at `width=0.62\textwidth` — left
+  untouched since the user's instruction named only this W2 frame.
 
 ### W3
 
@@ -611,6 +620,13 @@ not final Beamer LaTeX, unless the user asks to go straight to `.tex`.
   the first TikZ content in the deck, so an Overleaf compile pass is
   especially recommended next to confirm the coordinates/arrows render as
   intended (geometry was reasoned through, not visually verified).
+- **2026-07-18 label-collision fix**: the `\mu` label and unit `B`'s
+  `\theta_B^*` label sat almost on top of each other (unit `B`'s shrunk
+  point lands very close to `\mu` by design), which the user caught when
+  reviewing the frame. Moved `\mu`'s label from below the axis
+  (`\node[below] at (0,-0.35)`) to above it (`\node[above] at (0,0.2)`),
+  leaving `\theta_B^*` as the only label below the axis near that point.
+  No coordinates, arrows, or colors changed — label position only.
 
 ### W11
 
@@ -735,7 +751,26 @@ not final Beamer LaTeX, unless the user asks to go straight to `.tex`.
   figure assets flagged throughout (W2, W6, W10, W12 all had `\fcolorbox`
   placeholders to replace with real images — **W2, W6, W10, and W11's
   reused copy of W2's figure are all done as of 2026-07-17**, see those
-  cards' latest notes; only W12's risk-plot schematic remains open).
+  cards' latest notes).
+- **2026-07-18 figure-asset pass (W12's own turn, not a follow-up)**: the
+  frame (4) `\fcolorbox` placeholder is now a hand-drawn TikZ risk-vs-
+  distance plot, same treatment as W10's number-line schematic. Axes are
+  `|θ_j-μ|` (x) vs. MSE (y); a flat gray line at constant height marks the
+  raw estimator's risk `s_j^2`; a rising blue curve
+  (`1 + 0.13x^2`, chosen only to look right at this frame's scale, not
+  fit to real numbers) starts below the flat line near the origin and
+  crosses above it further out, with the crossing point marked by a dot
+  and a dashed drop-line, plus `<->` bracket labels underneath reading
+  "shrinkage wins" / "raw wins" on either side of the crossing. This
+  closes the deck's last open figure placeholder — **W0–W12 now have every
+  figure done, no `\fcolorbox` placeholders remain anywhere in
+  `eb-workshop.tex`.**
+- **2026-07-18 sizing fix**: the user caught that `\resizebox{0.85\textwidth}`
+  let this figure's content spill past the slide margins (wider aspect
+  ratio than W10's number-line diagram, since this plot also has axis
+  labels and the wins-brackets extending below the x-axis). Reduced to
+  `\resizebox{0.6\textwidth}{!}` — the tikzpicture's internal coordinates,
+  labels, and colors are untouched, only the overall scale shrank.
 
 ## Toy Demo Notes
 
