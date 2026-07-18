@@ -446,6 +446,33 @@ not final Beamer LaTeX, unless the user asks to go straight to `.tex`.
   deconvolution argument appears on the slides — the fat-tail result is
   stated purely as an empirical finding and its two decision consequences
   (aggressive shrinkage of small t-stats; lean vs. big strategy).
+- **2026-07-18 figure-asset pass**: frame (2), "The Fat-Tail Finding at
+  Bing," had no figure at all (unlike W2/W6/W10/W12, this card's original
+  draft never flagged a placeholder) — the user asked specifically for one
+  to be added. Confirmed the right source figure by reading
+  `references/azevedo-et-al-ab.pdf` via `pdftotext -layout` rather than
+  guessing: Figure 1, "The posterior mean function
+  $P_i(\hat\delta_i, n_i)$," is on PDF page 9, and the paper's own text
+  (p.25, Section 4.6.1) walks through this exact figure using the same two
+  numbers already on this slide (0.044→0.006 at $t\approx2$; 0.088→0.066 at
+  $t\approx4$) — a direct match, not just a thematic one. Candidates
+  considered and ruled out: Figure 4 (p.21, log-log tail plots — illustrates
+  fat-tailedness generally but not the shrinkage story) and Figure 3 (p.20,
+  histogram/Q-Q model fit — about goodness-of-fit, not shrinkage). Rendered
+  page 9 via PyMuPDF (`fitz`, 4x zoom) and cropped to just the plot + axis
+  labels (dropped the page-number margin, the "Figure 1:" caption line, the
+  "Notes:" methodology paragraph, and the surrounding body text) — saved as
+  `deliverable/slides/figures/azevedo-fig1-posterior-mean.png` (1130×720px).
+  Condensed the frame's bullets from 4 to 3 (merged the shrinkage-numbers
+  bullet and the closing "shape of the prior" bullet into one, since both
+  describe the same figure) to make room, then added the image at
+  `width=0.4\textwidth` with a source citation line, following the same
+  `\vs` + `center` + `\includegraphics` + `{\scriptsize Source: ...}`
+  pattern used by W2/W6/W11. No local `pdflatex`/`xelatex` available to
+  visually confirm the layout — structural check only (brace balance 494/494,
+  `frame`/`center`/`itemize` environment pairs all balanced, frame count
+  unchanged at 38 since this added content to an existing frame, not a new
+  one).
 
 ### W8
 
