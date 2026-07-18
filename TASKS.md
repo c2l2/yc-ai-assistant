@@ -473,6 +473,12 @@ not final Beamer LaTeX, unless the user asks to go straight to `.tex`.
   `frame`/`center`/`itemize` environment pairs all balanced, frame count
   unchanged at 38 since this added content to an existing frame, not a new
   one).
+- **2026-07-18 sizing/spacing fix**: user asked to shrink the image further
+  and tighten the gap above it. Changed `\includegraphics[width=0.4\textwidth]`
+  to `width=0.25\textwidth`, and replaced the `\vs` (`\vspace{1em}`) between
+  the bullet list and the `center` block with `\vspace{0.3em}`. The gap
+  between the image and its caption line (a blank line inside `center`)
+  was left untouched, per the user's instruction. Bullets unchanged.
 
 ### W8
 
