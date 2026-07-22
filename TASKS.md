@@ -660,6 +660,12 @@ not final Beamer LaTeX, unless the user asks to go straight to `.tex`.
   (`\node[below] at (0,-0.35)`) to above it (`\node[above] at (0,0.2)`),
   leaving `\theta_B^*` as the only label below the axis near that point.
   No coordinates, arrows, or colors changed — label position only.
+- **2026-07-22 internal-ID wording fix**: frame (5), "What the Formula Says,
+  in Plain Language," used the internal task codes "(W2)" and "(W4)" as if
+  the audience had a numbering key to decode them — the deck exposes no such
+  system to viewers. Changed to purely descriptive phrasing: "the Boston VAM
+  histogram from earlier" and "the attenuation-bias fix you saw earlier."
+  Wording only, no change to which examples are referenced.
 
 ### W11
 
@@ -723,6 +729,16 @@ not final Beamer LaTeX, unless the user asks to go straight to `.tex`.
   this satisfies the "caption with the actual computed values" goal
   without needing a separate re-caption — it's the real underlying figure,
   not a schematic with placeholder numbers.
+- **2026-07-22 internal-ID wording fix**: two audience-facing bullets used
+  bare task codes as if the audience could decode them. In frame 4, "From
+  Bayes to Empirical Bayes: Plug and Play," "W9's three-step recipe" →
+  "The three-step recipe from before," and "into W10's posterior mean
+  formula" → "into the posterior mean formula from before." In frame 1,
+  "The Empirical Step," "This is W9's ``deconvolution'' step" → "This is
+  the ``deconvolution'' step." Wording only. **Not touched** (outside the
+  user's explicit list for this pass): frame 1 still opens with "W10's
+  posterior mean formula assumed..." — same bare-code issue, left for a
+  follow-up pass if full within-frame consistency is wanted.
 
 ### W12
 
@@ -804,6 +820,10 @@ not final Beamer LaTeX, unless the user asks to go straight to `.tex`.
   labels and the wins-brackets extending below the x-axis). Reduced to
   `\resizebox{0.6\textwidth}{!}` — the tikzpicture's internal coordinates,
   labels, and colors are untouched, only the overall scale shrank.
+- **2026-07-22 internal-ID wording fix**: frame 5, "The Takeaway," said
+  "recall W3's fixed-vs-random-effects point" — a bare task code with no
+  audience-facing numbering key to decode it. Changed to "recall the
+  earlier fixed-vs-random-effects point." Wording only.
 
 ## Toy Demo Notes
 

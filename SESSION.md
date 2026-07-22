@@ -10,36 +10,46 @@ Use this file as the handoff note between separate Codex prompts.
   workshop outline was broken into a 13-task queue (W0-W12) in `TASKS.md`.
   **W0-W12 are all done — the deck is content-complete, and every frame now
   has a figure.** Part 1 is 21 slides; Part 2 is 15 slides (W10: 5, W11: 5,
-  W12: 5). Total: **38 frames**, unchanged this turn (a sizing/spacing
-  tweak only, no frames added/removed). What's left is a real LaTeX compile
-  pass — this deck has never been compiled end-to-end in this environment,
-  only structurally checked — plus whatever visual polish that compile
-  surfaces.
+  W12: 5). Total: **38 frames**, unchanged this turn (a wording-only fix,
+  no frames added/removed). What's left is a real LaTeX compile pass — this
+  deck has never been compiled end-to-end in this environment, only
+  structurally checked — plus whatever visual polish that compile surfaces.
 
 ## Current Task
 
-- Task ID: shrink W7's ("The Fat-Tail Finding at Bing") figure and tighten
-  the spacing above it, per explicit user-specified values.
-  1. `\includegraphics[width=0.4\textwidth]` → `width=0.25\textwidth`.
-  2. The `\vs` (`\vspace{1em}`) between the bullet list and the image's
-     `center` block → `\vspace{0.3em}`.
-  3. Left untouched, per the user's instruction: the gap between the image
-     and its caption line, and all three bullet points' text.
-- Status: `done`.
+- Task ID: replace internal task-code references ("(W2)", "(W4)", "W9's",
+  "W10's", "W3's") that had leaked into audience-facing slide text with
+  plain descriptive wording — the deck exposes no numbering key to viewers,
+  so these codes were meaningless to the audience. Four spots, exactly as
+  specified by the user:
+  1. "What the Formula Says, in Plain Language" (W10 frame 5): "(W2)" ->
+     "from earlier", "(W4)" -> "you saw earlier".
+  2. "The Empirical Step" (W11 frame 1): "W9's" -> "the".
+  3. "From Bayes to Empirical Bayes: Plug and Play" (W11 frame 4): "W10's"
+     -> "the posterior mean formula from before"; "W9's" -> "the
+     three-step recipe from before".
+  4. "The Takeaway" (W12 frame 5): "W3's" -> "the earlier".
+- Status: `done`. Wording-only change; no other content on these frames was
+  touched.
 
 ## Relevant Files
 
-- `deliverable/slides/eb-workshop.tex` (W7's "The Fat-Tail Finding at Bing"
-  frame — image width and pre-image spacing only)
-- `TASKS.md` (W7 card got a new "2026-07-18 sizing/spacing fix" note)
+- `deliverable/slides/eb-workshop.tex` (the four frames listed above)
+- `TASKS.md` (W10, W11, W12 cards each got a new "2026-07-22 internal-ID
+  wording fix" note)
 - `SESSION.md` (this file)
 
 ## Latest Decisions
 
-- Used a literal `\vspace{0.3em}` rather than redefining `\vs` (which is
-  reused at `width`-unrelated spots elsewhere in the deck for the standard
-  1em gap) — keeps this frame's tighter spacing local instead of changing
-  the shared macro's meaning everywhere.
+- Followed the user's explicit scope exactly — only the four listed spots
+  were changed. Left in place (not requested this turn, flagged for a
+  possible follow-up): "The Empirical Step" frame still opens with "W10's
+  posterior mean formula assumed..." (same bare-code issue, one line above
+  the "W9's" bullet that *was* fixed in that same frame) — see W11's card
+  note. Also left untouched: `W10's`/`W11's`/`W9's` mentions that live in
+  `%`-comments (build notes, not visible on any slide) and a couple of
+  earlier W10/W11 frames ("...from W9", "W11's job") that weren't on the
+  user's list either.
 
 ## Files Changed This Turn
 
@@ -50,19 +60,24 @@ Use this file as the handoff note between separate Codex prompts.
 ## Open Blockers
 
 - **Deck has never been compiled end-to-end with a real LaTeX toolchain in
-  this environment** — still true this turn. This turn's resize (0.4→0.25
-  `\textwidth`) was reasoned through but not visually confirmed by a real
-  compile — same caveat as every prior figure pass (W2, W6, W7, W10, W12)
-  before the user caught issues by reviewing rendered output. A real
-  `pdflatex`/`latexmk` (e.g. via Overleaf) pass is the highest-value next
-  step.
+  this environment** — still true this turn (this turn was text-only, no
+  layout risk, but the underlying blocker is unchanged). A real
+  `pdflatex`/`latexmk` (e.g. via Overleaf) pass is still the highest-value
+  next step.
 - `enumitem` fix (re-added `\usepackage{enumitem}` a few turns ago to fix a
   real `TeX capacity exceeded [grouping levels=255]` error the user hit in
   Overleaf) is still **unconfirmed by an actual compile**.
+- A few more bare internal task-codes remain in visible slide text outside
+  this turn's explicit scope (see "Latest Decisions" above) — worth a
+  follow-up pass if the user wants the whole deck fully scrubbed of
+  internal IDs, not just these four spots.
 - No task in `TASKS.md`'s Active Sequence table is `todo` or `blocked` —
   W0 through W12 are all `done`; remaining work is compile verification and
-  any polish it surfaces, not new queue entries.
+  any polish/wording cleanup it surfaces, not new queue entries.
 
 ## Recommended Next Prompt
 
-`麻煩把整份 eb-workshop.tex 拿去 Overleaf（或本地 pdflatex/latexmk）跑一次完整編譯，抓出任何排版溢出、標籤重疊、或圖片跑版的問題並回報——特別注意 W7「The Fat-Tail Finding at Bing」這張投影片圖片縮小到 0.25\textwidth 後是否太小或與文字擠壓，這份文件從沒有真的編譯過，其他地方可能還有沒發現的視覺問題。`
+`剩下投影片正文裡還有幾處內部代號（例如「The Empirical Step」開頭的 "W10's
+posterior mean formula"，以及更早 W10/W11 frame 裡的 "...from W9"、"W11's
+job"），要不要一併換成描述性說法？另外這份 .tex 從未真正編譯過，建議找時間拿去
+Overleaf 跑一次完整編譯，抓排版溢出或圖片跑版問題。`
