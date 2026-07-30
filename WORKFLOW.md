@@ -1,165 +1,174 @@
-# Research Workflow
+# Weekly Team Workflow
 
-This repository uses Markdown as the canonical research memory.
+This workflow treats each weekly meeting file as an internal report to the
+project manager. Team reporting remains human-authored and management decisions
+remain human-controlled. AI reads and evaluates before the meeting, then
+documents and synchronizes only after the manager approves the outcome.
 
-The workflow is designed so that notes stay local and readable by Codex, while
-the paper draft in `deliverable/paper/` becomes the main formal output over
-time.
+All paths are relative to the parent project root.
 
-## Core Principles
-
-- Markdown files store the working research memory.
-- The most relevant LaTeX draft in `deliverable/paper/` usually contains the latest project context.
-- Slides in `deliverable/slides/` should be derived from the paper draft rather than from scattered notes.
-- Skills are used to support repeated workflows, not to replace the repo structure.
-- Separate prompts are a feature, not a limitation: use local task and handoff files to preserve context across turns.
-
-## Folder Roles
-
-- `meeting-note.md`: running meeting summary and research coordination log
-- `BACKLOG.md`: important but not urgent issues and follow-ups
-- `TASKS.md`: queue of scoped tasks for multi-turn Codex execution
-- `SESSION.md`: active handoff note for the next Codex prompt
-- `references/`: paper PDFs and corresponding Markdown notes
-- `attachments/meetings/`: images used by meeting notes
-- `attachments/references/`: images used by paper notes
-- `data/`: raw, processed, temporary, and code-related data work
-- `finding/`: empirical analysis, modeling, and simulation work
-- `report/`: Markdown files that point to external docs or reporting artifacts
-- `deliverable/paper/`: main paper draft and manuscript files
-- `deliverable/slides/`: Beamer slide decks and slide-related files
-- `templates/`: reusable templates for analysis and simulation
-- `skills/`: Codex workflow skills for repeated research tasks
-
-## Research Pipeline
-
-Typical project flow:
-
-1. search papers
-2. create or update notes in `references/`
-3. log meetings and action items in `meeting-note.md`
-4. log hourly progress and backlog items during active work
-5. develop ideas with theory notes and discussion
-6. run simulations or empirical checks in `finding/`
-7. integrate stable material into `deliverable/paper/`
-8. create slides from `deliverable/paper/`
-
-Short version:
-
-`search -> note -> discuss -> think -> simulate -> paper -> slides`
-
-## Prompt-Chained Workflow
-
-When you want better performance by splitting work into separate prompts, use
-this loop:
-
-1. define the task queue in `TASKS.md`
-2. ask Codex to execute exactly one task
-3. let Codex update outputs plus `TASKS.md` and `SESSION.md`
-4. start the next prompt from the recommended handoff in `SESSION.md`
-
-Short version:
-
-`queue -> execute one task -> record handoff -> next prompt`
-
-This keeps each prompt narrow while still preserving continuity inside the repo.
-
-## What Belongs In Each File
-
-- `TASKS.md`: the ordered queue, status, scope, and definition of done
-- `SESSION.md`: what just happened and what the next prompt should say
-- `meeting-note.md`: higher-level research discussion, decisions, and coordination memory
-- `BACKLOG.md`: good ideas that matter, but are not the next prompt
-
-## Recommended Turn Shape
-
-For best Codex performance, structure each prompt around a single unit of work:
-
-1. point Codex to one task ID in `TASKS.md`
-2. name the target files or deliverable
-3. say whether Codex should stop after implementation or also document the result
-
-Example prompt:
+## Core Loop
 
 ```text
-Please work on T2 in TASKS.md.
-Focus only on that task.
-When finished, update TASKS.md and SESSION.md with the result and propose the next prompt.
+committed work
+      +
+member-authored internal weekly report
+              ↓
+read-only AI manager review
+              ↓
+manager and team discussion
+              ↓
+manager edits the internal report
+              ↓
+manager-invoked finalization
+              ↓
+finalized actions + non-task root state
 ```
 
-## Automating Prompt Sending
+## 1. Team Work and Reporting
 
-If you do not want to manually type each prompt, use the repo-local runner:
+During the week, members:
 
-```bash
-make codex-task-prompt
-make codex-task-next
-make codex-task-resume
-```
+1. complete their assigned work;
+2. commit the work to the repository;
+3. write their own update in the upcoming internal report at
+   `report/YYYY-MM-DD-weekly-meeting.md`.
 
-What each command does:
+Each update should identify:
 
-- `make codex-task-prompt`: prints the next generated prompt without sending it
-- `make codex-task-next`: sends the next task as a fresh `codex exec` run
-- `make codex-task-resume`: sends the next task to the most recent Codex session with `codex resume --last`
+- assigned task or intended outcome;
+- completed work;
+- relevant commits, changed files, or other evidence;
+- definition-of-done status;
+- blockers and dependencies;
+- proposed next step.
 
-You can target a specific task:
+AI does not draft these member updates. The report's primary audience is the
+project manager.
 
-```bash
-make codex-task-next TASK=T2
-```
+## 2. Read-Only Manager Review
 
-You can also set a model:
+Before the meeting, the manager invokes `review-weekly-progress`.
 
-```bash
-make codex-task-next TASK=T2 MODEL=gpt-5
-```
+The skill reads:
 
-Task selection rule:
+- the upcoming internal report;
+- the previous finalized report, including current assignments in
+  `Next Actions`;
+- the roadmap;
+- team roles and Git author identities;
+- new Git commits and relevant committed diffs;
+- linked evidence.
 
-1. first task with status `in_progress`
-2. otherwise first task with status `todo`
+The skill does not:
 
-This means you can keep the queue in `TASKS.md` and repeatedly run one command
-to move through the sequence.
+- edit the report or root documents;
+- run tests, builds, simulations, notebooks, servers, or application code;
+- infer quality or completion from commit volume;
+- produce a permanent review file.
 
-## Source of Truth by Stage
+The review window starts after the previous finalized report's `finalized_at`
+time and ends at the current `HEAD`. For the first review, or when that time is
+missing, the manager must provide a base date or commit; the skill does not
+treat older history as new progress.
 
-- Early-stage understanding: Markdown notes and meeting notes
-- Theory development: discussion, notes, and the current draft in `deliverable/paper/`
-- Simulation and numerical checking: `finding/`
-- Formal project narrative: `deliverable/paper/`
-- Presentation narrative: `deliverable/slides/`
+It returns an internal manager briefing in chat containing:
 
-## Skill Map
+- an executive summary;
+- a member-by-member claim and evidence assessment;
+- remaining definition-of-done items;
+- blockers, dependencies, and unreported committed work;
+- one recommended next step;
+- proposed assignments for meeting discussion;
+- items requiring manager or runtime verification.
 
-- `paper-search`: search literature and prioritize high-value papers
-- `paper-note`: turn papers into structured Markdown notes in `references/`
-- `meeting-log`: maintain `meeting-note.md`
-- `hourly-progress-log`: record compact hourly updates and backlog-worthy issues
-- `theory-workbench`: reason through assumptions, proof ideas, and gaps
-- `simulation-runner`: design and inspect simulations, using R by default
-- `chat-to-latex`: integrate current discussion into `deliverable/paper/` only when explicitly requested
-- `beamer-slides`: create or revise Beamer slides using the paper draft as the main source
-- `chinese-referee-report`: draft or revise Traditional Chinese referee reports in `report/`
-- `english-referee-report`: draft or revise English referee reports in `report/`
-- `letter-to-editor`: write editor-facing confidential comments or letters in `report/`
+## 3. Meeting Discussion
 
-## Important Conventions
+The manager uses the AI review as a discussion aid, not as an automatic
+evaluation record.
 
-- Use relative links for figures in Markdown notes.
-- For paper-note figures, store files in `attachments/references/`.
-- For meeting-note figures, store files in `attachments/meetings/`.
-- Use R by default for simulation work unless the project clearly uses another language.
-- Before integrating text into `deliverable/paper/`, check notation consistency with the paper draft.
-- For slide work, match the style of existing Beamer decks when possible.
-- For literature search, prioritize higher-quality journals when ranking candidate papers.
+During or after the meeting, the manager edits the internal weekly report to
+record:
 
-## Practical Guidance for Agents
+- accepted progress and important findings;
+- actual consensus and decisions;
+- agreed next actions and assignments;
+- backlog changes;
+- risks and mitigations;
+- unresolved questions.
 
-- Start from local files before relying on memory.
-- If `TASKS.md` and `SESSION.md` exist, use them first for multi-turn continuity.
-- Inspect `deliverable/paper/` whenever project context is needed and the task touches the paper.
-- Keep notes concise and structured so they remain useful later.
-- Do not treat exploratory notes as finished manuscript text.
-- Do not treat slides as the main place for developing ideas.
+Only content retained in this manager-edited note may update root state.
+
+## 4. Finalization and Root Synchronization
+
+After the meeting, the manager explicitly invokes `finalize-weekly-meeting` and
+identifies the internal report.
+
+The skill:
+
+1. revises the report into clear English without changing meaning;
+2. preserves the six canonical sections;
+3. adds or normalizes stable task, backlog, decision, and risk IDs when
+   unambiguous;
+4. asks the manager about material ambiguity rather than guessing;
+5. marks the report `finalized`;
+6. ensures `Next Actions` contains every active assignment for the coming week,
+   including explicit carryovers;
+7. updates:
+   - `BACKLOG.md`
+   - `DECISIONS.md`
+   - `RISKS.md`
+8. links every current root record to the weekly report that last changed it.
+
+The finalizer never uses the pre-meeting AI report or Git activity alone to
+create state.
+
+## Current-State Meaning
+
+- latest finalized report, `Next Actions`: current tasks and assignments
+- `BACKLOG.md`: current open backlog
+- `DECISIONS.md`: currently effective decisions
+- `RISKS.md`: current open risks
+
+All assignment history and task state remain in internal weekly reports. Closed
+backlog, superseded decisions, and resolved risks also remain there.
+
+## Stable IDs
+
+- Tasks: `T-###`
+- Backlog: `B-###`
+- Decisions: `D-###`
+- Risks: `R-###`
+- Team members: `TM-###`
+
+IDs support cross-week continuity. They do not replace readable descriptions.
+
+## Weekly Internal Report Structure
+
+Use `yc-ai-assistant/templates/weekly-meeting.md` and preserve:
+
+1. `Meeting Goals / Agenda`
+2. `Key Takeaways`
+3. `Consensus and Decisions`
+4. `Next Actions`
+5. `Backlog & Unresolved Questions`
+6. `Other`
+
+Store reports directly in `report/` with the name
+`YYYY-MM-DD-weekly-meeting.md`.
+
+Before finalization, every action from the previous meeting must be completed,
+cancelled, reassigned, or carried forward explicitly. This makes the latest
+finalized report sufficient for the next review.
+
+## No Automation Layer
+
+This workflow intentionally has:
+
+- no progress-running or progress-testing script;
+- no automated state replay;
+- no preview/apply command;
+- no workflow regression test suite;
+- no background update process.
+
+Human review and explicit manager invocation are the control points.

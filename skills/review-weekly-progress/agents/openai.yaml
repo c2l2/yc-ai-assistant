@@ -1,0 +1,4 @@
+interface:
+  display_name: "Review Weekly Progress"
+  short_description: "Review an internal weekly manager report"
+  default_prompt: "Use $review-weekly-progress to review the internal report at report/YYYY-MM-DD-weekly-meeting.md and new committed work without editing files or running project work."

@@ -14,7 +14,8 @@ The goal is not just to list papers. The goal is to help the user find papers th
 Inspect only the files needed for the task:
 
 - relevant notes in `references/`
-- `meeting-note.md` if recent discussions define the search direction
+- the latest finalized `report/YYYY-MM-DD-weekly-meeting.md` if recent
+  discussions define the search direction
 - any local project notes, prompts, or research questions provided by the user
 - the most relevant LaTeX file in `deliverable/paper/` when it helps identify the project's current framing, terminology, or literature needs
 

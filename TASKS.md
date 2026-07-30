@@ -1,14 +1,8 @@
-# Task Queue
+# Internal Codex Implementation Record
 
-Use this file when the work is intentionally split across multiple prompts.
-
-## How To Use
-
-- Keep tasks small enough that Codex can finish one in a single turn.
-- Put tasks in the order you want Codex to attempt them.
-- Mark exactly one task as `in_progress` at a time.
-- Move important but deferrable ideas to `BACKLOG.md`.
-- At the end of each turn, update statuses and note the next recommended prompt in `SESSION.md`.
+This file tracks changes to the AI workflow itself. It is not a team-management
+record. Team assignments and task history live entirely in finalized weekly
+meeting notes.
 
 ## Status Legend
 
@@ -21,21 +15,24 @@ Use this file when the work is intentionally split across multiple prompts.
 
 | ID | Status | Task | Output / Deliverable | Notes |
 | --- | --- | --- | --- | --- |
-| T1 | done | Add a one-sentence purpose statement to `toy-demo.md`. | `toy-demo.md` | Keep it to one short sentence under a new `## Purpose` heading. |
-| T2 | done | Add a three-item numbered checklist to `toy-demo.md`. | `toy-demo.md` | Put it under a new `## Checklist` heading. |
-| T3 | done | Add a final completion note to `toy-demo.md`. | `toy-demo.md` | Add a `## Completion Note` heading with one short paragraph. |
-| T4 | done | Update Beamer slide skills to support `% message:` comments for frame-level slide intent. | `skills/beamer-slides/SKILL.md`, `skills/revise-beamer-slides/SKILL.md` | New slides should add `% message:` comments; revisions should read them as the intended takeaway. |
-| T5 | done | Commit and push the current Beamer skill updates. | Git commit on `main` and push to `origin`. | Include the skill changes and handoff-note updates from this turn. |
-| T6 | done | Update Beamer slide skills to avoid math-first slide bodies. | `skills/beamer-slides/SKILL.md`, `skills/revise-beamer-slides/SKILL.md` | New slides and revisions should lead with a short verbal setup before any displayed equation when possible. |
-| T7 | done | Update Beamer slide skills to keep figure/table slides sparse and add presenter-note comments. | `skills/beamer-slides/SKILL.md`, `skills/revise-beamer-slides/SKILL.md` | Figure/table slides should use takeaway titles when helpful, show at most two visible sentences, and place fuller spoken interpretation in LaTeX presenter-note comments. |
-| T8 | done | Update Beamer slide skills to avoid awkward one-word or two-word trailing lines. | `skills/beamer-slides/SKILL.md`, `skills/revise-beamer-slides/SKILL.md` | When a sentence wraps badly, shorten or rephrase it instead of leaving an orphaned last line. |
-| T9 | done | Update `revise-beamer-slides` to mark revised frames and report the first revised frame line in chat. | `skills/revise-beamer-slides/SKILL.md` | Revised frames should get a `%revised` tag, and the final response should identify the first revised frame line in the target `.tex` file. |
-| T10 | done | Update `revise-beamer-slides` to stop when the target Beamer file may have unsaved changes. | `skills/revise-beamer-slides/SKILL.md` | If the on-disk `.tex` file may be stale relative to an unsaved editor buffer, stop and ask the user to save before proceeding. |
-| T11 | done | Update `beamer-slides` to separate generated frames with `% -----------------`. | `skills/beamer-slides/SKILL.md` | Place the separator between `\\end{frame}` and the next `\\begin{frame}` so frames are easier to locate in source. |
+| T1 | done | Replace the deterministic workflow design with the manager-led weekly process. | Repository workflow documentation | Remove the planned workflow script and tests. |
+| T2 | done | Create root context, current-state documents, and the English weekly template. | Root Markdown files and `templates/weekly-meeting.md` | Team members write their own updates. |
+| T3 | done | Create separate review and finalization skills. | `skills/review-weekly-progress/` and `skills/finalize-weekly-meeting/` | Review is read-only; finalization is manager-invoked. |
+| T4 | done | Retire conflicting paths and validate the redesigned workflow. | Clean file map and validation results | No old running-note or automated weekly-workflow path remains active. |
+| T5 | done | Retire the separate Codex session handoff. | Removed session file and updated repository instructions | Its former runner dependency was removed before the runner itself was retired in T6. |
+| T6 | done | Retire the internal Codex task runner. | Remove the runner, its Makefile targets, and active references | The internal task record is manual and cannot launch Codex. |
+| T7 | done | Retire the root team task register. | Store current assignments in finalized weekly notes | `Next Actions` is now the complete current task snapshot. |
+| T8 | done | Generalize the repository agent instructions. | Synchronized root and assistant `AGENTS.md` files | Research, empirical, and software workflows are primary; weekly coordination is optional. |
+| T9 | done | Treat weekly meeting files as internal manager reports. | Updated template, skills, and workflow documentation | Reports remain flat under `report/` with the manager as primary audience. |
+| T10 | done | Split Beamer initialization and revision into separate skills. | `skills/beamer-slides/SKILL.md`, `skills/revise-beamer-slides/SKILL.md` | New decks start from paper context; existing decks use the target file and inline comments. |
+| T11 | done | Add frame-level message and source-navigation conventions. | Beamer initialization and revision skills | Use `% message:` comments and place `% -----------------` between generated frames. |
+| T12 | done | Avoid math-first slide bodies. | Beamer initialization and revision skills | Lead with a short verbal setup before a displayed equation when possible. |
+| T13 | done | Keep figure and table slides sparse. | Beamer initialization and revision skills | Use takeaway titles, at most two visible sentences, and presenter-note comments. |
+| T14 | done | Avoid one-word or two-word trailing lines. | Beamer initialization and revision skills | Shorten or rephrase awkwardly wrapped sentences. |
+| T15 | done | Make revised frames auditable. | `skills/revise-beamer-slides/SKILL.md` | Add `%revised` and report the first revised frame line. |
+| T16 | done | Protect unsaved Beamer editor changes. | `skills/revise-beamer-slides/SKILL.md` | Stop and ask the user to save when the on-disk file may be stale. |
 
 ## Task Template
-
-Copy this block when you need more detail for a task:
 
 ```md
 ### T#
@@ -48,19 +45,3 @@ Copy this block when you need more detail for a task:
 - Depends on:
 - Notes for Codex:
 ```
-
-## Toy Demo Notes
-
-You can test the automation with:
-
-```bash
-make codex-task-next
-make codex-task-next
-make codex-task-next
-```
-
-Expected result:
-
-- `toy-demo.md` is updated in three small steps
-- `TASKS.md` moves from `todo` to `done`
-- `SESSION.md` keeps the handoff current after each run

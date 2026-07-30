@@ -14,7 +14,8 @@ The goal is to make theoretical thinking explicit, structured, and reusable. A g
 Inspect only the files needed for the task:
 
 - relevant Markdown notes in `references/`
-- `meeting-note.md` if recent discussions matter for the theory idea
+- the latest finalized `report/YYYY-MM-DD-weekly-meeting.md` if recent
+  discussions matter for the theory idea
 - any theory sketch, derivation, proof outline, or pasted math provided by the user
 - relevant LaTeX files in `deliverable/paper/` if the theory idea is already being drafted there
 
