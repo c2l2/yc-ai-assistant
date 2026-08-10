@@ -72,6 +72,31 @@ task-card "Definition of done" text for W3/W4/W5/W8/W9 still describes the
 original point-by-point content, now delivered across fewer frames — see
 each card's notes for the specific merge.
 
+## Revision Round 1 (Teacher Feedback, 2026-08-10)
+
+The teacher reviewed the content-complete W0–W12 deck and gave a new round of
+revision notes. These are tracked separately from the W0–W12 sequence (which
+stays as historical record of how the deck was first drafted) using an `R`
+prefix. **Planning/queue stage only — do not start drafting content until the
+user explicitly approves individual task cards**, same rule as the original
+Active Sequence.
+
+| ID | Status | Task | Output / Deliverable | Notes |
+| --- | --- | --- | --- | --- |
+| R1 | done | Sweep the deck for audience-facing internal task-ID leaks (`W2`, `W3`, `W4`, `W9`, `W10`, etc.) and replace with descriptive, no-numbering phrasing. | Edits to `deliverable/slides/eb-workshop.tex` | See task card R1. Fixed 2026-08-10 — 6 remaining audience-facing spots reworded; only `%`-comment authoring notes still contain `W\d+` tokens. Re-verified 2026-08-10 after R2's five new frames landed — zero new leaks. |
+| R2 | done | Insert a new "quick paper overview" mini-section between "A Preview of Today's Examples" and the deep-dive content, one card per paper. | New slides in `eb-workshop.tex` | Parent task — done 2026-08-10, 5 new frames (1 lead-in + R2a–R2d, 1 frame each). See R2a–R2d for the four paper-specific sub-cards. |
+| R2a | done | Paper overview: teacher value-added main literature (Angrist–Hull–Pathak–Walters / Walters 2024 framing). | 1 slide | See task card R2a. |
+| R2b | done | Paper overview: judge/firm effects gallery literature. | 1 slide | See task card R2b. |
+| R2c | done | Paper overview: Kline–Rose–Walters (ranking/discrimination). | 1 slide | See task card R2c. |
+| R2d | done | Paper overview: Azevedo et al. (A/B testing, fat tails). | 1 slide | See task card R2d. |
+| R3 | done | Review and trim the formula/technical-detail slides bridging Part 1 into Part 2 (sampling model, normal/normal setup), keeping only what's essential. | Edits to `eb-workshop.tex` (W9/W10 region) | See task card R3. Done 2026-08-10 — 8 frames merged down to 5 (approved by user before editing). |
+| R4 | todo | Re-review existing Part 1 slides against the "many pictures, light text, story-driven, example-led" style; simplify or split text-heavy/crowded frames. | Edits to `eb-workshop.tex` (Part 1 frames) | Parent task — see R4a/R4b for the two sub-passes. |
+| R4a | done | Style pass, Part 1 first half (opening + teacher value-added: individual estimate, distribution, regressor pitfall). | Edits to `eb-workshop.tex` | See task card R4a. Done 2026-08-10 — 9-item list proposed, approved with 2 tweaks, all executed. **Paused here per user request — R4b awaits sign-off on the 3 new figures' style before starting.** |
+| R4b | todo | Style pass, Part 1 second half (other unit types, ranking, A/B testing, synthesis). | Edits to `eb-workshop.tex` | See task card R4b. |
+| R5 | done | Add more intuitive pictures to Part 2. | New figures + slides in `eb-workshop.tex` | Parent task — done 2026-08-10, 2 new TikZ frames inserted between W10 and W11. See R5a/R5b. |
+| R5a | done | New figure: scatterplot of raw estimate (x-axis) vs. shrunk/posterior estimate (y-axis). | New figure + slide | See task card R5a. |
+| R5b | done | New figure: schematic showing shrinkage magnitude vs. sample size. | New figure + slide | See task card R5b. |
+
 ## Toy Demo History
 
 Tasks T1–T3 (`toy-demo.md` purpose/checklist/completion-note additions) were
@@ -824,6 +849,470 @@ not final Beamer LaTeX, unless the user asks to go straight to `.tex`.
   "recall W3's fixed-vs-random-effects point" — a bare task code with no
   audience-facing numbering key to decode it. Changed to "recall the
   earlier fixed-vs-random-effects point." Wording only.
+
+## Revision Round 1 Task Cards
+
+Detailed cards for the R-prefixed revision tasks above (teacher feedback,
+2026-08-10). Same rule as the Workshop Task Cards: draft an outline first,
+don't touch `eb-workshop.tex` until the user approves the individual card.
+
+### R1
+
+- Status: `done`
+- Goal: Find every place in the slide body text (not code comments — those
+  are fine to keep as authoring notes) where an internal task ID like `W2`,
+  `W3`, `W4`, `W9`, `W10` etc. leaks into what the audience actually reads,
+  and rewrite it as a plain descriptive reference with no numbering scheme
+  ("the Boston VAM histogram from earlier," "the earlier fixed-vs-random-
+  effects point," "the posterior mean formula from before").
+- Inputs: `deliverable/slides/eb-workshop.tex` itself (grep for `W[0-9]+`
+  inside `\begin{frame}...\end{frame}` bodies, not the `% ---` comment
+  banners between frames).
+- Target files: `deliverable/slides/eb-workshop.tex`.
+- Definition of done: no `W\d+`-style token remains inside any frame's
+  rendered text. — **Met.** A 2026-07-22 pass had already fixed four spots
+  (see W10/W11/W12 card notes above); this pass (2026-08-10) fixed the six
+  that remained: (1)/(2) "Setting Up the Derivation" frame, "(from W9)" and
+  "(also from W9)" → "(as introduced earlier)" / "(also introduced
+  earlier)"; (3) same frame, "Bayes formula, W11's job" → "Bayes formula,
+  which comes next"; (4) "Result: The Posterior Mean Formula" frame,
+  "exactly W11's job" → "exactly what comes next"; (5) "The Empirical Step"
+  frame, "W10's posterior mean formula assumed" → "The posterior mean
+  formula from before assumed" (this was the one the 2026-07-22 pass
+  explicitly left unfixed); (6) "Estimating $\tau^2$" frame, "in Part 1
+  (W3)" → "earlier"; (7) "For One Unit, It's Ambiguous" frame, "is W10's
+  shrinkage weight" → "is the shrinkage weight from before". Re-grepped
+  `W[0-9]+` afterward — every remaining match is inside a `%`-comment
+  banner (authoring notes between frames), none inside a `\begin{frame}`
+  body. Structural check: brace balance unchanged (495/495), frame count
+  unchanged (38/38 `\begin{frame}`/`\end{frame}`) — wording-only edit, no
+  layout risk.
+- Depends on: none (pure find-and-reword, done independent of other R
+  tasks). Note for future R2–R5 work: those tasks will add/move text and
+  could introduce new `W\d+` leaks or shift line numbers — re-grep after
+  each lands rather than assuming R1 covers content added later.
+- Notes for Codex: Comments (`% --- W6: ... ---`) are internal authoring
+  notes, not audience-facing — left alone, per plan. Only text inside
+  `\begin{frame}...\end{frame}` bodies (bullet text, captions, footnotes)
+  was touched.
+- **2026-08-10 re-verification pass (after R2 landed)**: user asked to
+  re-scan the whole deck since R2 added 5 new frames (including a new
+  `% --- R2: ... ---` comment banner that itself mentions `W1`, `W5` while
+  explaining the reuse decisions). Wrote a small script to walk the file
+  line-by-line, skip any line starting with `%`, and flag `W\d+` matches
+  only while inside a `\begin{frame}...\end{frame}` span — zero hits.
+  Cross-checked with a plain `grep -n 'W[0-9]+'` and a `grep -n
+  '\bR[0-9]+[a-d]?\b'` pass over the whole file: every match in both is
+  inside a `%`-comment line (the original W1–W12 banners, plus the new R2
+  banner's own internal cross-references). No `W\d+` or `R\d+` token
+  leaked into any frame's rendered text. Confirms R2's drafting followed
+  R1's rule correctly — no regression.
+
+### R2a
+
+- Status: `done`
+- Goal: A "paper at a glance" slide (or two) for the teacher value-added
+  literature underlying the W2/W3/W4 running example — research question,
+  why EB is the right tool, and the main finding, with the finding shown as
+  a figure/table wherever possible rather than prose.
+- Inputs: [walters-2024-eb-methods-labor-economics.md](../references/walters-2024-eb-methods-labor-economics.md);
+  figure to reuse: `deliverable/slides/figures/gu-walters-posterior-means.png`
+  (already used by W2 and W11) — **user decision (2026-08-10): reuse this
+  existing figure directly rather than drafting a new/simpler one.**
+- Target files: new slide draft; eventual home in `eb-workshop.tex` between
+  "A Preview of Today's Examples" and the first deep-dive frame.
+- Definition of done: 1–2 slides with (a) the research question in one
+  sentence, (b) a one-line "why EB" justification (many noisy unit-level
+  estimates, need to separate signal from sampling noise), (c) the headline
+  finding shown via the reused `gu-walters-posterior-means.png` figure. —
+  **Met, 1 frame.** "Paper at a Glance: Teacher \& School Value-Added"
+  states the research question (how much do teachers/schools differ, how
+  to get a trustworthy per-unit estimate), the why-EB justification (raw
+  estimates are noisy, especially for small schools, and confuse noise with
+  real quality unless corrected), and the shrinkage finding, closing with
+  `gu-walters-posterior-means.png` at `width=0.32\textwidth` (smaller than
+  W2's `0.36\textwidth`, since this frame carries three bullets above it
+  vs. W2's two-bullet-plus-figure layout).
+- Depends on: none content-wise; sequencing depends on R2b–R2d for shared
+  section framing (all four should read as one consistent "quick overview"
+  mini-section, so drafting them together or immediately in sequence is
+  recommended even though each is its own card).
+- Notes for Codex: Keep this distinct from W2/W3/W4's later deep dives —
+  this is a preview/orientation card, the deep dives still do the full
+  walkthrough. Avoid duplicating content verbatim; this should feel like an
+  abstract, not a rerun. Reusing the same image as W2/W11 means this will be
+  its third appearance in the deck — fine per the user's explicit decision,
+  but worth a caption/framing tweak so it doesn't feel like a verbatim
+  repeat (e.g., overview slide shows it with less annotation/detail than
+  the deep-dive frame). **Followed this**: no separate caption line/stats
+  box was added here (W11's version does that); this frame's caption is
+  just the one-line source citation, kept lighter than W2/W11's treatment.
+
+### R2b
+
+- Status: `done`
+- Goal: A "paper at a glance" slide for the judge/firm-effects gallery
+  literature (the W5 many-unit-types survey) — research question(s), why EB,
+  main finding(s), visual where possible.
+- Inputs: [other-unit-effects-gallery.md](../references/other-unit-effects-gallery.md).
+- Target files: new slide draft; eventual home in `eb-workshop.tex` in the
+  new overview mini-section.
+- Definition of done: **user decision (2026-08-10): do NOT reuse W5's
+  four-row gallery table here.** Instead, 1 slide (not 2) with a single
+  one-line framing — "this same problem (many noisy unit-level estimates)
+  shows up across judges, firms, doctors/hospitals, police, etc." — no
+  table, no per-paper research-question/finding breakdown. The full table
+  with citations stays exclusively on W5's deep-dive frame. — **Met.**
+  "Paper at a Glance: Beyond Schools" is prose only, no bullets, no table,
+  no figure: one sentence naming the four settings (judges, firms, doctors/
+  hospitals, police) and framing EB as the general-purpose fix, plus one
+  short transition sentence pointing forward to W5's fuller gallery.
+- Depends on: none (see R2a's note on drafting all of R2a–R2d together for
+  consistency).
+- Notes for Codex: This card is the odd one out in the R2 set precisely
+  because it's *not* a single-paper overview — per the user's explicit
+  instruction, keep it to one short, punchy sentence/frame rather than
+  trying to compress four studies into "why EB + main finding" format the
+  way R2a/R2c/R2d do. Resist the urge to add a mini-table "just to be
+  thorough" — that's the exact thing this decision was meant to avoid.
+  **Followed this**: no itemize list, no table, no figure — just two
+  sentences of running prose, the lightest frame in the whole mini-section.
+
+### R2c
+
+- Status: `done`
+- Goal: A "paper at a glance" slide (or two) for Kline–Rose–Walters (used
+  for the ranking/discrimination application, W6) — research question, why
+  EB, main finding, visual.
+- Inputs: [kline-rose-walters-2022-systemic-discrimination.md](../references/kline-rose-walters-2022-systemic-discrimination.md);
+  figures to reuse: `deliverable/slides/figures/kline-rose-walters-fig6.png`
+  and `.../fig7.png` — **user decision (2026-08-10): reuse these existing
+  figures directly rather than drafting simplified versions.**
+- Target files: new slide draft; eventual home in `eb-workshop.tex` overview
+  mini-section.
+- Definition of done: 1–2 slides — research question (do specific firms
+  discriminate, and can we name them with confidence?), why EB (average
+  effect is small/noisy per firm, need to separate real heterogeneity from
+  sampling noise before ranking), and the headline finding shown via the
+  reused fig6/fig7 images (concentration/Lorenz result and/or the "23 of
+  108 firms" result). — **Met, 1 frame.** "Paper at a Glance: Which Firms
+  Discriminate?" states the research question (even spread vs. concentrated
+  discrimination, naming firms with confidence), the why-EB justification
+  (each firm's audit estimate is noisy on its own; EB deconvolves the true
+  distribution and controls the false discovery rate for flagging), and the
+  headline concentration + "23 of 108" findings, closing with both fig6 and
+  fig7 side by side (kept the pair, per the "use judgment" note below) at
+  `width=0.42\textwidth`/`0.21\textwidth` — same 2:1 ratio as W6's
+  `0.52`/`0.26`, scaled down to fit under three bullets.
+- Depends on: none (see R2a's note).
+- Notes for Codex: Same third-appearance consideration as R2a — fig6/fig7
+  will now appear on both the overview slide and W6's deep dive, which is
+  fine per the user's explicit decision; if both figures together feel like
+  too much for a "quick" overview slide, it's fine to use just one of the
+  two here (e.g., fig7's Lorenz curve alone) and keep the pair for W6 —
+  use judgment, but don't switch to a different (non-reused) visual without
+  checking with the user first. **Followed this**: kept both fig6 and fig7
+  (matching the user's literal "KRW Figure 6/7" instruction rather than
+  trimming to one) — revisit if a compile pass shows the pair too cramped
+  next to three bullets of text on one frame.
+
+### R2d
+
+- Status: `done`
+- Goal: A "paper at a glance" slide (or two) for Azevedo et al. (used for
+  the A/B testing application, W7) — research question, why EB, main
+  finding, visual.
+- Inputs: [azevedo-et-al-2020-ab-testing-fat-tails.md](../references/azevedo-et-al-2020-ab-testing-fat-tails.md);
+  figure to reuse: `deliverable/slides/figures/azevedo-fig1-posterior-mean.png`
+  (posterior mean function, already used in W7's deep dive) — **user
+  decision (2026-08-10): reuse this existing figure directly rather than
+  drafting a simplified version.**
+- Target files: new slide draft; eventual home in `eb-workshop.tex` overview
+  mini-section.
+- Definition of done: 1–2 slides — research question (how should a firm
+  allocate scarce A/B-test traffic across many candidate ideas?), why EB
+  (most ideas' raw estimated effects are noisy given limited sample sizes;
+  need to borrow strength across ideas to decide what to ship), headline
+  finding shown via the reused `azevedo-fig1-posterior-mean.png` figure
+  (fat-tailed distribution of true effects / the shrinkage-at-different-
+  t-stats result). — **Met, 1 frame.** "Paper at a Glance: Scaling Up A/B
+  Testing" states the research question (allocating scarce experimental
+  users across many ideas), the why-EB justification (raw effects too
+  noisy to trust alone; posterior mean gives the ship/don't-ship rule), and
+  the fat-tails finding at Bing, closing with
+  `azevedo-fig1-posterior-mean.png` at `width=0.22\textwidth` (slightly
+  smaller than W7's `0.25\textwidth`, to match this frame's three bullets
+  vs. W7's own figure frame).
+- Depends on: none (see R2a's note).
+- Notes for Codex: Same third-appearance consideration as R2a/R2c — this
+  image will now appear on both the overview slide and W7's deep dive,
+  which is fine per the user's explicit decision; a lighter caption/less
+  annotation on the overview slide can help it read as a preview rather
+  than a rerun. **Followed this**: caption here is a single source line
+  (no restated numbers), lighter than W7's own frame which spells out both
+  worked shrinkage examples in its bullets.
+
+### R3
+
+- Status: `done`
+- Goal: Review the Part 1 → Part 2 transition frames — specifically W9's
+  sampling-model introduction and W10's normal/normal setup/derivation
+  frames — and cut formulas/technical detail down to only what's load-
+  bearing for what follows. This is a trim/simplify pass, not a rewrite of
+  the underlying math.
+- Inputs: `deliverable/slides/eb-workshop.tex` (W9 and W10 frames, currently
+  ~3 + 5 frames); the W9/W10 card notes above for what each frame is
+  currently carrying.
+- Target files: `deliverable/slides/eb-workshop.tex`.
+- Definition of done: identify, per frame in this range, what's essential
+  (audience needs it to follow Part 2) vs. what's decorative/redundant
+  (restates something already said, or a level of formality the talk
+  doesn't need) — propose cuts to the user before editing `eb-workshop.tex`,
+  since this touches the derivation the rest of Part 2 depends on. — **Met.**
+  Proposed a specific 8-frame-to-5-frame plan (with the exact keep/cut list)
+  via `AskUserQuestion` before touching the file; user picked the
+  recommended option (merge as proposed, keep the posterior-variance
+  formula as a one-line text mention rather than cutting it or keeping it
+  as a display equation). Then edited `eb-workshop.tex`:
+  1. **W9, 3 frames -> 2**: merged "Back to Boston Schools: The Sampling
+     Model" and "The Second Level: $\theta_j \sim G$" into one "The
+     Normal/Normal Model: Two Levels" frame — both defining equations kept
+     ($\hat\theta_j\mid\theta_j,s_j\sim N(\theta_j,s_j^2)$ and
+     $\theta_j\sim N(\mu,\tau^2)$), the redundant "two levels, one recipe"
+     summary bullet cut (redundant with the untouched recipe-preview frame
+     right after it). "Preview: The Three-Step EB Recipe" frame left
+     unchanged.
+  2. **W10, 5 frames -> 3**: merged "Setting Up the Derivation" (a near-
+     verbatim formal restatement of W9's two equations), "Deriving the
+     Posterior Mean: Precision-Weighting" (had an explicit Bayes'-rule
+     product-of-exponentials display equation), and "Result: The Posterior
+     Mean Formula" into one "Deriving the Posterior Mean" frame. Cuts: the
+     Bayes'-rule density equation is now stated in words only; the
+     posterior-variance formula is folded into a words-only clause rather
+     than shown as its own equation/bullet. The closed-form $\theta_j^*$
+     result equation itself is untouched (load-bearing for W11/W12). The
+     picture frame and the plain-language recap frame were left unchanged.
+  Net: 8 frames -> 5 frames, deck total 43 -> 40. Structural check: frame
+  count 40/40 (`\begin{frame}`/`\end{frame}`); braces 515/515; `itemize`
+  30/30 (down from 33, consistent with 3 fewer itemize-containing frames);
+  display-math `\[...\]` opens/closes 7/7 (excluding `\\[0.4em]`-style
+  linebreak spacing); dollar-sign count even (282); re-scanned for leaked
+  `W\d+`/`R\d+` tokens in frame bodies afterward — zero hits, same script
+  as R1's re-verification pass. Still no local `pdflatex`/`xelatex` in this
+  environment — not compiled, structural check only.
+- Depends on: none, but should probably be sequenced after R2 lands (R2
+  adds new slides before this region, which may change how much scene-
+  setting W9/W10 still need to do on their own). — done after R2, as
+  planned; in practice R2's additions (all before "A Preview of Today's
+  Examples") didn't overlap with W9/W10's content, so no further scope
+  change resulted from the sequencing.
+- Notes for Codex: Don't cut content that R1's or R4's changes elsewhere in
+  the deck rely on referencing back to (e.g., W11 and W12 both point back at
+  "the posterior mean formula from before" — confirm the trimmed version
+  still supports those references before finalizing). **Followed this**:
+  W11's "the posterior mean formula from before" and W12's "the shrinkage
+  weight from before" both still resolve correctly to content in the
+  merged "Deriving the Posterior Mean" frame — neither the $\theta_j^*$
+  equation nor the $w_j$ notation was touched by the cuts.
+
+### R4a
+
+- Status: `done`
+- Goal: Re-review the first half of Part 1 (opening/preview frames, plus
+  the teacher value-added individual-estimate, distribution, and regressor-
+  attenuation frames) against a "many pictures, light text, story-driven,
+  example-led" style bar. Flag which frames are too text-heavy or crowded,
+  and either simplify the wording or split into two frames.
+- Inputs: `deliverable/slides/eb-workshop.tex` (current W1–W4 frames).
+- Target files: `deliverable/slides/eb-workshop.tex`.
+- Definition of done: a per-frame assessment (keep as-is / simplify text /
+  split into two) presented to the user before any edits are made, then the
+  approved edits applied. — **Met.** Reviewed all 9 frames across W1–W4
+  (excluding R2's frames, a separate already-approved task) and presented a
+  per-frame assessment in chat with a priority tag on each: 2 low priority
+  (leave as-is), 1 medium (trim), 1 medium-high (trim), 3 high priority
+  (add a new illustrative figure), 1 highest priority (split — the clearest
+  case, since it undoes an earlier over-compression). User approved all 9
+  with two tweaks (see below), then all 9 were executed:
+  1. **"What Is Empirical Bayes?"** split into two frames — a text-only
+     definition frame, and a new "EB Serves Three Objectives" frame that
+     replaces the enumerate list with three small TikZ icons (bell curve
+     for "learn the distribution," a shrink-arrow for "improve individual
+     estimates" reusing W10's exact number-line motif, three ranked bars
+     for "support decisions").
+  2. **"A Preview of Today's Examples"** — trimmed the trailing
+     explanatory clause off the four bullets R2's new "Quick Paper
+     Overviews" mini-section (inserted right after this frame under task
+     R2) now covers in more depth, to avoid the same four topics being
+     spelled out in full twice in a row. The two bullets R2 doesn't cover
+     kept their full text.
+  3. **"The Problem: Noise Masquerades as Quality"** — added a new
+     illustrative funnel-plot figure (school size on x, raw estimate on
+     y, small/noisy schools in red scattering widely, large/precise
+     schools in blue clustering near the true mean) — no bullet text cut.
+  4. **"The EB Fix: Borrow Strength Across Schools"** — light trim of one
+     bullet (merged two clauses into one), figure unchanged.
+  5. **"How Much Does Quality Really Vary?"** — added a new illustrative
+     dual-normal-curve figure (wide red curve = raw variance, narrower
+     taller blue curve = true spread $G$) — no bullet text cut.
+  6. **"Introducing $G$"** — the closing FE/RE-terminology caveat bullet
+     (previously the densest bullet in W1–W4) trimmed from a two-clause,
+     multi-line explanation down to one sentence, kept as a normal inline
+     bullet (per the user's explicit tweak: no boxed aside, to avoid extra
+     layout complexity).
+  7. **"A Pitfall: Using $\hat\theta_j$ as a Regressor"** — added a new
+     illustrative regression-lines figure (a scatter with a steep "true
+     slope" line in blue and a flatter "attenuated" line in red) — no
+     bullet text cut.
+  8. **"The EB Fix: Regress on the Posterior Mean"** — the most crowded
+     frame in W1–W4 (4 bullets, the last a long two-clause asymmetry
+     argument, plus a pull-quote box) split back into two frames:
+     fix+why+caveat (3 bullets), then a dedicated "Memorable Rule: Right
+     Side Fixes Bias, Left Side Causes It" frame carrying the asymmetry
+     argument and the existing pull-quote box — this undoes the
+     2026-07-17 compression pass's merge of these same two points.
+  Net: W1 2→3 frames, W4 2→3 frames (+2 total); deck 42→44 frames.
+  Structural check: frame count 44/44; `tikzpicture` 8/8 (4 pre-existing +
+  4 new: the icon row, funnel plot, dual-curve, regression-lines); `scope`
+  3/3 (all inside the icon row); `center` 21/21; braces 618/618;
+  dollar-sign count even (326); display-math `\[...\]` still 7/7 (none of
+  the new content uses `\[...\]`, all figures are TikZ-only); re-scanned
+  for leaked `W\d+` tokens in frame bodies — zero hits. **Not yet compiled
+  in Overleaf** — this turn's 4 new TikZ figures (frame-1 icon row, funnel
+  plot, dual-normal curves, regression-lines) are new since the user's
+  last Overleaf confirmation (which covered R1–R3, 40 frames, plus R5's
+  scatter/weight-curve figures reported separately). **Per the user's
+  explicit request, execution paused here — R4b (W5–W8) will not start
+  until the user has reviewed these new figures' style** (first turn this
+  revision round where genuinely original illustrations, not reused paper
+  figures, were added to Part 1).
+- Depends on: none, but should follow R1 and R3 in execution order since
+  both touch overlapping frames (R1 rewords ID leaks in this range, R3 may
+  change how much the W9/W10 bridge needs W1–W4 to have already covered) —
+  sequencing avoids rework, not a hard blocking dependency. — Done after
+  both R1 and R3, as planned.
+- Notes for Codex: This is a judgment call pass, not mechanical — present
+  the assessment and get sign-off on which frames to touch before drafting
+  new copy, per the "no execution without approval" rule for this revision
+  round. **Followed this**: the 9-item list with per-frame current-state/
+  suggestion was presented in chat (not via `AskUserQuestion`, since it
+  was a multi-item list better suited to prose) and the user replied with
+  blanket approval plus two specific tweaks, both applied exactly as
+  specified (G's caveat trimmed inline, not boxed; execution paused before
+  R4b for a figure-style review).
+
+### R4b
+
+- Status: `todo`
+- Goal: Same style re-review as R4a, applied to the second half of Part 1 —
+  the many-unit-types gallery, the ranking (Kline–Rose–Walters) frames, the
+  A/B testing (Azevedo) frames, and the synthesis/wrap-up frame.
+- Inputs: `deliverable/slides/eb-workshop.tex` (current W5–W8 frames).
+- Target files: `deliverable/slides/eb-workshop.tex`.
+- Definition of done: same as R4a — per-frame assessment presented for
+  approval, then approved edits applied.
+- Depends on: none, but sequence after R2b/R2c/R2d land (the new paper-
+  overview slides may absorb some of what these frames currently spell out
+  in text, changing what "essential" text remains here).
+- Notes for Codex: Same judgment-call caveat as R4a — get sign-off before
+  drafting.
+
+### R5a
+
+- Status: `done`
+- Goal: Add a new intuitive figure to Part 2 — a scatterplot with each
+  unit's raw estimate on the x-axis and its shrunk/EB posterior-mean
+  estimate on the y-axis, making the "shrinkage pulls points toward the
+  center, more so for noisy units" idea visible at a glance across the
+  whole sample at once (complementing W10's single-unit number-line
+  schematic).
+- Inputs: none new — this would ideally use the same underlying data as an
+  existing worked example (Boston schools VAM) if the raw values are
+  recoverable from `references/`, otherwise a stylized/simulated version
+  with a note that it's illustrative.
+- Target files: new figure (script or TikZ) + new slide in
+  `eb-workshop.tex`, most likely placed in the W10/W11 region (after the
+  posterior-mean formula and EB plug-in are both established) or as part of
+  R5's contribution to Part 2 generally — exact placement to be decided at
+  drafting time.
+- Definition of done: a scatterplot figure (points below the 45-degree line
+  shrunk toward the prior mean, noisier units moving further) plus a slide
+  that introduces it, with a plain-language caption. — **Met.** New frame
+  "Seeing Shrinkage Across the Whole Sample" inserted right after W10's
+  "What the Formula Says, in Plain Language" (see placement decision
+  below). Figure is a hand-drawn TikZ scatter, not a script-generated plot:
+  x-axis $\hat\theta_j$, y-axis $\theta_j^*$, a dashed 45-degree "no
+  shrinkage" reference line, and 14 illustrative points in two colors —
+  7 blue ("precise units," $w=0.85$, close to the diagonal) and 7 red
+  ("noisy units," $w=0.35$, pulled close to $\mu$ at the origin) — reusing
+  the same blue=precise/red=noisy color coding as W10's existing two-unit
+  number-line picture for visual continuity. Caption explicitly states
+  "Illustrative example (not real data)."
+- Depends on: R3 (placement depends on what the trimmed W9/W10 region looks
+  like) and ideally comes after W10/W11's existing figures so it reads as a
+  complement, not a duplicate. — R3 landed first as planned; in practice
+  R5a was placed right after W10 (not after W11), see the placement
+  decision below.
+- Notes for Codex: Clarify with the user whether this should use real data
+  (if recoverable) or a clearly-labeled stylized/simulated example — don't
+  fabricate numbers that look like real Boston VAM data without flagging
+  them as illustrative. **Followed this**: confirmed via `AskUserQuestion`
+  (2026-08-10) — no unit-level raw dataset exists anywhere in this repo
+  (only PDFs/reference notes), so illustrative/stylized TikZ data was used,
+  explicitly labeled in the caption, matching the deck's existing house
+  style for W10/W12's hand-drawn schematics rather than inventing a new
+  "looks-real" precedent.
+- **2026-08-10 placement decision**: confirmed via `AskUserQuestion` —
+  placed right after W10's "What the Formula Says, in Plain Language" and
+  before W11's "The Empirical Step" (not after W11's own reused histogram
+  figure, which was the offered alternative). Rationale: R5a illustrates
+  the Bayes formula itself (known $\mu,\tau^2$), not the estimation step,
+  so it belongs with W10's material; also gives a "one unit (W10's
+  existing picture) -> many units at once (R5a) -> the general rule (R5b)"
+  zoom-out right before the deck turns to real estimation in W11.
+
+### R5b
+
+- Status: `done`
+- Goal: Add a new schematic figure to Part 2 illustrating the relationship
+  between shrinkage magnitude and sample size (units with fewer
+  observations / noisier estimates get pulled further toward the prior
+  mean; units with more observations barely move) — a more general,
+  population-level companion to W10's two-unit number-line picture.
+- Inputs: none new — schematic/illustrative, same style as W10's and W12's
+  hand-drawn TikZ figures (not a paper screenshot).
+- Target files: new TikZ figure + new slide in `eb-workshop.tex`, likely
+  near W10/W11 (shrinkage weight `w_j = \tau^2/(\tau^2+s_j^2)` region) —
+  exact placement to be decided at drafting time.
+- Definition of done: a figure showing shrinkage weight or shrinkage
+  distance as a function of sample size / precision (e.g., `s_j^2`
+  decreasing as `n_j` grows, and less shrinkage as a result), plus a slide
+  introducing it in plain language. — **Met.** New frame "How Much
+  Shrinkage? It Depends on Precision," placed immediately after R5a (a
+  matched pair, per the note below). Unlike R5a, this figure needed **no**
+  simulated data at all — it's a direct TikZ `plot` of the closed-form
+  shrinkage weight $s_j^2/(\tau^2+s_j^2)$ (the weight placed on $\mu$,
+  already derived on the "Deriving the Posterior Mean" frame two slides
+  earlier) as a smooth curve over $s_j \in [0,4.3]$, rising from 0 toward
+  an asymptote at 1 (marked with a dashed reference line). Two example
+  points are marked on the curve ("precise unit" at small $s_j$, "noisy
+  unit" at large $s_j$), reusing the same blue/red color coding as R5a and
+  W10's number-line picture. Caption explicitly translates $s_j$ into
+  "smaller effective sample sizes" language to satisfy the "vs. sample
+  size" framing from the teacher's original request, since $s_j$ (not
+  $n_j$) is what's formally in the model.
+- Depends on: R3 (placement depends on the trimmed W9/W10 region) and
+  R5a (should feel like a matched pair, not two unrelated figures — worth
+  drafting back to back for visual consistency). — **Met**: placed
+  directly adjacent to R5a (immediately following it), both inserted in
+  the same edit, sharing the same color convention and figure width
+  (`0.5\textwidth`/`0.48\textwidth`) for visual consistency.
+- Notes for Codex: This is the "shrinkage vs. sample size" relationship
+  specifically — keep it distinct from R5a's "raw vs. shrunk scatterplot,"
+  which is about the *estimates*, not the *sample-size driver* of
+  shrinkage. **Followed this**: R5b's x-axis is $s_j$ specifically (not
+  $\hat\theta_j$), and its y-axis is the shrinkage weight itself, not an
+  estimate value — no overlap in what each figure actually plots.
 
 ## Toy Demo Notes
 
