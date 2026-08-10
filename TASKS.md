@@ -81,6 +81,14 @@ prefix. **Planning/queue stage only — do not start drafting content until the
 user explicitly approves individual task cards**, same rule as the original
 Active Sequence.
 
+**Status (2026-08-10): all of R1–R5 are `done` — this revision round is
+complete.** Deck is at 44 frames, up from W0–W12's content-complete 38 (+5 R2,
+-3 R3, +2 R4a, +0 R4b — R4b only added figures inside existing frames). Three
+sizing passes were done across the session (see R4a's and R4b's card notes)
+to enlarge and eventually unify this round's new figures; the deck has not
+yet been re-compiled since the final (third) sizing pass — that is the
+natural next step, not a new content task.
+
 | ID | Status | Task | Output / Deliverable | Notes |
 | --- | --- | --- | --- | --- |
 | R1 | done | Sweep the deck for audience-facing internal task-ID leaks (`W2`, `W3`, `W4`, `W9`, `W10`, etc.) and replace with descriptive, no-numbering phrasing. | Edits to `deliverable/slides/eb-workshop.tex` | See task card R1. Fixed 2026-08-10 — 6 remaining audience-facing spots reworded; only `%`-comment authoring notes still contain `W\d+` tokens. Re-verified 2026-08-10 after R2's five new frames landed — zero new leaks. |
@@ -92,7 +100,7 @@ Active Sequence.
 | R3 | done | Review and trim the formula/technical-detail slides bridging Part 1 into Part 2 (sampling model, normal/normal setup), keeping only what's essential. | Edits to `eb-workshop.tex` (W9/W10 region) | See task card R3. Done 2026-08-10 — 8 frames merged down to 5 (approved by user before editing). |
 | R4 | todo | Re-review existing Part 1 slides against the "many pictures, light text, story-driven, example-led" style; simplify or split text-heavy/crowded frames. | Edits to `eb-workshop.tex` (Part 1 frames) | Parent task — see R4a/R4b for the two sub-passes. |
 | R4a | done | Style pass, Part 1 first half (opening + teacher value-added: individual estimate, distribution, regressor pitfall). | Edits to `eb-workshop.tex` | See task card R4a. Done 2026-08-10 — 9-item list proposed, approved with 2 tweaks, all executed. **Paused here per user request — R4b awaits sign-off on the 3 new figures' style before starting.** |
-| R4b | todo | Style pass, Part 1 second half (other unit types, ranking, A/B testing, synthesis). | Edits to `eb-workshop.tex` | See task card R4b. |
+| R4b | done | Style pass, Part 1 second half (other unit types, ranking, A/B testing, synthesis). | Edits to `eb-workshop.tex` | See task card R4b. Done 2026-08-10 — 8-frame list proposed, approved wholesale, all executed. **Revision round R1-R5 is now fully complete.** |
 | R5 | done | Add more intuitive pictures to Part 2. | New figures + slides in `eb-workshop.tex` | Parent task — done 2026-08-10, 2 new TikZ frames inserted between W10 and W11. See R5a/R5b. |
 | R5a | done | New figure: scatterplot of raw estimate (x-axis) vs. shrunk/posterior estimate (y-axis). | New figure + slide | See task card R5a. |
 | R5b | done | New figure: schematic showing shrinkage magnitude vs. sample size. | New figure + slide | See task card R5b. |
@@ -1200,22 +1208,106 @@ don't touch `eb-workshop.tex` until the user approves the individual card.
   blanket approval plus two specific tweaks, both applied exactly as
   specified (G's caveat trimmed inline, not boxed; execution paused before
   R4b for a figure-style review).
+- **2026-08-10 sizing pass**: user confirmed in Overleaf that all 4 of
+  this card's new TikZ figures (icon row, funnel plot, dual-normal curves,
+  regression-lines) render correctly with no overflow, but read too small
+  for back-row visibility. Enlarged the icon row 0.92->0.95\textwidth
+  (frame has no competing text, so kept close to W10's already-confirmed
+  0.92 ceiling); enlarged the other three (funnel plot, dual-curve,
+  regression-lines) 0.42-0.44->0.5\textwidth each, and tightened the
+  `\vs` immediately before each of those three figures to
+  `\vspace{0.4em}` to reclaim vertical room, matching the precedent set by
+  W7's 2026-07-18 sizing/spacing fix. Only `resizebox` width fractions and
+  those three `\vs` swaps changed — no internal TikZ coordinates were
+  touched (resizebox scales uniformly, keeping the risk reasoned-through
+  rather than guessed at without a local compiler). Structural check:
+  frame count unchanged (44/44, pure sizing edit); `tikzpicture` unchanged
+  (8/8); braces 623/623; dollar-sign count unchanged (326); re-scanned for
+  leaked `W\d+` tokens — zero hits. **Not yet re-compiled** — awaiting the
+  user's next Overleaf pass to confirm the larger sizes still fit cleanly.
 
 ### R4b
 
-- Status: `todo`
+- Status: `done`
 - Goal: Same style re-review as R4a, applied to the second half of Part 1 —
   the many-unit-types gallery, the ranking (Kline–Rose–Walters) frames, the
   A/B testing (Azevedo) frames, and the synthesis/wrap-up frame.
 - Inputs: `deliverable/slides/eb-workshop.tex` (current W5–W8 frames).
 - Target files: `deliverable/slides/eb-workshop.tex`.
 - Definition of done: same as R4a — per-frame assessment presented for
-  approval, then approved edits applied.
+  approval, then approved edits applied. — **Met.** Reviewed all 8 frames
+  across W5–W8, presented a per-frame issue+suggestion+priority list in
+  chat (2 low priority table-anchored frames left as-is: W5's gallery
+  table, W8's recurring-pattern table; 2 low-priority "optional, out of
+  scope" notes on W6/W7's already-figured frames; 4 high/medium-priority
+  frames flagged for a new illustrative figure). No frame needed a split
+  this round (unlike R4a's one clear split case). User approved the full
+  list with no scope changes, then all 4 new figures were added:
+  1. **"The Design: Auditing 108 Large Employers"** (W6) — added a
+     heterogeneity dot-plot: a single dot at the 2.1pp average gap with a
+     red double-arrow spread bracket showing the ≈1.9pp between-firm SD,
+     plus faint tick marks suggesting scattered individual firms — no
+     bullet text cut.
+  2. **"23 of 108 Firms"** (W6) — added an icon-array figure: 108 small
+     squares in an 18×6 grid (deliberately wide/short for a low aspect
+     ratio), the first 23 in red, the rest gray — a direct visual for the
+     "23 of 108" statistic.
+  3. **"The Setup: Screening Many Ideas With Scarce Experiments"** (W7) —
+     added a decision-rule number-line figure: a shaded "don't
+     ship"/"ship" split at zero with a handful of example idea-dots.
+  4. **"Lean vs. Big: How Fat Tails Change the Strategy"** (W7) — added a
+     two-column icon comparison: 2 large circles for "thin tails: big
+     data" vs. 6 small circles for "fat tails: lean."
+  All 4 new figures were deliberately designed with low height/width
+  aspect ratios (~0.1–0.33) since they land on 4-bullet frames with less
+  vertical headroom, and drafted directly at the eventual unified
+  `0.55\textwidth` (see the sizing-pass note on R4a's card and below) with
+  a `\vspace{0.4em}` before each, matching R4a's established pattern for
+  bullet-heavy figure frames.
 - Depends on: none, but sequence after R2b/R2c/R2d land (the new paper-
   overview slides may absorb some of what these frames currently spell out
-  in text, changing what "essential" text remains here).
+  in text, changing what "essential" text remains here). — Done well
+  after R2 (R2 landed several turns earlier); in practice none of R2's
+  overview content changed what W5–W8 needed to cover, same as R3's
+  sequencing turned out not to matter in practice.
 - Notes for Codex: Same judgment-call caveat as R4a — get sign-off before
-  drafting.
+  drafting. **Followed this**: the 8-item list was presented in chat with
+  explicit "先不要動手改，讓我看過再決定" framing honored — no edits made
+  until the user replied "清單全部照做，不用調整範圍."
+- **2026-08-10 unification sizing pass (same turn as R4b execution)**:
+  immediately after R4b's 4 new figures were added, the user asked to
+  enlarge and *unify* the sizing of all of this revision round's figures
+  (R4a's 6 + R4b's 4 new ones + W6/W7's own pre-existing KRW/Azevedo
+  figures = 12 total) rather than leaving them at the mismatched
+  0.5/0.55/0.6/0.95 spread from the two prior sizing passes. Set
+  `0.55\textwidth` uniformly across 11 of the 12: R4a's 6 (icon row down
+  from 0.95; funnel/dual-curve/regression-lines up from 0.5; R5a/R5b down
+  from 0.6 — note this means W1 and R5a/R5b actually got *smaller*, not
+  bigger, in service of consistency, which was flagged explicitly to the
+  user rather than silently applied), R4b's 4 new figures (drafted
+  directly at 0.55), and W6's KRW fig6 (0.52→0.55, with fig7 kept at
+  exactly half — 0.26→0.275 — to preserve the deliberate height-matching
+  ratio between the two images established when they were first added).
+  **One explicit exception**: W7's existing Azevedo Figure 1 was capped at
+  `0.32\textwidth` rather than brought to 0.55, because that image has
+  documented history (an earlier "2026-07-18 sizing/spacing fix") of
+  needing a *reduction* from 0.4 down to 0.25 specifically because it
+  caused a layout problem on this same 3-bullet frame — pushing to 0.55
+  risked repeating that exact problem, so a smaller-but-still-improved
+  0.32 was used instead and flagged to the user. R2's separate reused
+  copies of the same KRW/Azevedo images (in the "Paper at a Glance"
+  overview frames, at 0.42/0.21 and 0.22 respectively) were explicitly
+  left untouched — the user's request named specifically "這次W6/W7兩張
+  既有圖" (W6/W7's own deep-dive frames), not R2's differently-scoped
+  reuse. W10's number-line (0.92) and W12's risk-curve (0.6) — both
+  pre-existing, from before this revision round — were also left
+  untouched. Structural check: frame count unchanged (44/44, pure content-
+  within-existing-frames + sizing edit); `tikzpicture` 8→12 (4 new);
+  `center` 21→25 (4 new); `\ifnum`/`\fi` 1/1 (new to this file, used by
+  the icon-array figure); braces 676/676; dollar-sign count even (328);
+  re-scanned for leaked `W\d+` tokens — zero hits. **Not yet re-compiled**
+  — this is the third sizing pass this session and the first to touch
+  W6/W7's frames; an Overleaf check is the natural next step.
 
 ### R5a
 
@@ -1313,6 +1405,17 @@ don't touch `eb-workshop.tex` until the user approves the individual card.
   shrinkage. **Followed this**: R5b's x-axis is $s_j$ specifically (not
   $\hat\theta_j$), and its y-axis is the shrinkage weight itself, not an
   estimate value — no overlap in what each figure actually plots.
+- **2026-08-10 sizing pass**: user confirmed in Overleaf that both R5a's
+  and R5b's figures render correctly with no overflow, but read too small.
+  Enlarged both from `0.5\textwidth`/`0.48\textwidth` to
+  `0.6\textwidth` each, matching W12's already-confirmed 0.6\textwidth
+  ceiling for a similarly light (single-intro-line-then-figure) frame
+  layout — no `\vs` tightening needed here since these two frames have
+  much less competing text than the W1-W4 figures sized in the same pass
+  (see R4a's card note). No internal TikZ coordinates touched. Structural
+  check: frame count unchanged (44/44); `tikzpicture` unchanged (8/8);
+  braces 623/623; re-scanned for leaked `W\d+` tokens — zero hits. **Not
+  yet re-compiled** — awaiting the user's next Overleaf pass.
 
 ## Toy Demo Notes
 
