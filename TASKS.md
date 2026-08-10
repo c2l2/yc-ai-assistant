@@ -81,13 +81,16 @@ prefix. **Planning/queue stage only — do not start drafting content until the
 user explicitly approves individual task cards**, same rule as the original
 Active Sequence.
 
-**Status (2026-08-10): all of R1–R5 are `done` — this revision round is
+**Status (2026-08-10): all of R1–R6 are `done` — this revision round is
 complete.** Deck is at 44 frames, up from W0–W12's content-complete 38 (+5 R2,
--3 R3, +2 R4a, +0 R4b — R4b only added figures inside existing frames). Three
-sizing passes were done across the session (see R4a's and R4b's card notes)
-to enlarge and eventually unify this round's new figures; the deck has not
-yet been re-compiled since the final (third) sizing pass — that is the
-natural next step, not a new content task.
+-3 R3, +2 R4a, +0 R4b — R4b only added figures inside existing frames; R6
+touched existing frames only, no frame-count change). Three sizing passes were
+done across the session (see R4a's and R4b's card notes) to enlarge and
+eventually unify this round's new figures. R6 is the compile-verification
+pass those sizing passes were waiting on: it found and fixed 5 real content-
+overflow frames (not just visual crowding) via a local `pdflatex` compile
+loop, and separately discovered and repaired an unrelated file corruption
+(see R6's card) — see R6 below for the full list.
 
 | ID | Status | Task | Output / Deliverable | Notes |
 | --- | --- | --- | --- | --- |
@@ -104,6 +107,7 @@ natural next step, not a new content task.
 | R5 | done | Add more intuitive pictures to Part 2. | New figures + slides in `eb-workshop.tex` | Parent task — done 2026-08-10, 2 new TikZ frames inserted between W10 and W11. See R5a/R5b. |
 | R5a | done | New figure: scatterplot of raw estimate (x-axis) vs. shrunk/posterior estimate (y-axis). | New figure + slide | See task card R5a. |
 | R5b | done | New figure: schematic showing shrinkage magnitude vs. sample size. | New figure + slide | See task card R5b. |
+| R6 | done | Local `pdflatex` compile pass to fix 5 frames with genuine content overflow (not just visual crowding) left over from the three prior sizing passes, without changing any bullet/figure content. | Edits to `eb-workshop.tex` | See task card R6. Done 2026-08-10 — also found and repaired an unrelated file corruption (chat instruction text had been pasted into the middle of a frame title). |
 
 ## Toy Demo History
 
@@ -1416,6 +1420,116 @@ don't touch `eb-workshop.tex` until the user approves the individual card.
   check: frame count unchanged (44/44); `tikzpicture` unchanged (8/8);
   braces 623/623; re-scanned for leaked `W\d+` tokens — zero hits. **Not
   yet re-compiled** — awaiting the user's next Overleaf pass.
+
+### R6
+
+- Status: `done`
+- Goal: The user's local compile check (Overleaf) found that 5 specific
+  frames had *genuine* content overflow — real bullet/figure/caption content
+  cut off below the nav bar, not just visual crowding — left over from the
+  three prior sizing passes (R4a/R4b/R5b's `0.55\textwidth` unification).
+  Fix all 5 without changing any bullet wording or figure meaning, using this
+  priority order: (a) shrink figure width/proportions first, (b) tighten
+  vertical spacing between bullets and figures, (c) trim a line only if a
+  single overly-long line is the direct cause, (d) split into two frames only
+  as a last resort.
+- Inputs: none new — pure layout fix using the existing figures/bullets
+  already in `eb-workshop.tex`.
+- Target files: `deliverable/slides/eb-workshop.tex` (5 frames only — "The
+  Problem: Noise Masquerades as Quality," "A Pitfall: Using $\hat\theta_j$ as
+  a Regressor," "A Gallery of Many-Unit Settings," "23 of 108 Firms," "The
+  Fat-Tail Finding at Bing"). No other frame touched.
+- Definition of done: all 5 frames' full content (every bullet, the complete
+  figure, and the complete caption) renders above the nav bar with a local
+  `pdflatex` compile, verified both by the compiler's own overfull-box
+  warnings and by visually inspecting rendered page images. — **Met.** Local
+  `pdflatex` (MiKTeX) was available in this environment, so this was a real
+  compile-and-inspect loop, not a structural-only check like every prior
+  round. Before touching any of the 5 target frames, an unrelated problem was
+  found and fixed first: line 199 (the "A Preview of Today's Examples" frame
+  title) had a large block of chat-instruction text pasted into the middle of
+  it, splitting the title into "A Previ" + the pasted block + "ew of Today's
+  Examples" — this would have broken the entire compile. Flagged to the user
+  and repaired by restoring the plain `\begin{frame}{A Preview of Today's
+  Examples}` title; confirmed via `grep` that no other spot in the file had
+  the same corruption.
+  With that fixed, an initial compile located the 5 real overflow frames by
+  their `Overfull \vbox ... too high` warnings (ranging from ~10pt to
+  ~133pt), then each was iteratively edited and re-compiled until its
+  warning cleared:
+  1. **"The Problem: Noise Masquerades as Quality"** (funnel-plot figure,
+     ~133pt overflow — the worst of the 5): the TikZ picture's y-axis was
+     disproportionately tall for its width (aspect ≈0.9). Flattened it by
+     scaling every y-coordinate (axis extent, funnel-curve amplitude, all 11
+     data points, both labels) down by a combined ~0.39x, and reduced
+     `\resizebox` from `0.55\textwidth` to `0.38\textwidth`. No bullet text
+     touched; the funnel shape and small/large-school contrast are
+     unchanged, just flatter.
+  2. **"A Pitfall: Using $\hat\theta_j$ as a Regressor"** (regression-lines
+     figure, x-axis fully cut off, ~65pt overflow): same fix — flattened the
+     y-axis (scaled y-coordinates down ~0.6x), reduced `\resizebox` from
+     `0.55\textwidth` to `0.38\textwidth`, tightened the pre-figure
+     `\vspace` from `0.4em` to `0.05em`. Both regression lines and all 5
+     scatter points keep their original relative positions, just compressed
+     vertically.
+  3. **"A Gallery of Many-Unit Settings"** (table, worst-affected — the
+     Police/Gonçalves-Mello row was fully missing and the Doctors/Hospitals
+     row was cut, ~93pt vbox + ~14pt hbox overflow): switched the table font
+     from `\footnotesize` to `\scriptsize`, set `\arraystretch` to `0.6` (was
+     effectively `1.0`), removed the `[0.4em]` extra inter-row padding after
+     each of the first three rows, tightened the column widths slightly
+     (first column changed from an unconstrained `l` to a fixed `p{1.6cm}`,
+     third column `5.4cm` narrowed from the original de-facto width) to also
+     clear a horizontal overfull-hbox warning, and tightened the `\vs`
+     (1em) before/after the table down to `\vspace{0.02em}`. All 4 rows'
+     text is completely unchanged — same institutions, same citations, same
+     findings.
+  4. **"23 of 108 Firms: Naming Names with Statistical Confidence"** (icon
+     array, bottom rows + full caption cut, ~34pt overflow): the grid was
+     6 rows × 18 columns (aspect ≈0.33); reshaped to 4 rows × 27 columns
+     (same 108 total squares, same 23 flagged in red), which flattens the
+     aspect to ≈0.15. Also reduced `\resizebox` from `0.55\textwidth` to
+     `0.5\textwidth` and tightened the pre-figure `\vspace` from `0.4em` to
+     `0.2em`. The 23-red-of-108 count and meaning are unchanged — only the
+     grid's row/column shape changed.
+  5. **"The Fat-Tail Finding at Bing"** (posterior-mean-vs-signal image,
+     mildest — final caption line touching the nav bar, ~10pt overflow):
+     reduced `\includegraphics` from `0.32\textwidth` to `0.27\textwidth`
+     and tightened the pre-image `\vspace` from `0.3em` to `0.1em`. Image
+     and caption text unchanged.
+  Final verification: recompiled the whole 44-frame deck with `pdflatex`
+  (MiKTeX) after all 5 fixes. The `Overfull \vbox`/`\hbox` warnings that had
+  been anchored inside these 5 frames' line ranges are gone; the deck's
+  pre-existing overfull warnings on *other*, out-of-scope frames (the R2
+  "Paper at a Glance: Teacher & School Value-Added" frame, W3's "How Much
+  Does Quality Really Vary?", W6's "The Design: Auditing 108 Large
+  Employers," W7's "Lean vs. Big," the W8 recap table, R5a's "Seeing
+  Shrinkage Across the Whole Sample," and W12's "Picture: One Unit's Risk"
+  frame — none named in this task) are untouched and left exactly as they
+  were, per the instruction not to touch any frame outside the named 5.
+  Additionally rendered the 5 target frames to PNG (`pdftoppm`, pages 12,
+  16, 19, 22, 24) and visually confirmed every bullet, the complete
+  figure/grid/table, and the complete caption sit above the nav bar with a
+  visible safety margin on each. Re-scanned the 5 edited frames' visible
+  text for any new `W\d+`/`R\d+`-style leaks — none introduced (only TikZ
+  coordinates, `\resizebox`/`\includegraphics` widths, `\vspace` amounts,
+  and table formatting commands were changed).
+- Depends on: R4a, R4b, R5b (all three sizing passes that produced the
+  `0.55\textwidth`-era layout this task was verifying). — all done before
+  this task started.
+- Notes for Codex: This was the first task in the whole R1–R5(+R6) round
+  with a local `pdflatex` available (MiKTeX, confirmed via `pdflatex
+  --version` before starting) — every prior round's "structural check only"
+  disclaimers no longer apply to this task's own verification, though they
+  remain accurate historical statements about *those* tasks. The deck has a
+  long-standing, unrelated `! Undefined control sequence` /
+  `Missing \begin{document}` pair at line 23 (`\setitemize`, likely an
+  `enumitem`-family command used without its package) that appears on every
+  compile, before and after this task's edits, and does not stop `pdflatex`
+  from producing all 44 pages in nonstopmode (`pdflatex`'s recovery mode
+  just skips the malformed setting and continues) — left untouched as
+  out-of-scope for this task, flagged here in case a future task wants a
+  fully warning-clean compile.
 
 ## Toy Demo Notes
 

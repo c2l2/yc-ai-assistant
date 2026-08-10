@@ -8,85 +8,94 @@ Use this file as the handoff note between separate Codex prompts.
   session: Part 1 "Overview: Why Empirical Bayes?" and Part 2 "Point
   Estimation: Normal-Normal Model"). **W0-W12 (original content queue) are
   all done.** The teacher then gave a new round of revision feedback
-  (2026-08-10), tracked in `TASKS.md` as `R1`-`R5`. **All of R1-R5 are now
+  (2026-08-10), tracked in `TASKS.md` as `R1`-`R6`. **All of R1-R6 are now
   `done` — this revision round is complete.** Deck is at 44 frames.
 
 ## Current Task
 
-- Task ID: R4b — style pass on Part 1's second half (W5-W8), same workflow
-  as R4a: propose a per-frame list, get approval, execute. Plus a follow-up
-  **unification sizing pass** covering all of this round's figures.
-- Status: `done`. Reviewed all 8 frames across W5-W8, presented an 8-item
-  issue+suggestion+priority list in chat (2 table-anchored frames left
-  as-is: W5's gallery, W8's recap table; 2 already-figured frames flagged
-  as optional/low-priority; 4 frames flagged for a new figure). User
-  approved with no scope changes ("清單全部照做，不用調整範圍"). Executed:
-  1. W6 "The Design: Auditing 108 Large Employers" — added a
-     heterogeneity dot-plot (average-gap dot + spread bracket + faint firm
-     ticks).
-  2. W6 "23 of 108 Firms" — added a 108-square icon array (18x6 grid, 23
-     red / 85 gray).
-  3. W7 "The Setup" — added a decision-rule number line ("don't ship" /
-     "ship" split at zero, with example idea-dots).
-  4. W7 "Lean vs. Big" — added a two-column icon comparison (2 large
-     circles vs. 6 small circles).
-  All 4 designed with low aspect ratios (~0.1-0.33) for safety on
-  4-bullet frames, each with a `\vspace{0.4em}` before it (matching R4a's
-  pattern).
-- **Then, same turn**: user asked to enlarge AND unify the sizing of all
-  12 of this revision round's figures (R4a's 6 + R4b's 4 new + W6/W7's own
-  pre-existing KRW/Azevedo figures), replacing the mismatched
-  0.5/0.55/0.6/0.95 spread left by the two prior sizing passes. Set
-  `0.55\textwidth` uniformly across 11 of 12:
-  - R4a's 6: icon row (0.95->0.55, i.e. *smaller*), funnel/dual-curve/
-    regression-lines (0.5->0.55), R5a/R5b (0.6->0.55, also *smaller*) —
-    explicitly flagged to the user that unifying meant some figures got
-    smaller, not just bigger.
-  - R4b's 4 new figures: drafted directly at 0.55.
-  - W6's KRW fig6: 0.52->0.55; fig7 kept at exactly half (0.26->0.275) to
-    preserve the deliberate height-matching ratio between the two images.
-  - **One explicit exception**: W7's existing Azevedo Figure 1 capped at
-    `0.32\textwidth` (not 0.55) — this image has documented history (an
-    earlier "2026-07-18 sizing/spacing fix") of needing a *reduction* from
-    0.4 to 0.25 because it caused a layout problem on this exact 3-bullet
-    frame; pushing to 0.55 risked repeating that, so a smaller-but-still-
-    improved 0.32 was used and flagged explicitly rather than silently
-    deviating from "one consistent size."
-  - R2's separate reused copies of the same KRW/Azevedo images (in the
-    "Paper at a Glance" overview frames) were explicitly NOT touched — out
-    of scope per the user's "這次W6/W7兩張既有圖" wording. W10's
-    number-line (0.92) and W12's risk-curve (0.6), both pre-existing from
-    before this revision round, also untouched.
-  Structural check: frame count unchanged (44/44); `tikzpicture` 8->12 (4
-  new); `center` 21->25 (4 new); `\ifnum`/`\fi` 1/1 (new, used by the icon
-  array); braces 676/676; dollar-sign count even (328); re-scanned for
-  leaked `W\d+` tokens — zero hits. **Not yet re-compiled** — this is the
-  third sizing pass this session and the first to touch W6/W7's frames.
+- Task ID: R6 — local `pdflatex` compile-verification pass to fix 5 frames
+  with genuine content overflow (not just visual crowding) left over from
+  the R4a/R4b/R5b sizing passes, without changing any bullet/figure content.
+- Status: `done`. A local MiKTeX `pdflatex` was available in this
+  environment (confirmed via `pdflatex --version`), so this task did a real
+  compile-edit-recompile loop instead of the structural-only checks every
+  prior round relied on.
+- **Before touching any of the 5 target frames**: found and fixed an
+  unrelated file corruption. Line 199 (the "A Preview of Today's Examples"
+  frame title) had a block of chat-instruction text pasted into the middle
+  of the title string itself, splitting it into "A Previ" + the pasted text
+  + "ew of Today's Examples." This would have broken the whole compile.
+  Flagged to the user, then repaired by restoring the plain
+  `\begin{frame}{A Preview of Today's Examples}` title; `grep`-confirmed no
+  other spot in the file had the same corruption.
+- Fixed all 5 frames named in the task, each verified individually against
+  the compiler's `Overfull \vbox`/`\hbox` warnings until clear, then
+  re-verified together in a final full-deck compile and by visually
+  inspecting rendered PNG page images (`pdftoppm`, pages 12/16/19/22/24):
+  1. **"The Problem: Noise Masquerades as Quality"** (funnel plot, ~133pt
+     overflow — the worst of the 5): flattened the TikZ y-axis (~0.39x
+     combined scale-down on axis extent, curve amplitude, all 11 points,
+     both labels) and reduced `\resizebox` 0.55→0.38\textwidth.
+  2. **"A Pitfall: Using $\hat\theta_j$ as a Regressor"** (regression-lines
+     figure, x-axis fully cut off, ~65pt overflow): flattened the y-axis
+     (~0.6x scale-down), reduced `\resizebox` 0.55→0.38\textwidth, tightened
+     pre-figure `\vspace` 0.4em→0.05em.
+  3. **"A Gallery of Many-Unit Settings"** (table — worst-affected; the
+     Police row was fully missing, Doctors/Hospitals row cut, ~93pt vbox +
+     ~14pt hbox overflow): `\footnotesize`→`\scriptsize`, `\arraystretch`
+     1.0→0.6, removed the `[0.4em]` extra inter-row padding, tightened
+     column widths slightly (fixed the first column to `p{1.6cm}`, narrowed
+     the third to `5.4cm`), tightened surrounding `\vs`→`\vspace{0.02em}`.
+     All 4 rows' text/citations/findings unchanged.
+  4. **"23 of 108 Firms"** (icon array, bottom rows + full caption cut,
+     ~34pt overflow): reshaped the grid from 6×18 to 4×27 (same 108 squares,
+     same 23 flagged red, aspect ratio flattened 0.33→0.15), reduced
+     `\resizebox` 0.55→0.5\textwidth, tightened pre-figure `\vspace`
+     0.4em→0.2em.
+  5. **"The Fat-Tail Finding at Bing"** (mildest, ~10pt overflow — final
+     caption line touching the nav bar): reduced `\includegraphics`
+     0.32→0.27\textwidth, tightened pre-image `\vspace` 0.3em→0.1em.
+  No bullet wording, figure meaning, or data values changed anywhere — only
+  TikZ coordinate scaling, `\resizebox`/`\includegraphics` widths, `\vspace`
+  amounts, and table formatting commands.
+- Pre-existing overfull warnings on frames **outside** the named 5 (R2's
+  "Paper at a Glance: Teacher & School Value-Added," W3's "How Much Does
+  Quality Really Vary?," W6's "The Design: Auditing 108 Large Employers,"
+  W7's "Lean vs. Big," the W8 recap table, R5a's "Seeing Shrinkage Across
+  the Whole Sample," W12's "Picture: One Unit's Risk") were left exactly as
+  they were, per the instruction not to touch any frame outside the named 5.
+- Re-scanned the 5 edited frames for any new `W\d+`/`R\d+`-style
+  audience-facing leaks — none introduced.
 
 ## Relevant Files
 
-- `deliverable/slides/eb-workshop.tex` (4 new TikZ figures in W6/W7; 12
-  total figure-size edits across the file; two new comment banners
-  document the R4b figures and the unification sizing pass, including the
-  W7-Azevedo exception's reasoning)
-- `TASKS.md` (R4b card marked `done` with full details; the "Revision
-  Round 1" section header now states all of R1-R5 are done)
+- `deliverable/slides/eb-workshop.tex` (1 corrupted frame title restored; 5
+  frames' figures/tables re-sized and re-spaced; no bullet or figure content
+  changed; no frame added or removed — still 44 frames)
+- `TASKS.md` (R6 card added with full per-frame detail; "Revision Round 1"
+  section header now states R1-R6 are all done)
 - `SESSION.md` (this file)
 
 ## Latest Decisions
 
-- Unification target chosen as 0.55\textwidth: bigger than the one
-  CONFIRMED-safe anchor point this session had (W2's original 0.44, which
-  the user explicitly confirmed compiled fine before any enlarging), while
-  conservative enough to reason about being safe for the most cramped
-  4-bullet+figure frames — chosen deliberately, not arbitrarily.
-  New W6/W7 figures were designed with intentionally low aspect ratios
-  specifically so they'd be safe at this width despite landing on
-  4-bullet frames.
-- W7's Azevedo figure was treated as a documented exception rather than
-  forced to match — this is the one case in the whole session where a
-  specific figure has direct prior evidence (a past user-requested
-  shrink) of causing layout trouble at larger sizes.
+- Treated the pasted-instruction-text corruption in the frame title as a
+  blocking bug to fix immediately (not deferred), since it would have
+  broken the compile before any of the actual R6 work could even be
+  verified. Flagged it explicitly to the user rather than silently fixing
+  it.
+- Chose "flatten the y-axis" over "just shrink the resizebox width" as the
+  primary fix for the two worst TikZ overflows (funnel plot, regression
+  lines) — both figures had disproportionately tall aspect ratios (≈0.8-0.9)
+  for how little horizontal content they actually needed, so flattening the
+  y-coordinates directly fixes the *shape* problem, while a pure width
+  shrink alone would have needed to go small enough to hurt legibility.
+- For the icon array, reshaped rows×columns (6×18 → 4×27) rather than
+  shrinking individual squares — keeps each square a legible, countable
+  unit while cutting the total height.
+- For the gallery table, combined several small tightenings (font,
+  arraystretch, row padding, column widths, surrounding vspace) rather than
+  one large change — the overflow was ~93pt against a table that already
+  had reasonably dense text, so no single lever was enough on its own.
 
 ## Files Changed This Turn
 
@@ -96,25 +105,31 @@ Use this file as the handoff note between separate Codex prompts.
 
 ## Open Blockers
 
-- **This turn's changes (4 new W6/W7 figures + the unification resize
-  across 11 figures + the W7-Azevedo exception) have not been
-  re-compiled.** This is now the single highest-value next step —
-  recommend one more Overleaf pass covering the whole deck, paying
-  particular attention to: (a) whether 0.55\textwidth genuinely fits
-  cleanly on all the 4-bullet figure frames (W2, W3, W4, and the 2 new
-  W6/W7 4-bullet ones), (b) whether W1's icon row still looks good at the
-  smaller 0.55 (down from the previously-confirmed 0.95), (c) whether the
-  W7-Azevedo frame at 0.32 is now safely clear of its documented prior
-  overflow history.
-- **No task remains `todo` anywhere in the R1-R5 revision round.** Nothing
-  in `TASKS.md` is queued next — whatever comes after this is either a new
-  round of teacher feedback or a compile-verification pass, not existing
-  backlog.
+- None for this revision round — **R1-R6 are all `done`**, and R6's own
+  local compile confirms all 5 previously-overflowing frames now render
+  cleanly, both by compiler warnings and by visual inspection of rendered
+  page images.
+- **Pre-existing, out-of-scope note for a future task**: the deck has a
+  long-standing `! Undefined control sequence` / `Missing \begin{document}`
+  pair at line 23 (`\setitemize`, likely an `enumitem`-family command used
+  without its package) that appears on every compile, before and after this
+  turn's edits. It does not stop `pdflatex` from producing all 44 pages in
+  nonstopmode and was present before this session started — left untouched
+  as out of scope for R6, flagged here in case a future task wants a fully
+  warning-clean compile.
+- Local build artifacts (`eb-workshop.pdf`, `.aux`, `.log`, `.nav`, `.snm`,
+  `.toc`, etc.) were produced in `deliverable/slides/` during this task's
+  verification passes and were not committed or cleaned up — most are
+  already covered by `.gitignore` (`.aux`/`.log`/`.bbl`/`.blg`/`.bcf`/
+  `.run.xml`/`.out`), but `eb-workshop.pdf`, `.nav`, `.snm`, and `.toc` are
+  not ignored and will show as untracked in `git status` until either
+  removed or added to `.gitignore`.
 
 ## Recommended Next Prompt
 
-`R4b（4 張新圖）跟圖片尺寸統一（12 張圖收斂到 0.55，Azevedo 那張因為有先前溢
-出的紀錄特別保留在 0.32）都做完了，整個 R1-R5 修訂輪現在全部 done。投影片 44
-張還沒重新編譯，建議拿去 Overleaf 跑一次確認：W1 三目標圖示縮小到 0.55 後好不
-好看、W2/W3/W4 加上新的 W6/W7 四條 bullet + 圖的排版有沒有溢出、Azevedo 那張
-在 0.32 是否真的沒事。確認沒問題的話，這輪修訂就可以跟老師報告完成了。`
+`R1-R6 修訂輪全部完成，這次R6用本地 pdflatex 抓到5張投影片的真實內容溢出（不
+是視覺擁擠）並修好了，另外也發現並修復了檔案中一段意外貼入的文字（把 "A
+Preview of Today's Examples" 標題切成兩半的損壞）。整份44張投影片已經本地重新
+編譯確認過（包含渲染成圖片逐張目視檢查這5張）。可以跟老師報告這輪修訂完成了；
+如果不需要保留本地編譯出的 eb-workshop.pdf/.nav/.snm/.toc 等檔案，可以請它們被
+清掉或加進 .gitignore。`
