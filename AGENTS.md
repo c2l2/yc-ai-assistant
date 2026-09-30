@@ -216,6 +216,7 @@ Use repo-local skills when the task matches:
 - `beamer-slides`
 - `revise-beamer-slides`
 - `chat-to-latex`
+- `submission-check`
 - `chinese-referee-report`
 - `english-referee-report`
 - `letter-to-editor`

@@ -172,3 +172,13 @@ This workflow intentionally has:
 - no background update process.
 
 Human review and explicit manager invocation are the control points.
+
+## Optional Manuscript Review
+
+For pre-submission draft review, use
+[`submission-check`](skills/submission-check/SKILL.md) with all or selected
+scopes. The skill saves separate review passes and synthesizes an actionable
+report with verified `.tex` file and line references where applicable, without
+editing manuscript sources.
+
+This review is independent of the weekly team review and finalization workflow.
