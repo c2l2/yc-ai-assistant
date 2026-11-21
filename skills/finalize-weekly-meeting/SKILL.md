@@ -83,7 +83,6 @@ preflight passes without material ambiguity.
 - Assignment history and current assignments remain in internal weekly reports.
 - Each finalized report's `Next Actions` is the complete task snapshot for the
   coming week, including explicit carryovers.
-- Never create or update a root `TASKS.md`.
 - Closed or promoted backlog items remain in reports, not the open root view.
 - Superseded or revoked decisions remain in reports, not the effective root
   view.

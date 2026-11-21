@@ -73,8 +73,8 @@ same draft version, including supplied PDFs and analysis outputs.
 Choose the report destination using the output rules below. Before the first
 detailed pass, create a companion `<report-stem>-work/` directory containing
 `review-state.md`. Save the selected scopes, draft fingerprint, shared context
-map, coverage table, links to pass notes, and next action there. This is the
-handoff for subsequent prompts; do not depend on chat history alone.
+map, coverage table, links to pass notes, and next action there. On resuming
+the review, check the draft fingerprint before relying on those notes.
 
 **Run each selected scope as a focused pass.** For `all`, the default order is
 `theory`, `evidence`, `argument`, `presentation`, then `submission`. Independent

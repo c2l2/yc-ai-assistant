@@ -22,8 +22,26 @@ The repository is designed so that:
 Do not assume that every project uses every folder or workflow in this
 template. Prefer project-specific local context over template defaults.
 
-All paths below are relative to the project root. When `yc-ai-assistant` is
-used as a submodule, the project root is its parent.
+In a research project, resolve project paths from the parent of the installed
+`yc-ai-assistant/` submodule. Links in this file point to resources inside
+the shared Assistant. When developing the Assistant itself, use its own
+checkout as the project root.
+
+## Decide how to carry out the request
+
+An exploratory request such as 「先討論」 stays in chat unless the user also asks
+to save something. Once the user authorizes work, the assistant decides whether
+to open a Spectra change. Use one when the work needs continuity across
+conversations, coordinates substantive outputs, or produces a research claim
+that will need verification. Reuse a matching change. Finish a small, local
+edit directly. Continue authorized work through verification and return to the
+user for a material research or editorial decision.
+
+Use the target project's own Spectra workspace. Read `docs/spectra/` in the
+Assistant source checkout when developing the Assistant itself. In consumer
+projects, read the local project entry to find the research workspace. See
+the [research Spectra guide](docs/spectra-research.md) for examples and
+completion criteria.
 
 ## Global Interpretation Rules
 
@@ -77,8 +95,6 @@ used as a submodule, the project root is its parent.
 - `yc-ai-assistant/templates/`: templates used by repo-local AI workflows,
   including the weekly meeting template.
 - `yc-ai-assistant/skills/`: task-specific Codex skills.
-- `yc-ai-assistant/TASKS.md`: manual internal record for maintaining the shared
-  AI template; it is not a project or team task register.
 
 ## Context Priority
 
@@ -207,7 +223,12 @@ Use this workflow only for projects with weekly team coordination.
 
 ## Skill Usage
 
-Use repo-local skills when the task matches:
+When a task matches, read the relevant `SKILL.md` in this directory's
+`skills/` folder. For drafting or editing the user's research prose or writing
+a project reply to the user, apply [yc-humanizer](skills/yc-humanizer/SKILL.md)
+alongside the relevant research or editorial skill.
+
+Other available skills include:
 
 - `paper-note`
 - `theory-workbench`
@@ -234,19 +255,3 @@ rules.
 - Separate facts, interpretations, recommendations, and approved decisions.
 - Be explicit about uncertainty, assumptions, evidence limits, and gaps.
 - Prefer concise, reusable outputs over long generic prose.
-
-## Sequential Prompt Protocol
-
-When the user explicitly wants work split across separate prompts:
-
-1. identify the canonical project file that should carry status and context;
-2. work on one scoped task at a time unless the user asks to batch;
-3. update the relevant status or handoff in that canonical file when
-   authorized;
-4. use the latest finalized internal report's `Next Actions` for coordinated
-   team work;
-5. prefer local files over long chat-only context.
-
-Use `yc-ai-assistant/TASKS.md` only when maintaining the shared AI template.
-It is a manual internal record and must not be treated as the project's task
-queue. No automatic task runner is assumed.

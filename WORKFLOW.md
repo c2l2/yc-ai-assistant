@@ -1,11 +1,28 @@
-# Weekly Team Workflow
+# Research and team workflow
+
+Use chat to explore research questions. Once the user chooses a direction and
+asks for the work, identify the output and the evidence that would support it.
+Handle small edits directly. Use the project's Spectra workspace when the work
+requires continuity, coordinates substantive results, or establishes a claim
+that needs verification. The [research Spectra guide](docs/spectra-research.md)
+covers workspace selection and the change lifecycle.
+
+At delivery, say what the work supports, where the evidence is, and what still
+needs checking. A short answer in chat suffices for a small edit. For a tracked
+change, keep verification evidence with the change and link to the actual
+proof, code, results or other deliverable.
+
+## Optional weekly team workflow
 
 This workflow treats each weekly meeting file as an internal report to the
 project manager. Team reporting remains human-authored and management decisions
 remain human-controlled. AI reads and evaluates before the meeting, then
 documents and synchronizes only after the manager approves the outcome.
 
-All paths are relative to the parent project root.
+The reporting paths below are relative to the team's project root. When a
+weekly assignment corresponds to a Spectra change, link to it in the
+assignment. The finalized weekly report records the owner and commitment.
+The change records implementation and verification.
 
 ## Core Loop
 
@@ -160,18 +177,6 @@ Store reports directly in `report/` with the name
 Before finalization, every action from the previous meeting must be completed,
 cancelled, reassigned, or carried forward explicitly. This makes the latest
 finalized report sufficient for the next review.
-
-## No Automation Layer
-
-This workflow intentionally has:
-
-- no progress-running or progress-testing script;
-- no automated state replay;
-- no preview/apply command;
-- no workflow regression test suite;
-- no background update process.
-
-Human review and explicit manager invocation are the control points.
 
 ## Optional Manuscript Review
 
