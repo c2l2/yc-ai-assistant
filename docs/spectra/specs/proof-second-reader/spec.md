@@ -1,0 +1,32 @@
+# proof-second-reader Specification
+
+## Purpose
+
+當一段重要推導準備進稿，讓研究者能查核證明所用條件是否支持命題。
+
+## Requirements
+
+### Requirement: 獨立複核指定推導
+
+理論助手必須（SHALL）能依要求讓第二位讀者以命題、假設與所需推導複核，指出關鍵步驟及其依據，說明任何未能獨立檢查的部分。
+
+#### Scenario: 核對命題的適用條件
+
+- **WHEN** 研究者要第二位讀者檢查一段準備進稿的證明
+- **THEN** 複核者獨立解讀所給的材料，指出成立或缺少控制的步驟與理由。
+
+##### Example: 固定階數和成長階數
+
+- **GIVEN** 一個上界逐點隨樣本數趨近零，且其常數可以依階數改變
+- **WHEN** 複核者收到固定階數或成長階數的命題
+- **THEN** 依命題實際允許的階數判讀該步；需要額外的一致界時，標出缺口所在。
+
+<!-- @trace
+source: strengthen-research-skills
+updated: 2026-11-21
+code:
+  - skills/theory-workbench/SKILL.md
+  - skills/simulation-runner/SKILL.md
+  - skills/yc-humanizer/SKILL.md
+  - skills/yc-humanizer/references/research-voice.md
+-->

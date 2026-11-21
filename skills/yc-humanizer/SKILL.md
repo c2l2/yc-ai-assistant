@@ -1,6 +1,6 @@
 ---
 name: yc-humanizer
-description: Draft and revise research prose in Yu-Chang Chen's voice and write direct Chinese project replies. Use for manuscript paragraphs, proposals, research correspondence and substantive project discussions. Match the requested audience, language, and editing scope.
+description: Draft and revise research prose in Yu-Chang Chen's voice, write direct Chinese project replies, and calibrate style from his edits to an attributed draft. Match the requested audience, language, and editing scope.
 license: MIT
 ---
 
@@ -12,17 +12,27 @@ license: MIT
 
 寫方法時，從讀者實際面對的選擇切入。例如給定誰的資料，要估哪個效果，通常怎麼估，這篇文章改了哪一步。若原稿先給正式結果，把它留在讀者需要的位置，再用一個有根據的例子說明經濟意涵。操作步驟用明確的動詞，理論敘述沿用作者的符號與術語，包括稿件既有的 I 或 we。
 
+依段落要做的事選擇寫法。實證導論可先指出誰在什麼制度下、從哪些可行選項中作決定，再說哪個觀察值能回答研究問題。估計方法可從熟悉的基準出發，指出哪個量改變、哪個量先視為給定。寫理論結果時，把新舊結果的差別落在假設的量詞或適用範圍，再解釋這項差別帶來什麼經濟含義。需要選擇範例時，見[四篇文章的段落讀法](references/research-voice.md)。
+
 假設材料只交代「各店以去年的銷售額排序，同組店家按這個排名配對，在每對內隨機指派折扣」。可以寫成：
 
 > Within each group, we rank stores by last year's sales and use that ranking to form pairs. We randomize the discount assignment within each pair.
 
 描述實驗時核對對象、分派單位、期間及結果變數。若期間或樣本數在材料中找不到，而讀者需要這個資訊，將缺項留給作者。潤稿時，請勿自行補入機制、數字、文獻或假設。請作者考慮的新解釋可另外提出。
 
+寫結果時，把數字放在它實際衡量的變數和比較對象旁邊。若用代理變數、反事實配置或換算單位，保留從觀察資料到經濟解讀之間的那一步。「估計不夠精確」保留了不確定性；改成「沒有效果」會改變主張。
+
 ## 中文工作討論
 
 接著使用者正在談的事，先交代他現在需要知道的發現或決定。用實際的檔案、式子或段落作主詞。一句話能說清楚的變更就用一句話。如果有幾個選項需要他選，再列出各自會影響什麼。正式中文稿有另外的讀者，請以使用者給的同類稿件校準。
 
 例如，已知表二的資料截止於六月、圖一用到九月，可直接回：「表二做到六月，圖一做到九月。先確認這兩個結果原本要不要用同一段期間。」
+
+## 從作者的改稿校準
+
+有初稿和作者親改的定稿時，逐段比對同一段文字，先弄清楚作者動了什麼、那個位置的讀者需要什麼。替換估計對象、更正數字、改成本篇約定的符號，都屬於這次研究的修正。在內容相同時，作者把比較基準移到估計值旁邊，才提供了可以用來校準寫法的例子。合著稿若無法辨認修改者，就用作者確認的改動來校準個人偏好。
+
+作者明說「以後都這樣寫」時，按他指定的文類與範圍採用。他交代更新共用 skill 時，也可以把跨稿反覆出現、能歸屬於他的改動整理成一條規則，交代依據。若不確定這項偏好適用哪些文類，先就看過的稿件提出建議。只要求潤稿時，把適用的改動用在當次稿件即可。共用例句另行撰寫，稿件、修訂對照與專案專用約定留在原專案。
 
 ## 定稿
 

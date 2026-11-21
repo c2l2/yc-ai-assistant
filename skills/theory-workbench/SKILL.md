@@ -1,6 +1,6 @@
 ---
 name: theory-workbench
-description: Use when the user wants help developing theoretical ideas, checking assumptions, sketching proofs, identifying gaps in an argument, connecting theory notes across files, or turning rough theory notes into structured Markdown or LaTeX-ready outlines.
+description: Develop theoretical ideas, sketch proofs, check assumptions and diagnose gaps. Use also for an independent second reading of a proof intended for the paper.
 ---
 
 # Theory Workbench
@@ -51,8 +51,6 @@ Default output is one of the following, depending on the user's request:
 - Distinguish between mathematical necessity and modeling convenience.
 - When a result seems false or fragile, say so clearly and explain why.
 
-The skill cannot choose or activate a different model or engine. Instead, make the reasoning process more rigorous by being explicit about assumptions, logical dependencies, missing steps, and failure modes.
-
 For proof-oriented work, prefer this sequence:
 
 1. clarify the claim
@@ -61,6 +59,16 @@ For proof-oriented work, prefer this sequence:
 4. identify missing steps or fragile points
 5. iterate until the argument is stable
 6. convert to LaTeX only at the end if requested
+
+## A second reader for a consequential proof
+
+Use this option when the author asks for an independent check or an important result is about to enter the manuscript and depends on a fragile step. Keep early exploration conversational.
+
+Give a fresh reader the exact proposition, assumptions, definitions, current proof and any lemmas it invokes. Start a separate agent or session without the drafting conversation. Exclude earlier verdicts, the author's expected answer and other reviewers' notes from the materials available to it. If the available tool shares that history, describe your own second pass as a self-check.
+
+Ask the reader to rederive the critical implication. For an objection, request the first unsupported line, the assumption or inequality it needs, and a derivation or counterexample when available. For a sound step, ask which condition makes it work. Reconcile its reasoning against the actual proof before reporting a correction. Distinguish a gap in this proof from a false proposition. Apply any resulting manuscript edit under the project's existing agreement with the author.
+
+When testing a **change to this review skill**, use a correct proof and a disposable copy with one known defect. Give each to a separate fresh reader under the same neutral instructions, without access to the other copy or the answer key. Check both whether the defect was located and whether the sound proof drew a false objection. This exercise belongs to skill development. The user's live manuscript is never the test fixture. [Reviewer calibration](https://github.com/pedrohcgs/claude-code-my-workflow/blob/main/.claude/skills/vaccinate/SKILL.md)
 
 ## Good output standard
 

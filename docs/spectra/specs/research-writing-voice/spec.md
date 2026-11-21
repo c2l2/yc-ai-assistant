@@ -46,3 +46,29 @@ code:
   - WORKFLOW.md
   - skills/yc-humanizer/SKILL.md
 -->
+
+---
+### Requirement: 從指定作品與作者改稿校準寫作
+
+寫作助手必須（SHALL）按文類參照指定作品，分辨獨著、合著及可歸屬作者的親筆修改。日後從一篇稿件抽出的通則，須有作者明示或有重複改稿作為提議依據；共用指南的更新依使用者授權辦理。
+
+#### Scenario: 辨認改稿的適用範圍
+
+- **WHEN** 作者修改了研究敘述，而該段也包含本篇專用的符號或結果
+- **THEN** 助手區分可跨稿使用的表達習慣和僅適用本案的內容，再依證據與授權決定是否更新共用規則。
+
+##### Example: 調整實證段落
+
+- **GIVEN** 作者多次把空泛的表現描述換成原資料支持的比較，這次也修改本篇特有的變數名稱
+- **WHEN** 作者要求整理日後潤稿習慣
+- **THEN** 可將交代比較對象及證據列為寫作指引，符號約定留在本篇。
+
+<!-- @trace
+source: strengthen-research-skills
+updated: 2026-11-21
+code:
+  - skills/theory-workbench/SKILL.md
+  - skills/simulation-runner/SKILL.md
+  - skills/yc-humanizer/SKILL.md
+  - skills/yc-humanizer/references/research-voice.md
+-->
